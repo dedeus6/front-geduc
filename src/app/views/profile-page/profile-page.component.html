@@ -1,0 +1,21 @@
+<section class="wrapper">
+    <div class="profile-container">
+        <div class="menu-container">
+            <div class="menu-content">
+                <img class="profile-photo" src="../../assets/foto-event.png" />
+                <p class="profile-name">João da Silva</p>
+            </div>
+            <div class="menu-options">
+                <mat-selection-list #shoes [multiple]="false">
+                    <mat-list-option class="list-option" *ngFor="let menu of menuItems" [value]="menu" [routerLink]="menu.path">
+                        <mat-icon class="icon-option">{{menu.icon}}</mat-icon>
+                        {{menu.name}}
+                    </mat-list-option>
+                </mat-selection-list>
+            </div>
+        </div>
+        <div class="menu-page-content">
+            <router-outlet class="route"></router-outlet>
+        </div>
+    </div>
+</section>

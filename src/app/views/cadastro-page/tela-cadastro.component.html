@@ -1,0 +1,69 @@
+<section class="container">
+    <div id="imagem-login">
+        <img src="/assets/computador-estudante.svg" alt="Computador e Estudante">
+    </div>
+
+    <div class="container-campos">
+        <div class="info-login">
+            <h1>Cadastre sua conta</h1>
+        </div>     
+        
+        <form [formGroup]="registerForm" class="form-login-cadastro">
+            <div class="container-inputs">
+                <div>
+                    <mat-form-field id="campo-matricula" appearance="fill">
+                        <mat-label>RA / Matrícula</mat-label>
+                        <input
+                            matInput 
+                            type="number" 
+                            formControlName="matricula">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field id="campo-email" appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="text" formControlName="email">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field id="campo-senha" appearance="fill" >
+                        <mat-label>Senha</mat-label>
+                        <input matInput type="password" formControlName="password">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field id="campo-senha" appearance="fill" >
+                        <mat-label>Confirme sua senha</mat-label>
+                        <input matInput type="password" formControlName="confirmacaoSenha">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field id="campo-tags" appearance="fill">
+                        <mat-label>Suas habilidades</mat-label>
+                        <mat-chip-list #chipList aria-label="Fruit selection" formControlName="tags">
+                            <mat-chip *ngFor="let skill of skills" (removed)="remove(skill)">
+                                {{skill.name}}
+                                <button matChipRemove>
+                                <mat-icon>cancel</mat-icon>
+                                </button>
+                            </mat-chip>
+                            <input placeholder="Adiciona uma habilidade..."
+                                [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event)"
+                                >
+                        </mat-chip-list>
+                    </mat-form-field> 
+                </div>
+                <div>  
+                    <p>*Lembre-se de utilizar seu email institucional<button type="button" mat-flat-button color="primary" id="botao-cadastrar" routerLink="/" [disabled]="!registerForm.valid">CADASTRE-SE</button></p>
+                    <p id="paragrafo-pagina-login">Já tem uma conta?<button type="button" mat-stroked-button color="primary" id="botao-pagina-login" routerLink="/login">FAÇA O LOGIN</button></p>
+                </div>
+            </div> 
+        </form>
+    </div>
+</section>
+<section>
+    <router-outlet></router-outlet>
+</section>
