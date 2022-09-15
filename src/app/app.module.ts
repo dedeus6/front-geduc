@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -13,6 +14,8 @@ import { TelaLoginComponent } from './views/login-page/tela-login.component';
 import { CertificatesComponent } from './shared/components/profile/certificates/certificates.component';
 import { ContentComponent } from './shared/components/profile/content/content.component';
 import { CertificateCardComponent } from './shared/components/profile/certificates/certificate-card/certificate-card.component';
+
+import { AuthService } from './shared/services/auth.service';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
@@ -50,9 +53,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatListModule,
     MatCardModule,
     MatChipsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

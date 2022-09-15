@@ -7,7 +7,7 @@
             </div>
             <div class="menu-options">
                 <mat-selection-list #shoes [multiple]="false">
-                    <mat-list-option class="list-option" *ngFor="let menu of menuItems" [value]="menu" [routerLink]="menu.path">
+                    <mat-list-option class="list-option" *ngFor="let menu of menuItems" [value]="menu" [routerLink]="menu.path" (click)="executarOpcao(menu)">
                         <mat-icon class="icon-option">{{menu.icon}}</mat-icon>
                         {{menu.name}}
                     </mat-list-option>

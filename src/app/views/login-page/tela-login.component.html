@@ -14,7 +14,7 @@
                 <div>
                     <mat-form-field id="campo-matricula" appearance="fill" >
                         <mat-label>RA / Matrícula</mat-label>
-                        <input matInput type="number" formControlName="matricula">
+                        <input matInput type="text" formControlName="registration">
                     </mat-form-field>
                 </div>
                 <div>
@@ -26,6 +26,10 @@
                 <div>
                     <button type="button" (click)="submit()" mat-flat-button color="primary" id="botao-entrar" routerLink="/home" [disabled]="!loginForm.valid">ENTRAR</button>
                     <button type="button" mat-stroked-button color="primary" id="botao-cadastrar" routerLink="/cadastro">CADASTRAR</button>
+                </div>
+                <div class="msg-warning" *ngIf="mostraWarningCredencial">
+                    <mat-icon class="">warning</mat-icon>
+                    <span>Credenciais de usuário não encontradas. Tente novamente!</span>
                 </div>
             </div> 
         </form>

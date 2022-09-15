@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { MenuModel } from '../../models/menu.model';
 
 @Component({
@@ -28,10 +29,17 @@ export class ProfilePageComponent implements OnInit {
   ];
 
   constructor(
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
+  }
+
+  executarOpcao(menu){
+    if(menu.name === 'Sair') {
+      this.authService.logout();
+    }
   }
 
 }
