@@ -14,6 +14,10 @@ export class AuthService {
     return this.http.post<Usuario>(environment.GEDUC_API + '/v1/user/auth',  values);
   }
 
+  register(filtro: any) {
+    return this.http.post<Usuario>(environment.GEDUC_API + '/v1/user', filtro);
+  }
+
   clear(){
     localStorage.clear()
   }

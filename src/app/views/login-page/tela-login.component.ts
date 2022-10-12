@@ -22,7 +22,6 @@ export class TelaLoginComponent implements OnInit{
   }
   ngOnInit(): void {
     this.mostraWarningCredencial = false;
-    console.log(localStorage.getItem('user'));
   }
 
   submit(){
@@ -34,7 +33,6 @@ export class TelaLoginComponent implements OnInit{
           this.mostraWarningCredencial = false;
 
           localStorage.setItem('user', JSON.stringify(response)); // Substitui o JWT (JSON Web Token)
-          alert('Login Realizado com sucesso');
           
         }, 
         (error) => {

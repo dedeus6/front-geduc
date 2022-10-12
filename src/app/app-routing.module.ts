@@ -6,6 +6,7 @@ import { TelaCadastroComponent } from "./views/cadastro-page/tela-cadastro.compo
 import { TelaLoginComponent } from "./views/login-page/tela-login.component";
 import { HomePageComponent } from "./views/home-page/home-page.component";
 import { ProfilePageComponent } from "./views/profile-page/profile-page.component";
+import { AuthGuard } from "./shared/guard/auth-guard.guard";
 
 const routes: Routes = [
     {
@@ -25,6 +26,7 @@ const routes: Routes = [
     {
         path: "home",
         component: HomePageComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "profile",
@@ -32,13 +34,16 @@ const routes: Routes = [
         children: [
             {
                 path: "personal",
-                component: ContentComponent
+                component: ContentComponent,
+                canActivate: [AuthGuard]
             },
             {
                 path: "certificates",
-                component: CertificatesComponent
+                component: CertificatesComponent,
+                canActivate: [AuthGuard]
             }
-        ] 
+        ] ,
+        canActivate: [AuthGuard]
     }
    
 

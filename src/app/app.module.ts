@@ -26,6 +26,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips'; 
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatChipsModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [AuthService],
