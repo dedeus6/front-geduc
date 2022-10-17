@@ -3,6 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { MatChipInputEvent } from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 export interface Skill {
   name: string;
@@ -18,7 +20,7 @@ export class TelaCadastroComponent implements OnInit {
   passwordsValidator: boolean  = false;
   skillsFiltradas = [];
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private snackBar: MatSnackBar, private router: Router) {
     this.registerForm = this.fb.group(
       {
         name: ['', [Validators.required]],
@@ -63,11 +65,12 @@ export class TelaCadastroComponent implements OnInit {
     dataRegister.techs = this.skills.map(a => a.name)
     if(this.registerForm.valid){
       if(dataRegister.password == dataRegister.passwordConfirmation){
+        
         this.passwordsValidator = false;
         delete dataRegister.passwordConfirmation;
-        console.log(dataRegister);
-        this.authService.register(dataRegister).subscribe((response) =>{
-          console.log('form:', response);
+        this.authService.register(dataRegister).subscribe(() =>{
+          this.snackBar.open("Usuário Cadastrado com Sucesso", 'X');
+          this.router.navigate(['/login']);
         })
       } else {
         this.passwordsValidator = true;
