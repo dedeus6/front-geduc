@@ -28,6 +28,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { CreateEventPageComponent } from './views/create-event-page/create-event-page.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { FormsModule } from '@angular/forms';
     TelaLoginComponent,
     ContentComponent,
     CertificatesComponent,
-    CertificateCardComponent
+    CertificateCardComponent,
+    CreateEventPageComponent
   
   ],
   imports: [

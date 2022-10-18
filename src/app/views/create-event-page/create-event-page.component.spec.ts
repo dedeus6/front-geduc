@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalSubscribeComponent } from './modal-subscribe.component';
+import { CreateEventPageComponent } from './create-event-page.component';
 
-describe('ModalSubscribeComponent', () => {
-  let component: ModalSubscribeComponent;
-  let fixture: ComponentFixture<ModalSubscribeComponent>;
+describe('CreateEventPageComponent', () => {
+  let component: CreateEventPageComponent;
+  let fixture: ComponentFixture<CreateEventPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalSubscribeComponent ]
+      declarations: [ CreateEventPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalSubscribeComponent);
+    fixture = TestBed.createComponent(CreateEventPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
