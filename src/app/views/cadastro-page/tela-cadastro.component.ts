@@ -18,7 +18,6 @@ export class TelaCadastroComponent implements OnInit {
 
   registerForm: FormGroup;
   passwordsValidator: boolean  = false;
-  skillsFiltradas = [];
 
   constructor(private fb: FormBuilder, private authService: AuthService, private snackBar: MatSnackBar, private router: Router) {
     this.registerForm = this.fb.group(
@@ -28,7 +27,7 @@ export class TelaCadastroComponent implements OnInit {
         password: ['', [Validators.required, Validators.minLength(5)]],
         passwordConfirmation: ['', [Validators.required, Validators.minLength(5)]],
         registration: ['', [Validators.required]],
-        techs: [[this.skillsFiltradas]]
+        techs: []
         });
   }
 

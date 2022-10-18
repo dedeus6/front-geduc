@@ -10,9 +10,6 @@ export class HomePageComponent implements OnInit {
 
   constructor(public authService: AuthService) { }
 
-  ngOnInit(): void {
-    console.log(localStorage.getItem('user'));
-    console.log(this.authService.isAuthenticated());
-  }
+  ngOnInit(): void {}
 
 }

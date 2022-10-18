@@ -18,6 +18,10 @@ export class AuthService {
     return this.http.post<Usuario>(environment.GEDUC_API + '/v1/user', filtro);
   }
 
+  getUsuarioLogado(matricula: string) {
+    return this.http.get<Usuario>(environment.GEDUC_API + '/v1/user/'+ matricula);
+  }
+
   clear(){
     localStorage.clear()
   }

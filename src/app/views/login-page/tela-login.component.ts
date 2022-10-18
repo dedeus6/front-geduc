@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class TelaLoginComponent implements OnInit{
   mostraWarningCredencial: boolean;
   
 
-  constructor(private fb: FormBuilder, public authService: AuthService, private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, public authService: AuthService, private snackBar: MatSnackBar, private router: Router) {
     this.loginForm = this.fb.group(
       {
         registration: ['', [Validators.required]],
@@ -31,9 +32,10 @@ export class TelaLoginComponent implements OnInit{
 
     let dataLogin = this.loginForm.getRawValue();
     if(this.loginForm.valid){
-      this.snackBar.open("Usuário Logado com Sucesso", 'X');
       this.authService.login(dataLogin).subscribe(
         (response) => {
+          this.snackBar.open("Usuário Logado com Sucesso", 'X');
+          this.router.navigate(['/home']);
           this.mostraWarningCredencial = false;
 
           localStorage.setItem('user', JSON.stringify(response)); // Substitui o JWT (JSON Web Token)

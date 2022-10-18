@@ -24,7 +24,7 @@
                     </mat-form-field>
                 </div>
                 <div>
-                    <button type="button" (click)="submit()" mat-flat-button color="primary" id="botao-entrar" routerLink="/home" [disabled]="!loginForm.valid">ENTRAR</button>
+                    <button type="button" (click)="submit()" mat-flat-button color="primary" id="botao-entrar" [disabled]="!loginForm.valid">ENTRAR</button>
                     <button type="button" mat-stroked-button color="primary" id="botao-cadastrar" routerLink="/cadastro">CADASTRAR</button>
                 </div>
                 <div class="msg-warning" *ngIf="mostraWarningCredencial">

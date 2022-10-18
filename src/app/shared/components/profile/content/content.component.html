@@ -5,15 +5,15 @@
             <div class="email-container">
                 <mat-form-field appearance="fill" class="email-field">
                     <mat-label>Email</mat-label>
-                    <input matInput type="text">
+                    <input matInput type="text" [(ngModel)]="emailUsuario" disabled>
                 </mat-form-field>
                 <mat-icon>lock</mat-icon>
             </div>
             <mat-form-field class="example-chip-list" appearance="fill">
                 <mat-label>Suas habilidades</mat-label>
                 <mat-chip-list #chipList aria-label="Fruit selection">
-                  <mat-chip *ngFor="let skill of skills" (removed)="remove(skill)">
-                    {{skill.name}}
+                  <mat-chip *ngFor="let tech of techs" (removed)="remove(tech)">
+                    {{tech}}
                     <button matChipRemove>
                       <mat-icon>cancel</mat-icon>
                     </button>
