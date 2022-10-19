@@ -15,8 +15,9 @@ export interface Skill {
   styleUrls: ['./content.component.sass']
 })
 export class ContentComponent implements OnInit {
-  emailUsuario: String;
+  emailUsuario: string;
   localRegistration: Usuario;
+  getRegistration: string;
   constructor(private authService: AuthService, private contentService: ContentService) { }
 
   ngOnInit(): void {
@@ -52,17 +53,17 @@ export class ContentComponent implements OnInit {
   getUsuarioLogado(localRegistration: Usuario):void {
     
     this.authService.getUsuarioLogado(localRegistration.registration).subscribe((response) =>{
-      console.log(response);
       this.emailUsuario = response.email;
       this.techs = response.techs;
+      this.getRegistration = response.registration;
     })
   }
 
   alterarTecnologiasUsuario(){
-    console.log('chamei:', this.localRegistration.registration)
-    this.contentService.alterarTechsUsuario(this.localRegistration.registration).subscribe((response) => {
-      console.log('response:',response);
-      console.log('techs:',this.techs);
+    const filtro = {
+      techs: this.techs
+    }
+    this.contentService.alterarTechsUsuario(this.getRegistration, filtro).subscribe((response) => {
     })
   }
 

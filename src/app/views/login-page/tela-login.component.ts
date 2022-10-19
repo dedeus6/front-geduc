@@ -25,7 +25,6 @@ export class TelaLoginComponent implements OnInit{
   }
   ngOnInit(): void {
     this.mostraWarningCredencial = false;
-    console.log(sessionStorage.getItem('user'));
   }
 
   submit(){
