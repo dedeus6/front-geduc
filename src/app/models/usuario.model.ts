@@ -1,8 +1,8 @@
 export interface Usuario {
-    registration: String;
-    name?: String;
-    email?: String;
-    password: String;
+    registration: string;
+    name?: string;
+    email?: string;
+    password: string;
     techs?: Array<Tech[]>
 }
 

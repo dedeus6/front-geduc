@@ -7,6 +7,7 @@ import { TelaLoginComponent } from "./views/login-page/tela-login.component";
 import { HomePageComponent } from "./views/home-page/home-page.component";
 import { ProfilePageComponent } from "./views/profile-page/profile-page.component";
 import { AuthGuard } from "./shared/guard/auth-guard.guard";
+import { CreateEventPageComponent } from "./views/create-event-page/create-event-page.component";
 
 const routes: Routes = [
     {
@@ -43,6 +44,11 @@ const routes: Routes = [
                 canActivate: [AuthGuard]
             }
         ] ,
+        canActivate: [AuthGuard]
+    },
+    {
+        path:"create-event",
+        component: CreateEventPageComponent,
         canActivate: [AuthGuard]
     }
    

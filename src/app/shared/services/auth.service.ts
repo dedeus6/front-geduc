@@ -23,11 +23,11 @@ export class AuthService {
   }
 
   clear(){
-    localStorage.clear()
+    sessionStorage.clear()
   }
 
   isAuthenticated(){
-    return (localStorage.getItem('user')!==null?true:false);
+    return (sessionStorage.getItem('user')!==null?true:false);
   }
 
   logout(){

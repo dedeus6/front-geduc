@@ -16,6 +16,7 @@ import { ContentComponent } from './shared/components/profile/content/content.co
 import { CertificateCardComponent } from './shared/components/profile/certificates/certificate-card/certificate-card.component';
 
 import { AuthService } from './shared/services/auth.service';
+import { ContentService } from './shared/services/content.service';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
@@ -29,6 +30,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CreateEventPageComponent } from './views/create-event-page/create-event-page.component';
+
 
 @NgModule({
   declarations: [
@@ -62,7 +64,7 @@ import { CreateEventPageComponent } from './views/create-event-page/create-event
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, ContentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { Usuario } from 'src/app/models/usuario.model';
+import { ContentService } from 'src/app/shared/services/content.service';
 
 export interface Skill {
   name: string;
@@ -14,12 +16,12 @@ export interface Skill {
 })
 export class ContentComponent implements OnInit {
   emailUsuario: String;
-  constructor(private authService: AuthService) { }
+  localRegistration: Usuario;
+  constructor(private authService: AuthService, private contentService: ContentService) { }
 
   ngOnInit(): void {
-    // console.log(localStorage.getItem('user'));
-    // console.log(this.authService.isAuthenticated());
-    this.getUsuarioLogado();
+    this.localRegistration = JSON.parse(sessionStorage.getItem('user'))
+    this.getUsuarioLogado(this.localRegistration);
   }
 
   addOnBlur = true;
@@ -47,11 +49,20 @@ export class ContentComponent implements OnInit {
     }
   }
 
-  getUsuarioLogado():void {
-    this.authService.getUsuarioLogado('22050141').subscribe((response) =>{
+  getUsuarioLogado(localRegistration: Usuario):void {
+    
+    this.authService.getUsuarioLogado(localRegistration.registration).subscribe((response) =>{
       console.log(response);
       this.emailUsuario = response.email;
       this.techs = response.techs;
+    })
+  }
+
+  alterarTecnologiasUsuario(){
+    console.log('chamei:', this.localRegistration.registration)
+    this.contentService.alterarTechsUsuario(this.localRegistration.registration).subscribe((response) => {
+      console.log('response:',response);
+      console.log('techs:',this.techs);
     })
   }
 
