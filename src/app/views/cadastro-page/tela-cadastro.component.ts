@@ -75,9 +75,5 @@ export class TelaCadastroComponent implements OnInit {
         this.passwordsValidator = true;
       }
     }
-    
-    // this.authService.register(this.registerForm).subscribe((resposta)=> {
-    //   console.log(resposta);
-    // });
   }
 }

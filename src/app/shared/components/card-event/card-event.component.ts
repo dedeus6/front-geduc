@@ -18,7 +18,6 @@ export class CardEventComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalSubscribeComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 
