@@ -15,7 +15,7 @@ export interface Skill {
   styleUrls: ['./tela-cadastro.component.sass']
 })
 export class TelaCadastroComponent implements OnInit {
-
+  hide = true;
   registerForm: FormGroup;
   passwordsValidator: boolean  = false;
 

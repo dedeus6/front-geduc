@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./tela-login.component.sass']
 })
 export class TelaLoginComponent implements OnInit{
-
+  hide = true;
   loginForm: FormGroup;
   mostraWarningCredencial: boolean;
   

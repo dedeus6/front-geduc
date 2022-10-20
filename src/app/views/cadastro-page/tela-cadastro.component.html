@@ -11,7 +11,7 @@
         <form [formGroup]="registerForm" class="form-login-cadastro">
             <div class="container-inputs">
                 <div>
-                    <mat-form-field id="campo-matricula" appearance="fill">
+                    <mat-form-field id="campo-matricula" appearance="outline">
                         <mat-label>Nome</mat-label>
                         <input
                             matInput 
@@ -20,7 +20,7 @@
                     </mat-form-field>
                 </div>
                 <div>
-                    <mat-form-field id="campo-matricula" appearance="fill">
+                    <mat-form-field id="campo-matricula" appearance="outline">
                         <mat-label>RA / Matrícula</mat-label>
                         <input
                             matInput 
@@ -29,25 +29,28 @@
                     </mat-form-field>
                 </div>
                 <div>
-                    <mat-form-field id="campo-email" appearance="fill">
+                    <mat-form-field id="campo-email" appearance="outline">
                         <mat-label>Email</mat-label>
                         <input matInput type="text" formControlName="email">
                     </mat-form-field>
                 </div>
                 <div>
-                    <mat-form-field id="campo-senha" appearance="fill" >
+                    <mat-form-field id="campo-senha" appearance="outline" >
                         <mat-label>Senha</mat-label>
-                        <input matInput type="password" formControlName="password">
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
                     </mat-form-field>
                 </div>
                 <div>
-                    <mat-form-field id="campo-senha" appearance="fill" >
+                    <mat-form-field id="campo-senha" appearance="outline" >
                         <mat-label>Confirme sua senha</mat-label>
                         <input matInput type="password" formControlName="passwordConfirmation">
                     </mat-form-field>
                 </div>
                 <div>
-                    <mat-form-field id="campo-tags" appearance="fill">
+                    <mat-form-field id="campo-tags" appearance="outline">
                         <mat-label>Suas habilidades</mat-label>
                         <mat-chip-list #chipList aria-label="Fruit selection" formControlName="techs">
                             <mat-chip *ngFor="let skill of skills" (removed)="remove(skill)">

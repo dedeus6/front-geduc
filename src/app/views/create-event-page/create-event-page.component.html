@@ -1,1 +1,48 @@
-<p>create-event-page works!</p>
+<section class="wrapper">
+    <div class="criar-evento-container">
+        <div class="titulo">
+            <span >Crie seu evento</span>
+        </div>
+        <div>
+            <mat-form-field id="campo-titulo" appearance="outline">
+                <mat-label>Título do evento</mat-label>
+                <input matInput type="text" >
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field id="campo-descricao" appearance="outline">
+                <mat-label>Descricao</mat-label>
+                <textarea matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field id="campo-tags" appearance="outline">
+                <mat-label>Tags de Interesse</mat-label>
+                <input matInput type="text" >
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field id="campo-tags" appearance="outline">
+                <mat-label>Duração</mat-label>
+                <input matInput type="number" >
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="adicione-aulas-container">
+        <div class="titulo">
+            <span >Adicione as aulas</span>
+        </div>
+        <div class="certificates-cards" *ngFor="let lesson of lessons">
+            <app-certificate-card [certificate]="lesson"></app-certificate-card>
+        </div>
+        <div style="text-align: right;">
+            <button mat-raised-button color="primary">Adicionar <mat-icon>add</mat-icon></button>
+        </div>
+    </div>
+   
+</section>
+<section>
+    <div id="botao-criar-evento">
+        <button mat-raised-button color="primary">CRIAR EVENTO</button>
+    </div>
+</section>
