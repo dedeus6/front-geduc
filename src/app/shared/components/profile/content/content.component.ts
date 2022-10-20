@@ -4,6 +4,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ContentService } from 'src/app/shared/services/content.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface Skill {
   name: string;
@@ -18,7 +19,7 @@ export class ContentComponent implements OnInit {
   emailUsuario: string;
   localRegistration: Usuario;
   getRegistration: string;
-  constructor(private authService: AuthService, private contentService: ContentService) { }
+  constructor(private authService: AuthService, private contentService: ContentService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.localRegistration = JSON.parse(sessionStorage.getItem('user'))
@@ -64,6 +65,10 @@ export class ContentComponent implements OnInit {
       techs: this.techs
     }
     this.contentService.alterarTechsUsuario(this.getRegistration, filtro).subscribe((response) => {
+      this.snackBar.open("Tecnologias alteradas com Sucesso", 'X', {
+        duration: 3000,
+        panelClass: ['blue-snackbar']
+      });
     })
   }
 

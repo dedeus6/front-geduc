@@ -1,19 +1,26 @@
 .wrapper
     display: flex
     flex: 2
-    justify-content: space-between
+    justify-content: center
     margin-top: 5em
 
 .criar-evento-container
     display: flex
     flex: 1
     flex-direction: column
-    
+    max-width: 500px
+
+    .mat-form-field.mat-form-field
+        width: 90%
+
+    .mat-form-field.mat-form-field.campo-duracao
+        width: 30% 
     
 .adicione-aulas-container
     display: flex
     flex: 1
     flex-direction: column
+    max-width: 500px
 
     div:not(.titulo)
         margin: 10px

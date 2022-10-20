@@ -68,7 +68,10 @@ export class TelaCadastroComponent implements OnInit {
         this.passwordsValidator = false;
         delete dataRegister.passwordConfirmation;
         this.authService.register(dataRegister).subscribe(() =>{
-          this.snackBar.open("Usuário Cadastrado com Sucesso", 'X');
+          this.snackBar.open("Usuário Cadastrado com Sucesso", 'X', {
+            duration: 3000,
+            panelClass: ['blue-snackbar']
+          });
           this.router.navigate(['/login']);
         })
       } else {
