@@ -5,10 +5,8 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Tech } from 'src/app/models/tech.model';
 
-export interface Skill {
-  name: string;
-}
 @Component({
   selector: 'app-tela-cadastro',
   templateUrl: './tela-cadastro.component.html',
@@ -37,7 +35,7 @@ export class TelaCadastroComponent implements OnInit {
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  skills: Skill[] = [{name: 'Java'}];
+  skills: Tech[] = [{name: 'Java'}];
 
 
   add(event: MatChipInputEvent): void {
@@ -51,7 +49,7 @@ export class TelaCadastroComponent implements OnInit {
 
   }
 
-  remove(skill: Skill): void {
+  remove(skill: Tech): void {
     const index = this.skills.indexOf(skill);
 
     if (index >= 0) {

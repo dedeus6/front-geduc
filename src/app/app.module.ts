@@ -31,6 +31,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CreateEventPageComponent } from './views/create-event-page/create-event-page.component';
+import { StorageService } from './shared/services/storage.service';
+import { EventService } from './shared/services/event.service';
 
 
 @NgModule({
@@ -66,7 +68,7 @@ import { CreateEventPageComponent } from './views/create-event-page/create-event
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService, ContentService],
+  providers: [AuthService, ContentService, StorageService, EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

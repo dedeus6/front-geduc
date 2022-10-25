@@ -5,10 +5,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ContentService } from 'src/app/shared/services/content.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-export interface Skill {
-  name: string;
-}
+import { Tech } from 'src/app/models/tech.model';
 
 @Component({
   selector: 'app-content',
@@ -29,12 +26,10 @@ export class ContentComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   techs: any[];
-  skills: Skill[] = [{name: 'Java'}, {name: 'Python'}, {name: 'Angular'}];
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    // Add our fruit
     if (value) {
       this.techs.push(value);
     }
@@ -43,7 +38,7 @@ export class ContentComponent implements OnInit {
 
   }
 
-  remove(tech: Skill): void {
+  remove(tech: Tech): void {
     const index = this.techs.indexOf(tech);
 
     if (index >= 0) {
