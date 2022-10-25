@@ -22,8 +22,15 @@
     flex-direction: column
     max-width: 500px
 
-    div:not(.titulo)
-        margin: 10px
+    .inputFile-contaier
+        display: flex
+        flex: 1
+        justify-content: flex-end
+        background-color: red
+
+        .create-button-conta
+            display: flex
+            flex: 1
 
 .titulo 
         font-family: 'Lato'
@@ -36,3 +43,26 @@
 #botao-criar-evento
     text-align: center
     margin-top: 2em
+
+.card-container
+    display: flex
+    flex: 1
+    .card
+        display: flex
+        flex: 1
+        justify-content: space-between
+        align-items: center
+        align-content: center
+        width: 880px
+        max-width: 880px
+        height: 30px
+        border-color: #000000
+        font-family: "Lato"
+        font-style: normal
+        font-weight: 700
+        font-size: 15px
+        line-height: 48px
+        margin-bottom: 20px
+        .icons
+            display: flex
+            cursor: pointer

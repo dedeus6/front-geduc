@@ -30,6 +30,10 @@ export class AuthService {
     return (sessionStorage.getItem('user')!==null?true:false);
   }
 
+  getLoggedUser(): Usuario {
+    return sessionStorage.getItem('user')!==null ? JSON.parse(sessionStorage.getItem('user')) : null;
+  }
+
   logout(){
     this.clear();
   }
