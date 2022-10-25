@@ -20,6 +20,7 @@ import { ContentService } from './shared/services/content.service';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -53,6 +54,7 @@ import { CreateEventPageComponent } from './views/create-event-page/create-event
     AppRoutingModule,
     NoopAnimationsModule,
     MatInputModule,
+    MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
     MatDialogModule,

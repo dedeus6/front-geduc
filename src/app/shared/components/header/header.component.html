@@ -1,6 +1,7 @@
 <div class="wrapper">
     <div class="search-container">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">search</mat-icon>
+        <mat-icon routerLink="/home" class="icone" aria-label="Example home icon">home</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example serach icon" class="icone">search</mat-icon>
         <mat-form-field class="" appearance="outline" class="search-bar">
             <mat-label>Procure um evento...</mat-label>
             <input matInput type="text">
@@ -8,7 +9,6 @@
     </div>
     <div class="menu-container">
         <div class="menu-items">
-            <mat-icon routerLink="/home">home</mat-icon>
             <mat-icon class="menu-icon" routerLink="profile/personal">account_circle</mat-icon>
             <mat-icon>notifications</mat-icon>
         </div>

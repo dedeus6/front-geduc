@@ -37,7 +37,7 @@ export class TelaCadastroComponent implements OnInit {
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  skills: Skill[] = [{name: 'Java'}, {name: 'Python'}, {name: 'Angular'}];
+  skills: Skill[] = [{name: 'Java'}];
 
 
   add(event: MatChipInputEvent): void {

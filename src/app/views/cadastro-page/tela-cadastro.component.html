@@ -16,7 +16,8 @@
                         <input
                             matInput 
                             type="text" 
-                            formControlName="name">
+                            formControlName="name"
+                            maxlength="100">
                     </mat-form-field>
                 </div>
                 <div>
@@ -37,16 +38,13 @@
                 <div>
                     <mat-form-field id="campo-senha" appearance="outline" >
                         <mat-label>Senha</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" maxlength="20">
                     </mat-form-field>
                 </div>
                 <div>
                     <mat-form-field id="campo-senha" appearance="outline" >
                         <mat-label>Confirme sua senha</mat-label>
-                        <input matInput type="password" formControlName="passwordConfirmation">
+                        <input matInput type="password" formControlName="passwordConfirmation" maxlength="20">
                     </mat-form-field>
                 </div>
                 <div>
@@ -67,6 +65,9 @@
                                 >
                         </mat-chip-list>
                     </mat-form-field> 
+                </div>
+                <div style="margin-bottom: 1em;">
+                    <mat-checkbox color="primary" (change)="hide = !hide">Mostrar senha</mat-checkbox>
                 </div>
                 <div>  
                     <p>*Lembre-se de utilizar seu email institucional<button type="button" mat-flat-button color="primary" id="botao-cadastrar" [disabled]="!registerForm.valid" (click)="submitRegister()">CADASTRE-SE</button></p>
