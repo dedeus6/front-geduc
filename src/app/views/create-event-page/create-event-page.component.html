@@ -12,29 +12,29 @@
         <div>
             <mat-form-field id="campo-descricao" appearance="outline">
                 <mat-label>Descricao</mat-label>
-                <textarea matInput formControlName="eventDescription"></textarea>
+                <textarea matInput formControlName="eventDescription" maxlength="2000"></textarea>
             </mat-form-field>
         </div>
         <div>
             <mat-form-field class="example-chip-list" appearance="outline">
                 <mat-label>Suas habilidades</mat-label>
-                <mat-chip-list #chipList aria-label="Fruit selection">
+                <mat-chip-list #chipList aria-label="Tech selection" formControlName="techs">
                     <mat-chip *ngFor="let tech of techs" (removed)="remove(tech)">
-                        {{tech}}
-                        <button matChipRemove>
-                            <mat-icon>cancel</mat-icon>
-                        </button>
+                      {{tech}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
-                    <input placeholder="Adiciona uma habilidade..." [matChipInputFor]="chipList"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                        (matChipInputTokenEnd)="add($event)">
-                </mat-chip-list>
+                    <input placeholder="Adiciona uma habilidade..."
+                           [matChipInputFor]="chipList"
+                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                           [matChipInputAddOnBlur]="addOnBlur"
+                           (matChipInputTokenEnd)="add($event)">
+                  </mat-chip-list>
             </mat-form-field>
         </div>
         <div>
             <mat-form-field class="campo-duracao" appearance="outline">
                 <mat-label>Duração</mat-label>
-                <input matInput formControlName="duration" mask="00:00">
+                <input matInput formControlName="duration" mask="9999-99">
             </mat-form-field>
         </div>
     </div>
@@ -62,6 +62,6 @@
 </section>
 <section>
     <div id="botao-criar-evento">
-        <button mat-raised-button color="primary" (click)="createEvent()">CRIAR EVENTO</button>
+        <button mat-raised-button color="primary" (click)="createEvent()" [disabled]="!eventForm.valid">CRIAR EVENTO</button>
     </div>
 </section>

@@ -50,7 +50,7 @@
                 <div>
                     <mat-form-field id="campo-tags" appearance="outline">
                         <mat-label>Suas habilidades</mat-label>
-                        <mat-chip-list #chipList aria-label="Fruit selection" formControlName="techs">
+                        <mat-chip-list #chipList aria-label="Tech Selection" formControlName="techs">
                             <mat-chip *ngFor="let skill of skills" (removed)="remove(skill)">
                                 {{skill.name}}
                                 <button matChipRemove>

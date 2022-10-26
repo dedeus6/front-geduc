@@ -28,7 +28,9 @@ export class CreateEventPageComponent implements OnInit {
       {
         eventTile: ['', [Validators.required]],
         eventDescription: ['', [Validators.required]],
-        duration: ['', [Validators.required]]
+        duration: ['', [Validators.required]],
+        techs: [[], [Validators.required]]
+        // techs: this.fb.array([],[Validators.required])
       }
     )
   }
@@ -72,19 +74,27 @@ export class CreateEventPageComponent implements OnInit {
     this.files.forEach(file => {
       formData.append('files', file);
     })
-
-    this.storageService.sendFiles(formData).subscribe(response => {
-      const eventRequest: EventModel = {
-        creatorRegistration: this.loggedUser.registration,
-        description: this.eventForm.get('eventDescription').value,
-        title: this.eventForm.get('eventTile').value,
-        duration: this.eventForm.get('duration').value,
-        filesId: response.filesId,
-        techs: this.techs
-      }
-
-      this.eventService.createEvent(eventRequest).subscribe();
-    })
+    const x: any = {
+      creatorRegistration: this.loggedUser.registration,
+      description: this.eventForm.get('eventDescription').value,
+      title: this.eventForm.get('eventTile').value,
+      duration: this.eventForm.get('duration').value,
+      techs: this.techs
+    }
+    console.log(x)
+    // this.storageService.sendFiles(formData).subscribe(response => {
+    //   const eventRequest: EventModel = {
+    //     creatorRegistration: this.loggedUser.registration,
+    //     description: this.eventForm.get('eventDescription').value,
+    //     title: this.eventForm.get('eventTile').value,
+    //     duration: this.eventForm.get('duration').value,
+    //     filesId: response.filesId,
+    //     techs: this.techs
+    //   }
+      
+      
+    //   // this.eventService.createEvent(eventRequest).subscribe();
+    // })
   }
 
 }
