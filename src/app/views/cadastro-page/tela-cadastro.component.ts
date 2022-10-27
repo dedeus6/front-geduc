@@ -35,14 +35,14 @@ export class TelaCadastroComponent implements OnInit {
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  skills: Tech[] = [{name: 'Java'}];
+  techs: Tech[] = [{name: 'Java'}];
 
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     if (value) {
-      this.skills.push({name: value});
+      this.techs.push({name: value});
     }
 
     event.input.value = "";
@@ -50,16 +50,16 @@ export class TelaCadastroComponent implements OnInit {
   }
 
   remove(skill: Tech): void {
-    const index = this.skills.indexOf(skill);
+    const index = this.techs.indexOf(skill);
 
     if (index >= 0) {
-      this.skills.splice(index, 1);
+      this.techs.splice(index, 1);
     }
   }
 
   submitRegister(){
     let dataRegister = this.registerForm.getRawValue();
-    dataRegister.techs = this.skills.map(a => a.name)
+    dataRegister.techs = this.techs.map(a => a.name)
     if(this.registerForm.valid){
       if(dataRegister.password == dataRegister.passwordConfirmation){
         
@@ -68,7 +68,7 @@ export class TelaCadastroComponent implements OnInit {
         this.authService.register(dataRegister).subscribe(() =>{
           this.snackBar.open("Usuário Cadastrado com Sucesso", 'X', {
             duration: 3000,
-            panelClass: ['blue-snackbar']
+            panelClass: ['green-snackbar']
           });
           this.router.navigate(['/login']);
         })

@@ -34,6 +34,9 @@ import { CreateEventPageComponent } from './views/create-event-page/create-event
 import { StorageService } from './shared/services/storage.service';
 import { EventService } from './shared/services/event.service';
 
+// Dependências do ngx-mask
+import { NgxMaskModule } from 'ngx-mask';
+
 
 @NgModule({
   declarations: [
@@ -66,7 +69,8 @@ import { EventService } from './shared/services/event.service';
     MatSnackBarModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
   providers: [AuthService, ContentService, StorageService, EventService],
   bootstrap: [AppComponent]

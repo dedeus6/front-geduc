@@ -62,7 +62,7 @@ export class ContentComponent implements OnInit {
     this.contentService.alterarTechsUsuario(this.getRegistration, filtro).subscribe((response) => {
       this.snackBar.open("Tecnologias alteradas com Sucesso", 'X', {
         duration: 3000,
-        panelClass: ['blue-snackbar']
+        panelClass: ['green-snackbar']
       });
     })
   }

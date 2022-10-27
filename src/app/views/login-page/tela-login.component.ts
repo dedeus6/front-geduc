@@ -35,7 +35,7 @@ export class TelaLoginComponent implements OnInit{
         (response) => {
           this.snackBar.open("Usuário Logado com Sucesso", 'X', {
             duration: 3000,
-            panelClass: ['blue-snackbar']
+            panelClass: ['green-snackbar']
           });
           this.router.navigate(['/home']);
           this.mostraWarningCredencial = false;

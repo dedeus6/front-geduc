@@ -38,21 +38,21 @@
                 <div>
                     <mat-form-field id="campo-senha" appearance="outline" >
                         <mat-label>Senha</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" maxlength="20">
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" minlength="5" maxlength="20">
                     </mat-form-field>
                 </div>
                 <div>
                     <mat-form-field id="campo-senha" appearance="outline" >
                         <mat-label>Confirme sua senha</mat-label>
-                        <input matInput type="password" formControlName="passwordConfirmation" maxlength="20">
+                        <input matInput type="password" formControlName="passwordConfirmation" minlength="5" maxlength="20">
                     </mat-form-field>
                 </div>
                 <div>
                     <mat-form-field id="campo-tags" appearance="outline">
                         <mat-label>Suas habilidades</mat-label>
                         <mat-chip-list #chipList aria-label="Tech Selection" formControlName="techs">
-                            <mat-chip *ngFor="let skill of skills" (removed)="remove(skill)">
-                                {{skill.name}}
+                            <mat-chip *ngFor="let tech of techs" (removed)="remove(tech)">
+                                {{tech.name}}
                                 <button matChipRemove>
                                 <mat-icon>cancel</mat-icon>
                                 </button>

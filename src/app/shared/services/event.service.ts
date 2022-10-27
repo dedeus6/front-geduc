@@ -11,7 +11,7 @@ export class EventService {
     constructor(private http: HttpClient) { }
 
     createEvent(event: EventModel){
-        return this.http.post<EventModel>(environment.GEDUC_API + '/v1/event', event);
-      }
+      return this.http.post<EventModel>(environment.GEDUC_API + '/v1/event', event);
+    }
 
 }

@@ -1,25 +1,25 @@
 <section class="wrapper">
-    <div class="criar-evento-container" [formGroup]="eventForm">
+    <form class="criar-evento-container" [formGroup]="eventForm">
         <div class="titulo">
             <span>Crie seu evento</span>
         </div>
         <div>
             <mat-form-field id="campo-titulo" appearance="outline">
                 <mat-label>Título do evento</mat-label>
-                <input matInput type="text" formControlName="eventTile">
+                <input matInput type="text" formControlName="eventTile" required>
             </mat-form-field>
         </div>
         <div>
             <mat-form-field id="campo-descricao" appearance="outline">
                 <mat-label>Descricao</mat-label>
-                <textarea matInput formControlName="eventDescription" maxlength="2000"></textarea>
+                <textarea matInput formControlName="eventDescription" maxlength="2000" required></textarea>
             </mat-form-field>
         </div>
-        <div>
-            <mat-form-field class="example-chip-list" appearance="outline">
-                <mat-label>Suas habilidades</mat-label>
-                <mat-chip-list #chipList aria-label="Tech selection" formControlName="techs">
-                    <mat-chip *ngFor="let tech of techs" (removed)="remove(tech)">
+        <div class="mat-chip-list-mateus">
+            <mat-form-field class="example-chip-list" appearance="outline" >
+                <mat-label>Tags do evento</mat-label>
+                <mat-chip-list #chipList aria-label="Tech selection" formControlName="techs" required>
+                    <mat-chip *ngFor="let tech of techs" (removed)="remove(tech)" >
                       {{tech}}
                       <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
@@ -27,17 +27,18 @@
                            [matChipInputFor]="chipList"
                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                            [matChipInputAddOnBlur]="addOnBlur"
-                           (matChipInputTokenEnd)="add($event)">
+                           (matChipInputTokenEnd)="add($event)"
+                        >
                   </mat-chip-list>
-            </mat-form-field>
-        </div>
+                </mat-form-field>
+            </div>
         <div>
             <mat-form-field class="campo-duracao" appearance="outline">
                 <mat-label>Duração</mat-label>
-                <input matInput formControlName="duration" mask="9999-99">
+                <input matInput formControlName="duration" mask="00:00" required>
             </mat-form-field>
         </div>
-    </div>
+    </form>
     <div class="adicione-aulas-container">
         <div class="titulo">
             <span>Adicione as aulas</span>
@@ -54,7 +55,7 @@
         </div>
         <div class="inputFile-container">
             <div class="create-button-conta">
-                <button mat-raised-button color="primary"><input type="file"
+                <button mat-raised-button color="primary"><input type="file" accept="video/*"
                         (change)="inputFileChange($event)"></button>
             </div>
         </div>
