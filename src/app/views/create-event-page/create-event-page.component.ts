@@ -51,15 +51,24 @@ export class CreateEventPageComponent implements OnInit {
   }
 
   inputFileChange(event) {
-    if (event.target.files && event.target.files[0]) {
+    if (event.target.files.length > 1){
+      for(let i = 0; i < event.target.files.length; i++) {
+        this.files.push(event.target.files[i]);
+      }
+      this.eventForm.get('file').setValue(this.files);
+    } 
+    else if (event.target.files && event.target.files[0]) {
       this.files.push(event.target.files[0]);
       this.eventForm.get('file').setValue(this.files);
-      console.log(event.target.files);
     }
   }
 
   deleteFileOnList(file: File) {
-    this.files = this.files.filter(item => item.name !== file.name);
+    const index = this.files.indexOf(file)
+    if(index >= 0) {
+      this.files.splice(index,1);
+
+    }
     this.eventForm.get('file').setValue(this.files);
   }
 
@@ -85,18 +94,11 @@ export class CreateEventPageComponent implements OnInit {
   }
 
   createEvent() {
-    console.log(this.techs)
     const formData = new FormData();
     this.files.forEach(file => {
       formData.append('files', file);
     })
-    const x: any = {
-      creatorRegistration: this.loggedUser.registration,
-      description: this.eventForm.get('eventDescription').value,
-      title: this.eventForm.get('eventTile').value,
-      duration: this.eventForm.get('duration').value,
-      techs: this.techs
-    }
+
     this.storageService.sendFiles(formData).subscribe(response => {
       const eventRequest: EventModel = {
         creatorRegistration: this.loggedUser.registration,
@@ -107,13 +109,11 @@ export class CreateEventPageComponent implements OnInit {
         techs: this.eventForm.get('techs').value
       }
       
-      console.log('eventRequest: ', eventRequest);
       this.eventService.createEvent(eventRequest).subscribe((response) => {
         this.snackBar.open("Evento criado com Sucesso", 'X', {
           duration: 3000,
           panelClass: ['green-snackbar']
         });
-        console.log('resposta create:',response)
         this.router.navigate(['home'])
       }) 
     })
