@@ -13,6 +13,7 @@ export class TelaLoginComponent implements OnInit{
   hide = true;
   loginForm: FormGroup;
   mostraWarningCredencial: boolean;
+  mostraErro: boolean;
   
 
   constructor(private fb: FormBuilder, public authService: AuthService, private snackBar: MatSnackBar, private router: Router) {
@@ -25,6 +26,7 @@ export class TelaLoginComponent implements OnInit{
   }
   ngOnInit(): void {
     this.mostraWarningCredencial = false;
+    this.mostraErro = false;
   }
 
   submit(){
@@ -44,7 +46,14 @@ export class TelaLoginComponent implements OnInit{
           
         }, 
         (error) => {
-          this.mostraWarningCredencial = true;
+          console.log(error)
+          if(error.status === 422){
+            this.mostraWarningCredencial = true;
+            this.mostraErro = false;
+          } else {
+            this.mostraWarningCredencial = false;
+            this.mostraErro = true;
+          }
         }
       );
     }

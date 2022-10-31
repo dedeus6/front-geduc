@@ -30,6 +30,11 @@ export class ProfilePageComponent implements OnInit {
       name: 'Sair',
       icon: 'exit_to_app',
       path: '../login'
+    },
+    {
+      name: 'Meus eventos',
+      icon: 'videocam',
+      path: ''
     }
   ];
   
