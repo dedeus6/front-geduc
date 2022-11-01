@@ -8,6 +8,7 @@ import { HomePageComponent } from "./views/home-page/home-page.component";
 import { ProfilePageComponent } from "./views/profile-page/profile-page.component";
 import { AuthGuard } from "./shared/guard/auth-guard.guard";
 import { CreateEventPageComponent } from "./views/create-event-page/create-event-page.component";
+import { MyEventsComponent } from "./shared/components/profile/my-events/my-events.component";
 
 const routes: Routes = [
     {
@@ -41,6 +42,11 @@ const routes: Routes = [
             {
                 path: "certificates",
                 component: CertificatesComponent,
+                canActivate: [AuthGuard]
+            },
+            {
+                path: "my-events",
+                component: MyEventsComponent,
                 canActivate: [AuthGuard]
             }
         ] ,

@@ -1,0 +1,8 @@
+<section class="wrapper">
+    <div class="certificate-container">
+        <h1 class="title-page">Meus eventos</h1>
+        <div class="certificates-cards" *ngFor="let event of events">
+            <app-my-events-card [event]="event"></app-my-events-card>
+        </div>
+    </div>
+</section>

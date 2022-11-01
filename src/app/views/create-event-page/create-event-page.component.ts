@@ -3,7 +3,7 @@ import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskModule } from 'ngx-mask';
 import { EventModel } from 'src/app/models/event.model';
 import { Tech } from 'src/app/models/tech.model';
@@ -32,7 +32,8 @@ export class CreateEventPageComponent implements OnInit {
     private storageService: StorageService, 
     private eventService: EventService, 
     private snackBar: MatSnackBar, 
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
     ) {
     this.eventForm = this.fb.group(
       {
@@ -46,8 +47,9 @@ export class CreateEventPageComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    const origem = this.route.snapshot.queryParamMap.get('origem');
+    console.log('origem',origem)
     this.loggedUser = this.authService.getLoggedUser();
-
   }
 
   inputFileChange(event) {

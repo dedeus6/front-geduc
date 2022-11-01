@@ -36,6 +36,8 @@ import { EventService } from './shared/services/event.service';
 
 // Dependências do ngx-mask
 import { NgxMaskModule } from 'ngx-mask';
+import { MyEventsComponent } from './shared/components/profile/my-events/my-events.component';
+import { MyEventsCardComponent } from './shared/components/profile/my-events/my-events-card/my-events-card.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { NgxMaskModule } from 'ngx-mask';
     ContentComponent,
     CertificatesComponent,
     CertificateCardComponent,
-    CreateEventPageComponent
+    CreateEventPageComponent,
+    MyEventsComponent,
+    MyEventsCardComponent
   
   ],
   imports: [

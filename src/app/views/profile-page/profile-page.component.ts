@@ -27,15 +27,15 @@ export class ProfilePageComponent implements OnInit {
       path: 'certificates'
     },
     {
+      name: 'Meus eventos',
+      icon: 'videocam',
+      path: 'my-events'
+    },
+    {
       name: 'Sair',
       icon: 'exit_to_app',
       path: '../login'
     },
-    {
-      name: 'Meus eventos',
-      icon: 'videocam',
-      path: ''
-    }
   ];
   
 
