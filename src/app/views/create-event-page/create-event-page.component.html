@@ -1,7 +1,8 @@
 <section class="wrapper">
     <form class="criar-evento-container" [formGroup]="eventForm">
         <div class="titulo">
-            <span>Crie seu evento</span>
+            <span *ngIf="origem === 'incluir'">Crie seu evento</span>
+            <span *ngIf="origem === 'alterar'">Altere seu evento</span>
         </div>
         <div>
             <mat-form-field id="campo-titulo" appearance="outline">

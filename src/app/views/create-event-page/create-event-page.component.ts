@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskModule } from 'ngx-mask';
 import { EventModel } from 'src/app/models/event.model';
+import { getEventModel } from 'src/app/models/getEvent.model';
 import { Tech } from 'src/app/models/tech.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -25,6 +26,7 @@ export class CreateEventPageComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   addOnBlur = true;
   loggedUser: Usuario;
+  origem: string;
 
   constructor(
     private fb: FormBuilder, 
@@ -47,9 +49,20 @@ export class CreateEventPageComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    const origem = this.route.snapshot.queryParamMap.get('origem');
-    console.log('origem',origem)
+    this.origem = this.route.snapshot.queryParamMap.get('origem');
     this.loggedUser = this.authService.getLoggedUser();
+    if(this.origem === "alterar")
+    this.getEventsOfUser(this.loggedUser);
+  }
+
+  getEventsOfUser(usuarioLogado: Usuario): void {
+    const filtro = {
+      nome: "creatorRegistration",
+      valor: usuarioLogado.registration
+    }
+    this.eventService.getEventsOfUser(filtro).subscribe((response) => {
+      console.log(response)
+    })
   }
 
   inputFileChange(event) {

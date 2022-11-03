@@ -6,6 +6,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { ContentService } from 'src/app/shared/services/content.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Tech } from 'src/app/models/tech.model';
+import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
   selector: 'app-content',
@@ -19,7 +20,7 @@ export class ContentComponent implements OnInit {
   constructor(private authService: AuthService, private contentService: ContentService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.localRegistration = JSON.parse(sessionStorage.getItem('user'))
+    this.localRegistration = JSON.parse(sessionStorage.getItem('user'));
     this.getUsuarioLogado(this.localRegistration);
   }
 
