@@ -13,12 +13,8 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  chamaCriarEvento(origem: string): void {
-    this.router.navigate(['create-event'], {
-      queryParams: {
-        origem: origem
-      }
-    })
+  chamaCriarEvento(): void {
+    this.router.navigate(['create-event']);
   }
 
 }

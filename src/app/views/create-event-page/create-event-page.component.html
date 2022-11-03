@@ -1,8 +1,8 @@
 <section class="wrapper">
-    <form class="criar-evento-container" [formGroup]="eventForm">
+    <form class="criar-evento-container" [formGroup]="eventForm" *ngIf="eventForm">
         <div class="titulo">
-            <span *ngIf="origem === 'incluir'">Crie seu evento</span>
-            <span *ngIf="origem === 'alterar'">Altere seu evento</span>
+            <span *ngIf="!isUpdate">Crie seu evento</span>
+            <span *ngIf="isUpdate">Altere seu evento</span>
         </div>
         <div>
             <mat-form-field id="campo-titulo" appearance="outline">
@@ -64,8 +64,8 @@
 </section>
 <section>
     <div id="botao-criar-evento">
-        <button *ngIf="origem === 'incluir'" class="botao-evento" mat-raised-button color="primary" (click)="createEvent()" [disabled]="!eventForm.valid">CRIAR EVENTO</button>
-        <button *ngIf="origem === 'alterar'" class="botao-evento" mat-raised-button color="primary" (click)="createEvent()" [disabled]="!eventForm.valid">ALTERAR EVENTO</button>
+        <button *ngIf="!isUpdate && eventForm" class="botao-evento" mat-raised-button color="primary" (click)="createEvent()" [disabled]="!eventForm.valid || sendingEvent">CRIAR EVENTO</button>
+        <button *ngIf="isUpdate && eventForm" class="botao-evento" mat-raised-button color="primary" (click)="createEvent()" [disabled]="!eventForm.valid || sendingEvent">ALTERAR EVENTO</button>
         <button mat-stroked-button color="primary" (click)="voltar()">VOLTAR</button>
     </div>
 </section>

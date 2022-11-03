@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { GetFiles } from 'src/app/models/getFiles.model';
 import { UploadFileResponse } from 'src/app/models/storage.model';
 import { environment } from 'src/environments/environment';
 
@@ -18,4 +19,8 @@ export class StorageService {
         });
       }
 
+
+    getFiles(filesId: UploadFileResponse){
+      return this.http.get<GetFiles>(environment.GEDUC_API + `/v1/storage/${filesId}`)
+    }
 }

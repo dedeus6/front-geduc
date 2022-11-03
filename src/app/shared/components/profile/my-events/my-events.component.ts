@@ -26,7 +26,7 @@ export class MyEventsComponent implements OnInit {
     }
     this.eventService.getEvents(filtro).subscribe((response) => {
       this.events = response;
-      
+      // console.log(this.events)
     })
   }
 }
