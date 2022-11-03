@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  GEDUC_API: 'http://localhost:8080'
+  GEDUC_API: 'https://back-geduc.herokuapp.com'
 };
 
 
