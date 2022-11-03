@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CertificatesComponent implements OnInit {
 
-  certificates: Array<string> = ['Evento 1', 'Evento 2', 'Evento 3', 'Evento 4'];
+  certificates: Array<string> = ['Certificado 1', 'Certificado 2', 'Certificado 3', 'Certificado 4'];
 
   constructor() { }
 

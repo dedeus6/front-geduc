@@ -9,7 +9,7 @@
             <h1>Faça login na sua conta</h1>
         </div>
         
-        <form [formGroup]="loginForm" class="form-login-cadastro"> 
+        <div [formGroup]="loginForm" class="form-login-cadastro"> 
             <div class="container-inputs">
                 <div>
                     <mat-form-field id="campo-matricula" appearance="outline" >
@@ -21,10 +21,12 @@
                     <mat-form-field id="campo-senha" appearance="outline">
                         <mat-label>Senha</mat-label>
                         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        <button mat-icon-button matSuffix  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                         </button>
                     </mat-form-field>
+                </div>
+                <div style="margin-bottom: 1em;">
+                    <mat-checkbox color="primary" (change)="hide = !hide">Mostrar senha</mat-checkbox>
                 </div>
                 <div>
                     <button type="button" (click)="submit()" mat-flat-button color="primary" id="botao-entrar" [disabled]="!loginForm.valid">ENTRAR</button>
@@ -34,7 +36,11 @@
                     <mat-icon class="">warning</mat-icon>
                     <span>Credenciais de usuário não encontradas. Tente novamente!</span>
                 </div>
+                <div class="msg-error" *ngIf="mostraErro">
+                    <mat-icon class="">warning</mat-icon>
+                    <span>Um erro aconteceu. Tente novamente!</span>
+                </div>
             </div> 
-        </form>
+        </div>
     </div>
 </section>

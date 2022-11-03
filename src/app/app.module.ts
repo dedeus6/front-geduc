@@ -20,6 +20,7 @@ import { ContentService } from './shared/services/content.service';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -30,6 +31,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { CreateEventPageComponent } from './views/create-event-page/create-event-page.component';
+import { StorageService } from './shared/services/storage.service';
+import { EventService } from './shared/services/event.service';
+
+// Dependências do ngx-mask
+import { NgxMaskModule } from 'ngx-mask';
+import { MyEventsComponent } from './shared/components/profile/my-events/my-events.component';
+import { MyEventsCardComponent } from './shared/components/profile/my-events/my-events-card/my-events-card.component';
 
 
 @NgModule({
@@ -45,7 +53,9 @@ import { CreateEventPageComponent } from './views/create-event-page/create-event
     ContentComponent,
     CertificatesComponent,
     CertificateCardComponent,
-    CreateEventPageComponent
+    CreateEventPageComponent,
+    MyEventsComponent,
+    MyEventsCardComponent
   
   ],
   imports: [
@@ -53,6 +63,7 @@ import { CreateEventPageComponent } from './views/create-event-page/create-event
     AppRoutingModule,
     NoopAnimationsModule,
     MatInputModule,
+    MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
@@ -62,9 +73,10 @@ import { CreateEventPageComponent } from './views/create-event-page/create-event
     MatSnackBarModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
-  providers: [AuthService, ContentService],
+  providers: [AuthService, ContentService, StorageService, EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

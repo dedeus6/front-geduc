@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -8,8 +9,12 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {}
+
+  chamaCriarEvento(): void {
+    this.router.navigate(['create-event']);
+  }
 
 }
