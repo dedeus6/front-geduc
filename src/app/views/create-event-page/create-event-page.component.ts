@@ -27,7 +27,7 @@ export class CreateEventPageComponent implements OnInit {
   addOnBlur = true;
   loggedUser: Usuario;
   origem: string;
-
+  eventReceived: any;
   constructor(
     private fb: FormBuilder, 
     private authService: AuthService, 
@@ -39,7 +39,7 @@ export class CreateEventPageComponent implements OnInit {
     ) {
     this.eventForm = this.fb.group(
       {
-        eventTile: ['', [Validators.required]],
+        eventTitle: ['', [Validators.required]],
         eventDescription: ['', [Validators.required]],
         duration: ['', [Validators.required]],
         techs: [[], [Validators.required]],
@@ -50,17 +50,31 @@ export class CreateEventPageComponent implements OnInit {
   
   ngOnInit(): void {
     this.origem = this.route.snapshot.queryParamMap.get('origem');
+    this.verificarOrigem();
     this.loggedUser = this.authService.getLoggedUser();
-    if(this.origem === "alterar")
-    this.getEventsOfUser(this.loggedUser);
   }
 
-  getEventsOfUser(usuarioLogado: Usuario): void {
+  verificarOrigem(): void {
+    if(this.origem !== "incluir"){
+      this.origem = "alterar";
+      this.route.queryParams.subscribe((params) => {
+        this.eventReceived = params
+      })
+      this.eventForm.get('eventTitle').setValue(this.eventReceived.title);
+      this.eventForm.get('eventDescription').setValue(this.eventReceived.description);
+      this.eventForm.get('duration').setValue(this.eventReceived.duration);
+      this.techs = this.eventReceived.techs
+      this.eventForm.get('techs').setValue(this.techs);
+      console.log('recebi', this.eventReceived)
+    }
+  }
+
+  getEvents(usuarioLogado: Usuario): void {
     const filtro = {
       nome: "creatorRegistration",
       valor: usuarioLogado.registration
     }
-    this.eventService.getEventsOfUser(filtro).subscribe((response) => {
+    this.eventService.getEvents(filtro).subscribe((response) => {
       console.log(response)
     })
   }
@@ -118,7 +132,7 @@ export class CreateEventPageComponent implements OnInit {
       const eventRequest: EventModel = {
         creatorRegistration: this.loggedUser.registration,
         description: this.eventForm.get('eventDescription').value,
-        title: this.eventForm.get('eventTile').value,
+        title: this.eventForm.get('eventTitle').value,
         duration: this.eventForm.get('duration').value,
         filesId: response.filesId,
         techs: this.eventForm.get('techs').value
@@ -132,6 +146,10 @@ export class CreateEventPageComponent implements OnInit {
         this.router.navigate(['home'])
       }) 
     })
+  }
+
+  voltar(): void{
+    window.history.back();
   }
 
 }

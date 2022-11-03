@@ -1,8 +1,8 @@
 <div class="card-container">
-    <mat-card class="card" *ngFor="let event of events">
-        {{event}}
+    <mat-card class="card">
+        {{event.title}}
         <div class="icons">
-            <mat-icon (click)="chamaAlterarEvento('alterar')">edit</mat-icon>
+            <mat-icon (click)="chamaAlterarEvento(event)">edit</mat-icon>
         </div>
     </mat-card>
 </div>

@@ -7,7 +7,7 @@
         <div>
             <mat-form-field id="campo-titulo" appearance="outline">
                 <mat-label>Título do evento</mat-label>
-                <input matInput type="text" formControlName="eventTile" required>
+                <input matInput type="text" formControlName="eventTitle" required>
             </mat-form-field>
         </div>
         <div>
@@ -64,6 +64,8 @@
 </section>
 <section>
     <div id="botao-criar-evento">
-        <button mat-raised-button color="primary" (click)="createEvent()" [disabled]="!eventForm.valid">CRIAR EVENTO</button>
+        <button *ngIf="origem === 'incluir'" class="botao-evento" mat-raised-button color="primary" (click)="createEvent()" [disabled]="!eventForm.valid">CRIAR EVENTO</button>
+        <button *ngIf="origem === 'alterar'" class="botao-evento" mat-raised-button color="primary" (click)="createEvent()" [disabled]="!eventForm.valid">ALTERAR EVENTO</button>
+        <button mat-stroked-button color="primary" (click)="voltar()">VOLTAR</button>
     </div>
 </section>

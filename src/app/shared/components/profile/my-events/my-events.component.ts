@@ -10,23 +10,23 @@ import { EventService } from 'src/app/shared/services/event.service';
 })
 export class MyEventsComponent implements OnInit {
 
-  events: getEventModel[] = [];
+  events: getEventModel;
   localRegistration: Usuario;
   constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
     this.localRegistration = JSON.parse(sessionStorage.getItem('user'))
-    this.getEventsOfUser(this.localRegistration);
+    this.getEvents(this.localRegistration);
   }
   
-  getEventsOfUser(usuarioLogado: Usuario): void {
+  getEvents(usuarioLogado: Usuario): void {
     const filtro = {
       nome: "creatorRegistration",
       valor: usuarioLogado.registration
     }
-    this.eventService.getEventsOfUser(filtro).subscribe((response) => {
-      console.log(response)
-      this.events.push(response);
+    this.eventService.getEvents(filtro).subscribe((response) => {
+      this.events = response;
+      
     })
   }
 }

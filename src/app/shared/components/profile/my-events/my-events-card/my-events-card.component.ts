@@ -10,18 +10,16 @@ import { getEventModel } from 'src/app/models/getEvent.model';
 export class MyEventsCardComponent implements OnInit {
 
   @Input()
-  events: getEventModel[] = [];
+  event: getEventModel;
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    // console.log('event',this.event)
   }
   
-  chamaAlterarEvento(origem: string): void {
+  chamaAlterarEvento(event: getEventModel): void {
     this.router.navigate(['../create-event'], {
-      queryParams: {
-        origem: origem
-      }
+      queryParams: event,
     })
   }
 

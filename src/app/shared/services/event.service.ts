@@ -15,7 +15,7 @@ export class EventService {
       return this.http.post<EventModel>(environment.GEDUC_API + '/v1/event', event);
     }
 
-    getEventsOfUser(filtro: any){
+    getEvents(filtro: any){
       return this.http.get<getEventModel>(environment.GEDUC_API + `/v1/event?${filtro.nome}=${filtro.valor}`)
     }
 
