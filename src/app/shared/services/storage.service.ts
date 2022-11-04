@@ -20,7 +20,7 @@ export class StorageService {
       }
 
 
-    getFiles(filesId: UploadFileResponse){
+    getFiles(filesId: string){
       return this.http.get<GetFiles>(environment.GEDUC_API + `/v1/storage/${filesId}`)
     }
 }

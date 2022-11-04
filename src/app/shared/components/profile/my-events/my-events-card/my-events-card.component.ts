@@ -19,7 +19,7 @@ export class MyEventsCardComponent implements OnInit {
   
   chamaAlterarEvento(event: getEventModel): void {
     this.router.navigate(['../create-event'], {
-      queryParams: {eventNumber: event.eventNumber}
+      queryParams: event
     })
   }
 

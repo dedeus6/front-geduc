@@ -10,7 +10,7 @@ import { EventService } from 'src/app/shared/services/event.service';
 })
 export class MyEventsComponent implements OnInit {
 
-  events: getEventModel;
+  events: getEventModel[];
   localRegistration: Usuario;
   constructor(private eventService: EventService) { }
 

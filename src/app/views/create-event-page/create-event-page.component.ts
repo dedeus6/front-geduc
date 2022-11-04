@@ -13,7 +13,6 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-event-page',
@@ -30,6 +29,7 @@ export class CreateEventPageComponent implements OnInit {
   loggedUser: Usuario;
   isUpdate: boolean;
   eventReceived: EventModel;
+  eventReceived2: EventModel;
   eventNumber: string;
   sendingEvent: boolean = false;
   constructor(
@@ -49,11 +49,11 @@ export class CreateEventPageComponent implements OnInit {
     this.isUpdate = this.eventNumber !== null ? true : false;
     if(this.isUpdate){
       this.eventService.getEvents(this.eventNumber).subscribe((response) => {
-        this.eventReceived = response[0];
-        console.log(response);
-        console.log('techs',this.eventReceived.techs);
+        this.eventReceived = response.find(obj => {return obj.eventNumber === this.eventNumber});
+        this.techs.push(this.eventReceived.techs)
         this.loadForm();
-      })
+        this.getFilesOfEVent(this.eventReceived.filesId)
+      });
     } else {
       this.loadForm();
     }
@@ -66,35 +66,19 @@ export class CreateEventPageComponent implements OnInit {
         eventTitle: [this.isUpdate?this.eventReceived.title:'', [Validators.required]],
         eventDescription: [this.isUpdate?this.eventReceived.description:'', [Validators.required]],
         duration: [this.isUpdate?this.eventReceived.duration:'', [Validators.required]],
-        techs: [[], [Validators.required]],
+        techs: [this.techs, [Validators.required]],
         file: [[], [Validators.required]]
       }
     )
   }
-  // verificarOrigem(): void {
-  //   if(this.origem !== "incluir"){
-  //     this.origem = "alterar";
-  //     this.route.queryParams.subscribe((params) => {
-  //       this.eventReceived = params
-  //     })
-  //     this.eventForm.get('eventTitle').setValue(this.eventReceived.title);
-  //     this.eventForm.get('eventDescription').setValue(this.eventReceived.description);
-  //     this.eventForm.get('duration').setValue(this.eventReceived.duration);
-  //     this.techs = this.eventReceived.techs
-  //     this.eventForm.get('techs').setValue(this.techs);
-  //     this.getFilesOfEVent(this.eventReceived.filesId);
-  //     console.log('recebi techs', this.techs)
-  //   }
-  // }
+
 
   getEvents(usuarioLogado: Usuario): void {
     const filtro = {
       nome: "creatorRegistration",
       valor: usuarioLogado.registration
     }
-    this.eventService.getEvents(filtro).subscribe((response) => {
-      console.log(response)
-    })
+    this.eventService.getEvents(filtro).subscribe(() => {})
   }
 
   inputFileChange(event) {
@@ -109,7 +93,6 @@ export class CreateEventPageComponent implements OnInit {
       this.files.push(event.target.files[0]);
       this.eventForm.get('file').setValue(this.files);
     }
-    console.log('this',event.target.files)
   }
 
   deleteFileOnList(file: File) {
@@ -174,10 +157,9 @@ export class CreateEventPageComponent implements OnInit {
     window.history.back();
   }
 
-  getFilesOfEVent(filesId: UploadFileResponse): void {
+  getFilesOfEVent(filesId: string): void {
     this.storageService.getFiles(filesId).subscribe((response) => {
-      console.log('files:',response)
-      // this.files.push(response.files)
+      this.files = response.files
     })
   }
 
