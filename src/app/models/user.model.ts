@@ -1,6 +1,6 @@
 import { Tech } from "./tech.model";
 
-export interface Usuario {
+export interface User {
     registration: string;
     name?: string;
     email?: string;

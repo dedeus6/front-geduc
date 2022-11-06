@@ -9,10 +9,10 @@ import { Tech } from 'src/app/models/tech.model';
 
 @Component({
   selector: 'app-tela-cadastro',
-  templateUrl: './tela-cadastro.component.html',
-  styleUrls: ['./tela-cadastro.component.sass']
+  templateUrl: './sign-up-page.component.html',
+  styleUrls: ['./sign-up-page.component.sass']
 })
-export class TelaCadastroComponent implements OnInit {
+export class SignUpPageComponent implements OnInit {
   hide = true;
   registerForm: FormGroup;
   passwordsValidator: boolean  = false;

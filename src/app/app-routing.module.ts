@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { CertificatesComponent } from "./shared/components/profile/certificates/certificates.component";
 import { ContentComponent } from "./shared/components/profile/content/content.component";
-import { TelaCadastroComponent } from "./views/cadastro-page/tela-cadastro.component";
+import { SignUpPageComponent } from "./views/sign-up-page/sign-up-page.component";
 import { TelaLoginComponent } from "./views/login-page/tela-login.component";
 import { HomePageComponent } from "./views/home-page/home-page.component";
 import { ProfilePageComponent } from "./views/profile-page/profile-page.component";
@@ -23,7 +23,7 @@ const routes: Routes = [
     },
     {
         path: "cadastro",
-        component: TelaCadastroComponent
+        component: SignUpPageComponent
     },
     {
         path: "home",

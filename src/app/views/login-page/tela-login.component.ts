@@ -46,7 +46,6 @@ export class TelaLoginComponent implements OnInit{
           
         }, 
         (error) => {
-          console.log(error)
           if(error.status === 422){
             this.mostraWarningCredencial = true;
             this.mostraErro = false;

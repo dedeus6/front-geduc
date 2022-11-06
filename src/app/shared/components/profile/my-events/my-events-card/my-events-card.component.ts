@@ -17,7 +17,7 @@ export class MyEventsCardComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  chamaAlterarEvento(event: getEventModel): void {
+  callEditEvents(event: getEventModel): void {
     this.router.navigate(['../create-event'], {
       queryParams: event
     })

@@ -9,7 +9,7 @@ import { HomePageComponent } from './views/home-page/home-page.component';
 import { CardEventComponent } from './shared/components/card-event/card-event.component';
 import { ModalSubscribeComponent } from './shared/components/modal-subscribe/modal-subscribe.component';
 import { ProfilePageComponent } from './views/profile-page/profile-page.component';
-import { TelaCadastroComponent } from './views/cadastro-page/tela-cadastro.component';
+import { SignUpPageComponent } from './views/sign-up-page/sign-up-page.component';
 import { TelaLoginComponent } from './views/login-page/tela-login.component';
 import { CertificatesComponent } from './shared/components/profile/certificates/certificates.component';
 import { ContentComponent } from './shared/components/profile/content/content.component';
@@ -48,7 +48,7 @@ import { MyEventsCardComponent } from './shared/components/profile/my-events/my-
     CardEventComponent,
     ModalSubscribeComponent,
     ProfilePageComponent,
-    TelaCadastroComponent,
+    SignUpPageComponent,
     TelaLoginComponent,
     ContentComponent,
     CertificatesComponent,

@@ -5,11 +5,13 @@ import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskModule } from 'ngx-mask';
+import { async } from 'rxjs';
 import { EventModel } from 'src/app/models/event.model';
+import { Files } from 'src/app/models/files.model';
 import { getEventModel } from 'src/app/models/getEvent.model';
 import { UploadFileResponse } from 'src/app/models/storage.model';
 import { Tech } from 'src/app/models/tech.model';
-import { Usuario } from 'src/app/models/usuario.model';
+import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -24,14 +26,16 @@ export class CreateEventPageComponent implements OnInit {
   files: Array<File> = [];
   techs: any[] = [];
   eventForm: FormGroup;
+  tempForm: FormGroup;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   addOnBlur = true;
-  loggedUser: Usuario;
+  loggedUser: User;
   isUpdate: boolean;
   eventReceived: EventModel;
-  eventReceived2: EventModel;
   eventNumber: string;
   sendingEvent: boolean = false;
+  hasChangeOn: boolean = false;
+  
   constructor(
     private fb: FormBuilder, 
     private authService: AuthService, 
@@ -50,9 +54,10 @@ export class CreateEventPageComponent implements OnInit {
     if(this.isUpdate){
       this.eventService.getEvents(this.eventNumber).subscribe((response) => {
         this.eventReceived = response.find(obj => {return obj.eventNumber === this.eventNumber});
-        this.techs.push(this.eventReceived.techs)
+        this.eventReceived.techs.forEach((tag ) => this.techs.push(tag))
         this.loadForm();
-        this.getFilesOfEVent(this.eventReceived.filesId)
+        this.getFilesOfEVent(this.eventReceived.filesId);
+        
       });
     } else {
       this.loadForm();
@@ -61,19 +66,21 @@ export class CreateEventPageComponent implements OnInit {
   }
   
   loadForm(): void {
+    
     this.eventForm = this.fb.group(
       {
         eventTitle: [this.isUpdate?this.eventReceived.title:'', [Validators.required]],
         eventDescription: [this.isUpdate?this.eventReceived.description:'', [Validators.required]],
         duration: [this.isUpdate?this.eventReceived.duration:'', [Validators.required]],
         techs: [this.techs, [Validators.required]],
-        file: [[], [Validators.required]]
+        file: [this.files, [Validators.required]]
       }
-    )
+    );
+    this.onCreateGroupFormValueChange();
   }
 
 
-  getEvents(usuarioLogado: Usuario): void {
+  getEvents(usuarioLogado: User): void {
     const filtro = {
       nome: "creatorRegistration",
       valor: usuarioLogado.registration
@@ -93,16 +100,17 @@ export class CreateEventPageComponent implements OnInit {
       this.files.push(event.target.files[0]);
       this.eventForm.get('file').setValue(this.files);
     }
+    this.hasChangeOn = true;
   }
 
   deleteFileOnList(file: File) {
-    console.log('delet',file)
     const index = this.files.indexOf(file)
     if(index >= 0) {
       this.files.splice(index,1);
 
     }
     this.eventForm.get('file').setValue(this.files);
+    this.hasChangeOn = true;
   }
 
   add(event: MatChipInputEvent): void {
@@ -114,7 +122,7 @@ export class CreateEventPageComponent implements OnInit {
     }
 
     event.input.value = "";
-
+    this.hasChangeOn = true;
   }
 
   remove(tech: Tech): void {
@@ -124,15 +132,16 @@ export class CreateEventPageComponent implements OnInit {
       this.techs.splice(index, 1);
       this.eventForm.get('techs').setValue(this.techs);
     }
+    this.hasChangeOn = true;
   }
 
-  createEvent() {
+  createEvent(origin: string) {
     this.sendingEvent = true;
     const formData = new FormData();
     this.files.forEach(file => {
       formData.append('files', file);
     })
-
+    
     this.storageService.sendFiles(formData).subscribe(response => {
       const eventRequest: EventModel = {
         creatorRegistration: this.loggedUser.registration,
@@ -143,14 +152,61 @@ export class CreateEventPageComponent implements OnInit {
         techs: this.eventForm.get('techs').value
       }
       
-      this.eventService.createEvent(eventRequest).subscribe((response) => {
-        this.snackBar.open("Evento criado com Sucesso", 'X', {
-          duration: 3000,
-          panelClass: ['green-snackbar']
+      if(origin === 'create'){
+        this.eventService.createEvent(eventRequest).subscribe((response) => {
+          this.snackBar.open("Evento criado com Sucesso", 'X', {
+            duration: 3000,
+            panelClass: ['green-snackbar']
+          });
+          this.router.navigate(['home'])
+        },
+        (error) => {
+          this.sendingEvent = false;
+          this.snackBar.open("Erro ao alterar evento", 'X', {
+            panelClass: ['red-snackbar']
+          });
+        }) 
+      } else {
+        //chama o alterar
+        this.eventService.editEvents(eventRequest, this.eventNumber).subscribe(()=>{
+          this.snackBar.open("Evento alterado com Sucesso", 'X', {
+            duration: 3000,
+            panelClass: ['green-snackbar']
+          });
+          this.router.navigate(['home'])
+        },
+        (error) => {
+          this.sendingEvent = false;
+          this.snackBar.open("Erro ao alterar evento", 'X', {
+            panelClass: ['red-snackbar']
+          });
         });
-        this.router.navigate(['home'])
-      }) 
+      }
+    }, 
+    (error) => {
+      this.sendingEvent = false;
+      this.snackBar.open("Erro ao salvar arquivos", 'X', {
+        panelClass: ['red-snackbar']
+      });
     })
+  }
+
+  onCreateGroupFormValueChange(){
+    if(this.isUpdate){
+      const initialValue = this.eventForm.value
+      const TempForm = this.eventForm;
+      TempForm.valueChanges.subscribe(value => {
+        delete initialValue.techs;
+        delete initialValue.file;
+        delete value.techs;
+        delete value.file;
+        if (JSON.stringify(initialValue) === JSON.stringify(value)) {
+          this.hasChangeOn = false
+        } else {
+          this.hasChangeOn = true
+        }
+      });
+    }
   }
 
   voltar(): void{
@@ -160,7 +216,8 @@ export class CreateEventPageComponent implements OnInit {
   getFilesOfEVent(filesId: string): void {
     this.storageService.getFiles(filesId).subscribe((response) => {
       this.files = response.files
+      this.loadForm();
+      this.eventForm.get('file').setValue(this.files);
     })
   }
-
 }

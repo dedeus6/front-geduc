@@ -19,4 +19,8 @@ export class EventService {
       return this.http.get<Array<getEventModel>>(environment.GEDUC_API + `/v1/event?${filtro.nome}=${filtro.valor}`)
     }
 
+    editEvents(event: EventModel, eventNumber: string){
+      return this.http.put<EventModel>(environment.GEDUC_API + `/v1/event/${eventNumber}`, event);
+    }
+
 }

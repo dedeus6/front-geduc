@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { getEventModel } from 'src/app/models/getEvent.model';
-import { Usuario } from 'src/app/models/usuario.model';
+import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ContentService } from 'src/app/shared/services/content.service';
 import { EventService } from 'src/app/shared/services/event.service';
@@ -16,7 +16,7 @@ export class ProfilePageComponent implements OnInit {
   primeiroNomeUsuario: string;
   ultimoNomeUsuario: string;
   nomeUsuario: string;
-  localRegistration: Usuario;
+  localRegistration: User;
   menuItems: Array<MenuModel> = [
     {
       name: 'Perfil',
