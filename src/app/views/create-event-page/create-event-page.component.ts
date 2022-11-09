@@ -5,7 +5,6 @@ import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskModule } from 'ngx-mask';
-import { async } from 'rxjs';
 import { EventModel } from 'src/app/models/event.model';
 import { Files } from 'src/app/models/files.model';
 import { getEventModel } from 'src/app/models/getEvent.model';
@@ -137,11 +136,11 @@ export class CreateEventPageComponent implements OnInit {
 
   createEvent(origin: string) {
     this.sendingEvent = true;
+    var mensagem = '';
     const formData = new FormData();
     this.files.forEach(file => {
       formData.append('files', file);
     })
-    
     this.storageService.sendFiles(formData).subscribe(response => {
       const eventRequest: EventModel = {
         creatorRegistration: this.loggedUser.registration,
@@ -153,42 +152,29 @@ export class CreateEventPageComponent implements OnInit {
       }
       
       if(origin === 'create'){
-        this.eventService.createEvent(eventRequest).subscribe((response) => {
-          this.snackBar.open("Evento criado com Sucesso", 'X', {
-            duration: 3000,
-            panelClass: ['green-snackbar']
-          });
-          this.router.navigate(['home'])
+        this.eventService.createEvent(eventRequest).subscribe(() => {
+          mensagem = "Evento criado com Sucesso. "
         },
         (error) => {
           this.sendingEvent = false;
-          this.snackBar.open("Erro ao alterar evento", 'X', {
-            panelClass: ['red-snackbar']
-          });
-        }) 
+          error.status === 500 ? mensagem = "Um erro inesperado aconteceu. Tente novamente!" : mensagem = "Erro ao alterar evento. "+ error.message
+        });
       } else {
         //chama o alterar
         this.eventService.editEvents(eventRequest, this.eventNumber).subscribe(()=>{
-          this.snackBar.open("Evento alterado com Sucesso", 'X', {
-            duration: 3000,
-            panelClass: ['green-snackbar']
-          });
-          this.router.navigate(['home'])
+          mensagem = "Evento alterado com Sucesso. "
         },
         (error) => {
           this.sendingEvent = false;
-          this.snackBar.open("Erro ao alterar evento", 'X', {
-            panelClass: ['red-snackbar']
-          });
+          error.status === 500 ? mensagem = "Um erro inesperado aconteceu. Tente novamente!" : mensagem = "Erro ao alterar evento. "+ error.message
         });
       }
     }, 
     (error) => {
       this.sendingEvent = false;
-      this.snackBar.open("Erro ao salvar arquivos", 'X', {
-        panelClass: ['red-snackbar']
-      });
-    })
+      error.status === 500 ? mensagem = "Um erro inesperado aconteceu. Tente novamente!" : mensagem = "Erro ao salvar arquivos. "+ error.message
+    });
+    this.disparaMensagem(mensagem, this.sendingEvent);
   }
 
   onCreateGroupFormValueChange(){
@@ -215,9 +201,53 @@ export class CreateEventPageComponent implements OnInit {
 
   getFilesOfEVent(filesId: string): void {
     this.storageService.getFiles(filesId).subscribe((response) => {
-      this.files = response.files
+      response.files.forEach((file) => {
+        this.b64toBlob(file.bytes, file.contentType, '',file.name)
+      })
+      
       this.loadForm();
       this.eventForm.get('file').setValue(this.files);
     })
+  }
+
+  b64toBlob(b64Data, contentType, sliceSize, name): Blob {
+    contentType = contentType || 'video/*';
+    sliceSize = sliceSize || 512;
+  
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+  
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+    
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+      }
+    
+      var byteArray = new Uint8Array(byteNumbers);
+    
+      byteArrays.push(byteArray);
+    }
+  
+    var blob = new Blob(byteArrays, {type: contentType});
+    blob = blob.slice(0, blob.size, contentType)
+    var file = new File([blob], name, {type: contentType} )
+    this.files.push(file)
+    return blob;
+  }
+
+  disparaMensagem(mensagem: string, sendingEvent: boolean): void {
+    if(!sendingEvent){
+      this.snackBar.open(mensagem, 'X', {
+        panelClass: ['red-snackbar']
+      });
+    } else {
+      this.snackBar.open(mensagem, 'X', {
+        duration: 3000,
+        panelClass: ['green-snackbar']
+      });
+      this.router.navigate(['home'])
+    }
   }
 }

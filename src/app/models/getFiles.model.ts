@@ -4,5 +4,5 @@ export interface GetFiles {
     filesId: string;
     createdDate: string;
     finalUploadDate: string;
-    files: File[];
+    files: Files[];
 }

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { Tech } from 'src/app/models/tech.model';
 
 @Component({
-  selector: 'app-tela-cadastro',
+  selector: 'app-sign-up-page',
   templateUrl: './sign-up-page.component.html',
   styleUrls: ['./sign-up-page.component.sass']
 })

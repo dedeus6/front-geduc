@@ -5,11 +5,11 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
-  selector: 'app-tela-login',
-  templateUrl: './tela-login.component.html',
-  styleUrls: ['./tela-login.component.sass']
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.sass']
 })
-export class TelaLoginComponent implements OnInit{
+export class LoginPage implements OnInit{
   hide = true;
   loginForm: FormGroup;
   mostraWarningCredencial: boolean;
