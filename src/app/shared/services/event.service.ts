@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EventModel } from 'src/app/models/event.model';
 import { getEventModel } from 'src/app/models/getEvent.model';
@@ -23,4 +23,14 @@ export class EventService {
       return this.http.put<EventModel>(environment.GEDUC_API + `/v1/event/${eventNumber}`, event);
     }
 
+    // private handleError(error: HttpErrorResponse) {
+    //   if(error.status === 0){
+
+    //   } else if (error.status >= 500 && error.status <= 599){
+
+    //   } else {
+
+    //   }
+    //   return thr
+    // }
 }

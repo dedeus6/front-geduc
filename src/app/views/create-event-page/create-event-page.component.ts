@@ -34,6 +34,7 @@ export class CreateEventPageComponent implements OnInit {
   eventNumber: string;
   sendingEvent: boolean = false;
   hasChangeOn: boolean = false;
+  mensagem: string = '';
   
   constructor(
     private fb: FormBuilder, 
@@ -136,11 +137,11 @@ export class CreateEventPageComponent implements OnInit {
 
   createEvent(origin: string) {
     this.sendingEvent = true;
-    var mensagem = '';
     const formData = new FormData();
     this.files.forEach(file => {
       formData.append('files', file);
     })
+    
     this.storageService.sendFiles(formData).subscribe(response => {
       const eventRequest: EventModel = {
         creatorRegistration: this.loggedUser.registration,
@@ -148,33 +149,32 @@ export class CreateEventPageComponent implements OnInit {
         title: this.eventForm.get('eventTitle').value,
         duration: this.eventForm.get('duration').value,
         filesId: response.filesId,
-        techs: this.eventForm.get('techs').value
+        techs: this.eventForm.get('techs').value,
       }
       
       if(origin === 'create'){
         this.eventService.createEvent(eventRequest).subscribe(() => {
-          mensagem = "Evento criado com Sucesso. "
+          this.mensagem = "Evento criado com Sucesso. "
+          this.disparaMensagem(this.mensagem);
         },
-        (error) => {
+        () => {
           this.sendingEvent = false;
-          error.status === 500 ? mensagem = "Um erro inesperado aconteceu. Tente novamente!" : mensagem = "Erro ao alterar evento. "+ error.message
         });
       } else {
         //chama o alterar
         this.eventService.editEvents(eventRequest, this.eventNumber).subscribe(()=>{
-          mensagem = "Evento alterado com Sucesso. "
+          this.mensagem = "Evento alterado com Sucesso. "
+          this.disparaMensagem(this.mensagem);
         },
-        (error) => {
+        () => {
           this.sendingEvent = false;
-          error.status === 500 ? mensagem = "Um erro inesperado aconteceu. Tente novamente!" : mensagem = "Erro ao alterar evento. "+ error.message
         });
       }
     }, 
-    (error) => {
+    () => {
       this.sendingEvent = false;
-      error.status === 500 ? mensagem = "Um erro inesperado aconteceu. Tente novamente!" : mensagem = "Erro ao salvar arquivos. "+ error.message
     });
-    this.disparaMensagem(mensagem, this.sendingEvent);
+    
   }
 
   onCreateGroupFormValueChange(){
@@ -237,17 +237,11 @@ export class CreateEventPageComponent implements OnInit {
     return blob;
   }
 
-  disparaMensagem(mensagem: string, sendingEvent: boolean): void {
-    if(!sendingEvent){
-      this.snackBar.open(mensagem, 'X', {
-        panelClass: ['red-snackbar']
-      });
-    } else {
-      this.snackBar.open(mensagem, 'X', {
-        duration: 3000,
-        panelClass: ['green-snackbar']
-      });
-      this.router.navigate(['home'])
-    }
+  disparaMensagem(mensagem: string): void {
+    this.snackBar.open(mensagem, 'X', {
+      duration: 3000,
+      panelClass: ['green-snackbar']
+    });
+    this.router.navigate(['home'])
   }
 }

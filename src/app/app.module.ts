@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -38,6 +38,7 @@ import { EventService } from './shared/services/event.service';
 import { NgxMaskModule } from 'ngx-mask';
 import { MyEventsComponent } from './shared/components/profile/my-events/my-events.component';
 import { MyEventsCardComponent } from './shared/components/profile/my-events/my-events-card/my-events-card.component';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 
 
 @NgModule({
@@ -76,7 +77,12 @@ import { MyEventsCardComponent } from './shared/components/profile/my-events/my-
     HttpClientModule,
     NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
-  providers: [AuthService, ContentService, StorageService, EventService],
+  providers: [AuthService, ContentService, StorageService, EventService,
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpErrorInterceptor,
+    multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
