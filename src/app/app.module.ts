@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/components/header/header.component';
@@ -9,8 +9,8 @@ import { HomePageComponent } from './views/home-page/home-page.component';
 import { CardEventComponent } from './shared/components/card-event/card-event.component';
 import { ModalSubscribeComponent } from './shared/components/modal-subscribe/modal-subscribe.component';
 import { ProfilePageComponent } from './views/profile-page/profile-page.component';
-import { TelaCadastroComponent } from './views/cadastro-page/tela-cadastro.component';
-import { TelaLoginComponent } from './views/login-page/tela-login.component';
+import { SignUpPageComponent } from './views/sign-up-page/sign-up-page.component';
+import { LoginPage } from './views/login-page/login-page.component';
 import { CertificatesComponent } from './shared/components/profile/certificates/certificates.component';
 import { ContentComponent } from './shared/components/profile/content/content.component';
 import { CertificateCardComponent } from './shared/components/profile/certificates/certificate-card/certificate-card.component';
@@ -38,6 +38,7 @@ import { EventService } from './shared/services/event.service';
 import { NgxMaskModule } from 'ngx-mask';
 import { MyEventsComponent } from './shared/components/profile/my-events/my-events.component';
 import { MyEventsCardComponent } from './shared/components/profile/my-events/my-events-card/my-events-card.component';
+import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 
 
 @NgModule({
@@ -48,8 +49,8 @@ import { MyEventsCardComponent } from './shared/components/profile/my-events/my-
     CardEventComponent,
     ModalSubscribeComponent,
     ProfilePageComponent,
-    TelaCadastroComponent,
-    TelaLoginComponent,
+    SignUpPageComponent,
+    LoginPage,
     ContentComponent,
     CertificatesComponent,
     CertificateCardComponent,
@@ -76,7 +77,12 @@ import { MyEventsCardComponent } from './shared/components/profile/my-events/my-
     HttpClientModule,
     NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
-  providers: [AuthService, ContentService, StorageService, EventService],
+  providers: [AuthService, ContentService, StorageService, EventService,
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpErrorInterceptor,
+    multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

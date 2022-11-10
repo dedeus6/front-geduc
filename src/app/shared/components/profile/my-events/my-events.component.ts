@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { getEventModel } from 'src/app/models/getEvent.model';
-import { Usuario } from 'src/app/models/usuario.model';
+import { User } from 'src/app/models/user.model';
 import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
@@ -10,8 +10,8 @@ import { EventService } from 'src/app/shared/services/event.service';
 })
 export class MyEventsComponent implements OnInit {
 
-  events: getEventModel;
-  localRegistration: Usuario;
+  events: getEventModel[];
+  localRegistration: User;
   constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
@@ -19,14 +19,13 @@ export class MyEventsComponent implements OnInit {
     this.getEvents(this.localRegistration);
   }
   
-  getEvents(usuarioLogado: Usuario): void {
+  getEvents(loggedUser: User): void {
     const filtro = {
       nome: "creatorRegistration",
-      valor: usuarioLogado.registration
+      valor: loggedUser.registration
     }
     this.eventService.getEvents(filtro).subscribe((response) => {
       this.events = response;
-      // console.log(this.events)
     })
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Usuario } from 'src/app/models/usuario.model';
+import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,15 +11,11 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(values: {registration: string, password: string}){
-    return this.http.post<Usuario>(environment.GEDUC_API + '/v1/user/auth',  values);
+    return this.http.post<User>(environment.GEDUC_API + '/v1/user/auth',  values);
   }
 
   register(filtro: any) {
-    return this.http.post<Usuario>(environment.GEDUC_API + '/v1/user', filtro);
-  }
-
-  getUsuarioLogado(matricula: string) {
-    return this.http.get<Usuario>(environment.GEDUC_API + '/v1/user/'+ matricula);
+    return this.http.post<User>(environment.GEDUC_API + '/v1/user', filtro);
   }
 
   clear(){
@@ -30,7 +26,7 @@ export class AuthService {
     return (sessionStorage.getItem('user')!==null?true:false);
   }
 
-  getLoggedUser(): Usuario {
+  getLoggedUser(): User {
     return sessionStorage.getItem('user')!==null ? JSON.parse(sessionStorage.getItem('user')) : null;
   }
 

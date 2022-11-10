@@ -64,8 +64,8 @@
 </section>
 <section>
     <div id="botao-criar-evento">
-        <button *ngIf="!isUpdate && eventForm" class="botao-evento" mat-raised-button color="primary" (click)="createEvent()" [disabled]="!eventForm.valid || sendingEvent">CRIAR EVENTO</button>
-        <button *ngIf="isUpdate && eventForm" class="botao-evento" mat-raised-button color="primary" (click)="createEvent()" [disabled]="!eventForm.valid || sendingEvent">ALTERAR EVENTO</button>
+        <button *ngIf="!isUpdate && eventForm" class="botao-evento" mat-raised-button color="primary" (click)="createEvent('create')" [disabled]="!eventForm.valid || sendingEvent">CRIAR EVENTO</button>
+        <button *ngIf="isUpdate && eventForm" class="botao-evento" mat-raised-button color="primary" (click)="createEvent('edit')" [disabled]="!eventForm.valid || !hasChangeOn && eventForm.valid || sendingEvent">ALTERAR EVENTO</button>
         <button mat-stroked-button color="primary" (click)="voltar()">VOLTAR</button>
     </div>
 </section>

@@ -1,4 +1,4 @@
-export class getEventModel {
+export interface getEventModel {
     title: string;
     description: string;
     creatorRegistration: string;

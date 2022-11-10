@@ -5,15 +5,14 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
-  selector: 'app-tela-login',
-  templateUrl: './tela-login.component.html',
-  styleUrls: ['./tela-login.component.sass']
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.sass']
 })
-export class TelaLoginComponent implements OnInit{
+export class LoginPage implements OnInit{
   hide = true;
   loginForm: FormGroup;
   mostraWarningCredencial: boolean;
-  mostraErro: boolean;
   
 
   constructor(private fb: FormBuilder, public authService: AuthService, private snackBar: MatSnackBar, private router: Router) {
@@ -26,7 +25,6 @@ export class TelaLoginComponent implements OnInit{
   }
   ngOnInit(): void {
     this.mostraWarningCredencial = false;
-    this.mostraErro = false;
   }
 
   submit(){
@@ -46,13 +44,10 @@ export class TelaLoginComponent implements OnInit{
           
         }, 
         (error) => {
-          console.log(error)
           if(error.status === 422){
             this.mostraWarningCredencial = true;
-            this.mostraErro = false;
           } else {
             this.mostraWarningCredencial = false;
-            this.mostraErro = true;
           }
         }
       );

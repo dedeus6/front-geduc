@@ -6,14 +6,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskModule } from 'ngx-mask';
 import { EventModel } from 'src/app/models/event.model';
+import { Files } from 'src/app/models/files.model';
 import { getEventModel } from 'src/app/models/getEvent.model';
 import { UploadFileResponse } from 'src/app/models/storage.model';
 import { Tech } from 'src/app/models/tech.model';
-import { Usuario } from 'src/app/models/usuario.model';
+import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-event-page',
@@ -25,13 +25,17 @@ export class CreateEventPageComponent implements OnInit {
   files: Array<File> = [];
   techs: any[] = [];
   eventForm: FormGroup;
+  tempForm: FormGroup;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   addOnBlur = true;
-  loggedUser: Usuario;
+  loggedUser: User;
   isUpdate: boolean;
   eventReceived: EventModel;
   eventNumber: string;
   sendingEvent: boolean = false;
+  hasChangeOn: boolean = false;
+  mensagem: string = '';
+  
   constructor(
     private fb: FormBuilder, 
     private authService: AuthService, 
@@ -49,11 +53,12 @@ export class CreateEventPageComponent implements OnInit {
     this.isUpdate = this.eventNumber !== null ? true : false;
     if(this.isUpdate){
       this.eventService.getEvents(this.eventNumber).subscribe((response) => {
-        this.eventReceived = response[0];
-        console.log(response);
-        console.log('techs',this.eventReceived.techs);
+        this.eventReceived = response.find(obj => {return obj.eventNumber === this.eventNumber});
+        this.eventReceived.techs.forEach((tag ) => this.techs.push(tag))
         this.loadForm();
-      })
+        this.getFilesOfEVent(this.eventReceived.filesId);
+        
+      });
     } else {
       this.loadForm();
     }
@@ -61,40 +66,26 @@ export class CreateEventPageComponent implements OnInit {
   }
   
   loadForm(): void {
+    
     this.eventForm = this.fb.group(
       {
         eventTitle: [this.isUpdate?this.eventReceived.title:'', [Validators.required]],
         eventDescription: [this.isUpdate?this.eventReceived.description:'', [Validators.required]],
         duration: [this.isUpdate?this.eventReceived.duration:'', [Validators.required]],
-        techs: [[], [Validators.required]],
-        file: [[], [Validators.required]]
+        techs: [this.techs, [Validators.required]],
+        file: [this.files, [Validators.required]]
       }
-    )
+    );
+    this.onCreateGroupFormValueChange();
   }
-  // verificarOrigem(): void {
-  //   if(this.origem !== "incluir"){
-  //     this.origem = "alterar";
-  //     this.route.queryParams.subscribe((params) => {
-  //       this.eventReceived = params
-  //     })
-  //     this.eventForm.get('eventTitle').setValue(this.eventReceived.title);
-  //     this.eventForm.get('eventDescription').setValue(this.eventReceived.description);
-  //     this.eventForm.get('duration').setValue(this.eventReceived.duration);
-  //     this.techs = this.eventReceived.techs
-  //     this.eventForm.get('techs').setValue(this.techs);
-  //     this.getFilesOfEVent(this.eventReceived.filesId);
-  //     console.log('recebi techs', this.techs)
-  //   }
-  // }
 
-  getEvents(usuarioLogado: Usuario): void {
+
+  getEvents(usuarioLogado: User): void {
     const filtro = {
       nome: "creatorRegistration",
       valor: usuarioLogado.registration
     }
-    this.eventService.getEvents(filtro).subscribe((response) => {
-      console.log(response)
-    })
+    this.eventService.getEvents(filtro).subscribe(() => {})
   }
 
   inputFileChange(event) {
@@ -109,17 +100,17 @@ export class CreateEventPageComponent implements OnInit {
       this.files.push(event.target.files[0]);
       this.eventForm.get('file').setValue(this.files);
     }
-    console.log('this',event.target.files)
+    this.hasChangeOn = true;
   }
 
   deleteFileOnList(file: File) {
-    console.log('delet',file)
     const index = this.files.indexOf(file)
     if(index >= 0) {
       this.files.splice(index,1);
 
     }
     this.eventForm.get('file').setValue(this.files);
+    this.hasChangeOn = true;
   }
 
   add(event: MatChipInputEvent): void {
@@ -131,7 +122,7 @@ export class CreateEventPageComponent implements OnInit {
     }
 
     event.input.value = "";
-
+    this.hasChangeOn = true;
   }
 
   remove(tech: Tech): void {
@@ -141,15 +132,16 @@ export class CreateEventPageComponent implements OnInit {
       this.techs.splice(index, 1);
       this.eventForm.get('techs').setValue(this.techs);
     }
+    this.hasChangeOn = true;
   }
 
-  createEvent() {
+  createEvent(origin: string) {
     this.sendingEvent = true;
     const formData = new FormData();
     this.files.forEach(file => {
       formData.append('files', file);
     })
-
+    
     this.storageService.sendFiles(formData).subscribe(response => {
       const eventRequest: EventModel = {
         creatorRegistration: this.loggedUser.registration,
@@ -157,28 +149,99 @@ export class CreateEventPageComponent implements OnInit {
         title: this.eventForm.get('eventTitle').value,
         duration: this.eventForm.get('duration').value,
         filesId: response.filesId,
-        techs: this.eventForm.get('techs').value
+        techs: this.eventForm.get('techs').value,
       }
       
-      this.eventService.createEvent(eventRequest).subscribe((response) => {
-        this.snackBar.open("Evento criado com Sucesso", 'X', {
-          duration: 3000,
-          panelClass: ['green-snackbar']
+      if(origin === 'create'){
+        this.eventService.createEvent(eventRequest).subscribe(() => {
+          this.mensagem = "Evento criado com Sucesso. "
+          this.disparaMensagem(this.mensagem);
+        },
+        () => {
+          this.sendingEvent = false;
         });
-        this.router.navigate(['home'])
-      }) 
-    })
+      } else {
+        //chama o alterar
+        this.eventService.editEvents(eventRequest, this.eventNumber).subscribe(()=>{
+          this.mensagem = "Evento alterado com Sucesso. "
+          this.disparaMensagem(this.mensagem);
+        },
+        () => {
+          this.sendingEvent = false;
+        });
+      }
+    }, 
+    () => {
+      this.sendingEvent = false;
+    });
+    
+  }
+
+  onCreateGroupFormValueChange(){
+    if(this.isUpdate){
+      const initialValue = this.eventForm.value
+      const TempForm = this.eventForm;
+      TempForm.valueChanges.subscribe(value => {
+        delete initialValue.techs;
+        delete initialValue.file;
+        delete value.techs;
+        delete value.file;
+        if (JSON.stringify(initialValue) === JSON.stringify(value)) {
+          this.hasChangeOn = false
+        } else {
+          this.hasChangeOn = true
+        }
+      });
+    }
   }
 
   voltar(): void{
     window.history.back();
   }
 
-  getFilesOfEVent(filesId: UploadFileResponse): void {
+  getFilesOfEVent(filesId: string): void {
     this.storageService.getFiles(filesId).subscribe((response) => {
-      console.log('files:',response)
-      // this.files.push(response.files)
+      response.files.forEach((file) => {
+        this.b64toBlob(file.bytes, file.contentType, '',file.name)
+      })
+      
+      this.loadForm();
+      this.eventForm.get('file').setValue(this.files);
     })
   }
 
+  b64toBlob(b64Data, contentType, sliceSize, name): Blob {
+    contentType = contentType || 'video/*';
+    sliceSize = sliceSize || 512;
+  
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+  
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+    
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+      }
+    
+      var byteArray = new Uint8Array(byteNumbers);
+    
+      byteArrays.push(byteArray);
+    }
+  
+    var blob = new Blob(byteArrays, {type: contentType});
+    blob = blob.slice(0, blob.size, contentType)
+    var file = new File([blob], name, {type: contentType} )
+    this.files.push(file)
+    return blob;
+  }
+
+  disparaMensagem(mensagem: string): void {
+    this.snackBar.open(mensagem, 'X', {
+      duration: 3000,
+      panelClass: ['green-snackbar']
+    });
+    this.router.navigate(['home'])
+  }
 }
