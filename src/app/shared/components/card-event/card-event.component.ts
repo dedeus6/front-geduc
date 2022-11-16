@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { getEventModel } from 'src/app/models/getEvent.model';
 import { ModalSubscribeComponent } from '../modal-subscribe/modal-subscribe.component';
 
 @Component({
@@ -8,6 +9,8 @@ import { ModalSubscribeComponent } from '../modal-subscribe/modal-subscribe.comp
   styleUrls: ['./card-event.component.sass']
 })
 export class CardEventComponent implements OnInit {
+  @Input()
+  event: getEventModel;
 
   constructor(public dialog: MatDialog) { }
 
@@ -15,7 +18,9 @@ export class CardEventComponent implements OnInit {
   }
 
   openModal() {
-    const dialogRef = this.dialog.open(ModalSubscribeComponent);
+    const dialogRef = this.dialog.open(ModalSubscribeComponent, {
+      data : this.event
+    });
 
     dialogRef.afterClosed().subscribe(result => {
     });

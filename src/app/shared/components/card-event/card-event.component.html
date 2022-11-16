@@ -4,8 +4,8 @@
             <img src="assets/foto-event.png">
         </div>
         <div class="info-container">
-            <h1 class="event-title">Título do evento</h1>
-            <p class="event-description">Descrição do evento....</p>
+            <h1 class="event-title">{{event.title}}</h1>
+            <p class="event-description" maxlength="5">{{event.description}}</p>
             <button class="event-button" mat-raised-button color="primary" (click)="openModal()">Veja mais</button>
         </div>
     </div>

@@ -21,8 +21,7 @@ export class MyEventsComponent implements OnInit {
   
   getEvents(loggedUser: User): void {
     const filtro = {
-      nome: "creatorRegistration",
-      valor: loggedUser.registration
+      parametro: "creatorRegistration="+loggedUser.registration
     }
     this.eventService.getEvents(filtro).subscribe((response) => {
       this.events = response;

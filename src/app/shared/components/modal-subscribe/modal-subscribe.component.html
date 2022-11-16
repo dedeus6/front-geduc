@@ -5,15 +5,19 @@
             <div class="img-container">
                 <img src="assets/foto-event.png">
             </div>
-            <h1 class="event-title">Título do evento</h1>
-            <p class="event-description">Descrição do evento....</p>
+            <h1 class="event-title">{{event.title}}</h1>
+            <p class="event-description">{{event.description}}</p>
             <div class="icon-container">
                 <mat-icon aria-hidden="false" aria-label="Example home icon">person</mat-icon>
                 <p>João da Silva</p>
             </div>
             <div class="icon-container">
                 <mat-icon aria-hidden="false" aria-label="Example home icon">schedule</mat-icon>
-                <p>11:00</p>
+                <p>{{event.duration}}</p>
+            </div>
+            <div class="icon-container">
+                <mat-icon aria-hidden="false" aria-label="Example home icon">cached</mat-icon>
+                <p>{{event.status}}</p>
             </div>
             <div class="button-container">
                 <button mat-raised-button color="primary">Inscreva-se</button>
