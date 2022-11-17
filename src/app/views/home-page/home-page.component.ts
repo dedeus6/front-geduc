@@ -34,6 +34,7 @@ export class HomePageComponent implements OnInit {
   getEventsWithTags(loggedUser: User): any {
     var myString = '';
     let techsUser = loggedUser.techs
+    console.log('techs', techsUser)
     techsUser.forEach((element, index) => {
       if(techsUser.length === 1){
         myString += 'techs=' + element
@@ -41,10 +42,11 @@ export class HomePageComponent implements OnInit {
         index === techsUser.length-1 ? myString += 'techs='+element : myString += 'techs='+element+'&'
       }
     })
-    const filtro = {
+    console.log(myString)
+    const filter = {
       param: myString
     }
-    this.eventService.getEvents(filtro).subscribe((response) => {
+    this.eventService.getEvents(filter).subscribe((response) => {
       this.events = response;
     });
   }

@@ -11,6 +11,7 @@ import { EventService } from 'src/app/shared/services/event.service';
 export class MyEventsComponent implements OnInit {
 
   events: getEventModel[];
+  eventsSubscribed: getEventModel[];
   localRegistration: User;
   constructor(private eventService: EventService) { }
 
@@ -20,11 +21,14 @@ export class MyEventsComponent implements OnInit {
   }
   
   getEvents(loggedUser: User): void {
-    const filtro = {
-      parametro: "creatorRegistration="+loggedUser.registration
+    const filter = {
+      param: "creatorRegistration="+loggedUser.registration
     }
-    this.eventService.getEvents(filtro).subscribe((response) => {
+    this.eventService.getEvents(filter).subscribe((response) => {
       this.events = response;
+    })
+    this.eventService.getSubscribedEvents(loggedUser.registration).subscribe((response) => {
+      this.eventsSubscribed = response;
     })
   }
 }

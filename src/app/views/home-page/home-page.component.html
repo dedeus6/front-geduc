@@ -1,5 +1,4 @@
 <section class="wrapper">
-
     <div class="home-container">
         <div class="info-container">
             <div class="img-container">
@@ -19,9 +18,12 @@
             <div class="for-you-container">
                 <h1 class="for-you-text-title">Recomendados para você</h1>
             </div>
-            <div class="card-events-container" *ngFor="let event of events">
-                <app-card-event [event]="event"></app-card-event>
+            <div class="events-container"> 
+                <div class="card-events-container" *ngFor="let event of events">
+                    <app-card-event [event]="event"></app-card-event>
+                </div>
             </div>
+            <!-- arrumar formatacao -->
         </div>
     </div>
 </section>
