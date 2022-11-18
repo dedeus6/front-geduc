@@ -39,6 +39,10 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MyEventsComponent } from './shared/components/profile/my-events/my-events.component';
 import { MyEventsCardComponent } from './shared/components/profile/my-events/my-events-card/my-events-card.component';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { MySubscribedEventsCardComponent } from './shared/components/profile/my-events/my-subscribed-events-card/my-subscribed-events-card.component';
+import { SearchEventsPageComponent } from './views/search-events-page/search-events-page.component';
+import { ModalNotificationComponent } from './shared/components/modal-notification/modal-notification.component';
+import { NotificationCardComponent } from './shared/components/modal-notification/notification-card/notification-card.component';
 
 
 @NgModule({
@@ -56,7 +60,11 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
     CertificateCardComponent,
     CreateEventPageComponent,
     MyEventsComponent,
-    MyEventsCardComponent
+    MyEventsCardComponent,
+    MySubscribedEventsCardComponent,
+    SearchEventsPageComponent,
+    ModalNotificationComponent,
+    NotificationCardComponent
   
   ],
   imports: [

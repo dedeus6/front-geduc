@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { getEventModel } from 'src/app/models/getEvent.model';
+import { AuthService } from '../../services/auth.service';
 import { ModalSubscribeComponent } from '../modal-subscribe/modal-subscribe.component';
 
 @Component({

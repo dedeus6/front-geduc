@@ -9,6 +9,7 @@ import { ProfilePageComponent } from "./views/profile-page/profile-page.componen
 import { AuthGuard } from "./shared/guard/auth-guard.guard";
 import { CreateEventPageComponent } from "./views/create-event-page/create-event-page.component";
 import { MyEventsComponent } from "./shared/components/profile/my-events/my-events.component";
+import { SearchEventsPageComponent } from "./views/search-events-page/search-events-page.component";
 
 const routes: Routes = [
     {
@@ -55,6 +56,10 @@ const routes: Routes = [
     {
         path:"create-event",
         component: CreateEventPageComponent,
+        canActivate: [AuthGuard]
+    },{
+        path:"search-events",
+        component: SearchEventsPageComponent,
         canActivate: [AuthGuard]
     }
    

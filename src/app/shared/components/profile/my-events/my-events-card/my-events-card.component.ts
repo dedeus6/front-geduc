@@ -12,9 +12,6 @@ export class MyEventsCardComponent implements OnInit {
   @Input()
   event: getEventModel;
 
-  // @Input()
-  // eventSubscribed: getEventModel;
-
   constructor(private router: Router) { }
 
   ngOnInit(): void {

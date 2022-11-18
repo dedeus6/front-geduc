@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { getEventModel } from 'src/app/models/getEvent.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from '../../services/auth.service';
 import { EventService } from '../../services/event.service';
 
 @Component({
@@ -10,13 +12,18 @@ import { EventService } from '../../services/event.service';
   styleUrls: ['./modal-subscribe.component.sass']
 })
 export class ModalSubscribeComponent implements OnInit {
-  event: getEventModel
+  event: getEventModel;
+  localRegistration: User;
+  creatorOfEvent: string;
   constructor(
-    protected dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any, private eventService: EventService, private snackBar: MatSnackBar) { }
+    protected dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any, private eventService: EventService, private snackBar: MatSnackBar, private authService: AuthService) { }
 
   ngOnInit(): void {
-    console.log('data', this.data)
     this.event = this.data;
+    this.localRegistration = JSON.parse(sessionStorage.getItem('user'));
+    this.authService.getLoggedUserEndpoint(this.event.creatorRegistration).subscribe((response) => {
+      this.creatorOfEvent = response.name.split(/(\s).+\s/).join(""); // regular expression que separa o array e ignora os espaços em branco a mais
+    });
   }
 
   close() {
@@ -26,7 +33,7 @@ export class ModalSubscribeComponent implements OnInit {
   subscribeInEvent(): void {
     const filter = {
       eventNumber: this.event.eventNumber,
-      registration: this.event.creatorRegistration
+      registration: this.localRegistration.registration
     }
     this.eventService.subscribeEvents(filter).subscribe(() => {
       this.snackBar.open("Incrição feita no evento com sucesso", 'X', {
