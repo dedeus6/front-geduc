@@ -11,7 +11,6 @@ export class CertificateCardComponent implements OnInit {
   certificate: string;
 
   constructor() {
-    console.log('cets', this.certificate)  
   }
 
   ngOnInit(): void {

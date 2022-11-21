@@ -1,10 +1,14 @@
 <section class="wrapper">
     <div class="home-container">
         <div class="events-container">
-            <div class="events-container"> 
+            <div class="events-container"  *ngIf="hasEvents"> 
+                <div class="card-events-container" *ngFor="let event of events">
+                    <app-card-event [event]="event"></app-card-event>
+                </div>
+            </div>
+            <div class="events-container"  *ngIf="!hasEvents"> 
                 <div class="card-events-container">
-                    <!-- <app-card-event></app-card-event> -->
-                    aa
+                    SHEESH
                 </div>
             </div>
             <!-- arrumar formatacao -->

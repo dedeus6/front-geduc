@@ -5,7 +5,7 @@
         <mat-icon aria-hidden="false" aria-label="Example search icon" class="icone">search</mat-icon>
         <mat-form-field class="" appearance="outline" class="search-bar">
             <mat-label>Procure um evento...</mat-label>
-            <input (keydown)="enterSubmit($event)" matInput type="text">
+            <input (keydown)="enterSubmit($event)" matInput type="text" [(ngModel)]="eventTitle">
         </mat-form-field>
     </div>
     <div class="menu-container">

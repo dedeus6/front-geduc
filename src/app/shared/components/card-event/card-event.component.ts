@@ -13,9 +13,15 @@ export class CardEventComponent implements OnInit {
   @Input()
   event: getEventModel;
 
+  showCard: boolean = false;
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    console.log('event',this.event)
+    if(this.event === undefined){
+      console.log('entrei nulo',this.event)
+    }
   }
 
   openModal() {

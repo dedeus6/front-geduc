@@ -43,6 +43,7 @@ import { MySubscribedEventsCardComponent } from './shared/components/profile/my-
 import { SearchEventsPageComponent } from './views/search-events-page/search-events-page.component';
 import { ModalNotificationComponent } from './shared/components/modal-notification/modal-notification.component';
 import { NotificationCardComponent } from './shared/components/modal-notification/notification-card/notification-card.component';
+import { NotFoundPageComponent } from './shared/components/not-found-page/not-found-page.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { NotificationCardComponent } from './shared/components/modal-notificatio
     MySubscribedEventsCardComponent,
     SearchEventsPageComponent,
     ModalNotificationComponent,
-    NotificationCardComponent
+    NotificationCardComponent,
+    NotFoundPageComponent
   
   ],
   imports: [
