@@ -11,6 +11,7 @@ import { ModalNotificationComponent } from '../modal-notification/modal-notifica
 export class HeaderComponent implements OnInit {
 
   eventTitle: string;
+
   constructor(
     private router: Router,
     public dialog: MatDialog

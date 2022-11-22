@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { getEventModel } from 'src/app/models/getEvent.model';
 import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
@@ -12,23 +13,30 @@ export class MyEventsComponent implements OnInit {
 
   events: getEventModel[];
   eventsSubscribed: getEventModel[];
-  localRegistration: User;
-  constructor(private eventService: EventService) { }
+  loggedUser: User;
+  constructor(private eventService: EventService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.localRegistration = JSON.parse(sessionStorage.getItem('user'))
-    this.getEvents(this.localRegistration);
+    this.loggedUser = this.authService.getLoggedUser();
+    this.listEvents(this.loggedUser.registration);
   }
   
-  getEvents(loggedUser: User): void {
+  listEvents(registration: string): void {
     const filter = {
-      param: "creatorRegistration="+loggedUser.registration
+      param: "creatorRegistration="+registration
     }
     this.eventService.getEvents(filter).subscribe((response) => {
       this.events = response;
     })
-    this.eventService.getSubscribedEvents(loggedUser.registration).subscribe((response) => {
+    this.eventService.getSubscribedEvents(registration, null).subscribe((response) => {
       this.eventsSubscribed = response;
     })
+  }
+
+  unsubscribeEvent(listEvents: boolean) {
+    if (listEvents) {
+      this.listEvents(this.loggedUser.registration);
+    }
   }
 }

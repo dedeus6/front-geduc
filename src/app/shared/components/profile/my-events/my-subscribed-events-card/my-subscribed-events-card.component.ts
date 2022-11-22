@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { getEventModel } from 'src/app/models/getEvent.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
   selector: 'app-my-subscribed-events-card',
@@ -9,12 +12,21 @@ import { getEventModel } from 'src/app/models/getEvent.model';
 export class MySubscribedEventsCardComponent implements OnInit {
   @Input()
   eventSubscribed: getEventModel;
-  constructor() { }
+
+  @Output()
+  listSubscribedEvents = new EventEmitter<boolean>(false);
+
+  loggedUser: User;
+
+  constructor(private authService: AuthService, private eventService: EventService) { }
 
   ngOnInit(): void {
+    this.loggedUser = this.authService.getLoggedUser();
   }
 
-  apagar(eventSubscribed: getEventModel): void {
-    
+  unsubscribeEvent(eventNumber: string): void {
+    this.eventService.unsubscribeEvents(eventNumber, this.loggedUser.registration).subscribe(response => {
+      this.listSubscribedEvents.emit(true);
+    });
   }
 }

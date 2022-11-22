@@ -29,7 +29,13 @@ export class EventService {
       return this.http.post<EventSubscribe>(environment.GEDUC_API + '/v1/event/subscribe', eventSubscribe);
     }
 
-    getSubscribedEvents(registration: string){
-      return this.http.get<Array<getEventModel>>(environment.GEDUC_API + `/v1/event/subscribed/${registration}`)
+    getSubscribedEvents(registration: string, eventNumber: string){
+      return this.http.get<Array<getEventModel>>(environment.GEDUC_API + `/v1/event/subscribed/${registration}`, {
+        params: eventNumber === null ? {} : {eventNumber}
+      })
+    }
+
+    unsubscribeEvents(eventNumber: string, registration: string){
+      return this.http.post<void>(environment.GEDUC_API + `/v1/event/unsubscribe/${eventNumber}/${registration}`, {});
     }
 }

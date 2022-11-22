@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { NotificationModel } from 'src/app/models/notification.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from '../../services/auth.service';
+import { NotificationService } from '../../services/notification.service';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-modal-notification',
@@ -6,12 +12,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./modal-notification.component.sass']
 })
 export class ModalNotificationComponent implements OnInit {
-  notifications: Array<string> = ['Certificado 1', 'Certificado 2', 'Certificado 3', 'Certificado 4'];
-  constructor() {
-    console.log(this.notifications)
+
+  loggedUser: User;
+  notifications: Array<NotificationModel>;
+
+  constructor(
+    private authService: AuthService,
+    private notificationService: NotificationService
+    ) {
   }
 
   ngOnInit(): void {
+    this.loggedUser = this.authService.getLoggedUser();
+    this.listNotifications();
+  }
+
+  listNotifications() {
+    this.notificationService.getNotifications(this.loggedUser.registration).subscribe(response => {
+      this.notifications = response;
+    });
+  }
+
+  readNotification(notificationId: string): void {
+    this.notificationService.readNotifications(notificationId).subscribe(response => {
+      this.listNotifications();
+    });
   }
 
 }

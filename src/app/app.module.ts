@@ -42,8 +42,8 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { MySubscribedEventsCardComponent } from './shared/components/profile/my-events/my-subscribed-events-card/my-subscribed-events-card.component';
 import { SearchEventsPageComponent } from './views/search-events-page/search-events-page.component';
 import { ModalNotificationComponent } from './shared/components/modal-notification/modal-notification.component';
-import { NotificationCardComponent } from './shared/components/modal-notification/notification-card/notification-card.component';
 import { NotFoundPageComponent } from './shared/components/not-found-page/not-found-page.component';
+import { NotificationService } from './shared/services/notification.service';
 
 
 @NgModule({
@@ -65,7 +65,6 @@ import { NotFoundPageComponent } from './shared/components/not-found-page/not-fo
     MySubscribedEventsCardComponent,
     SearchEventsPageComponent,
     ModalNotificationComponent,
-    NotificationCardComponent,
     NotFoundPageComponent
   
   ],
@@ -87,7 +86,7 @@ import { NotFoundPageComponent } from './shared/components/not-found-page/not-fo
     HttpClientModule,
     NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
-  providers: [AuthService, ContentService, StorageService, EventService,
+  providers: [AuthService, ContentService, StorageService, EventService, NotificationService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpErrorInterceptor,

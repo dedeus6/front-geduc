@@ -13,17 +13,31 @@ import { EventService } from '../../services/event.service';
 })
 export class ModalSubscribeComponent implements OnInit {
   event: getEventModel;
-  localRegistration: User;
+  loggedUser: User;
   creatorOfEvent: string;
+  alreadySubscribed: boolean = false;
   constructor(
-    protected dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any, private eventService: EventService, private snackBar: MatSnackBar, private authService: AuthService) { }
+    protected dialog: MatDialog, 
+    @Inject(MAT_DIALOG_DATA) public data: any, 
+    private eventService: EventService, 
+    private snackBar: MatSnackBar, 
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.event = this.data;
-    this.localRegistration = JSON.parse(sessionStorage.getItem('user'));
+    this.loggedUser = this.authService.getLoggedUser();
     this.authService.getLoggedUserEndpoint(this.event.creatorRegistration).subscribe((response) => {
       this.creatorOfEvent = response.name.split(/(\s).+\s/).join(""); // regular expression que separa o array e ignora os espaços em branco a mais
     });
+    this.verifyIfUserAlteradySubscibed();
+  }
+
+  verifyIfUserAlteradySubscibed() {
+    this.eventService.getSubscribedEvents(this.loggedUser.registration, this.event.eventNumber).subscribe(response => {
+      if (response.length > 0) {
+        this.alreadySubscribed = true
+      }
+    })
   }
 
   close() {
@@ -33,7 +47,7 @@ export class ModalSubscribeComponent implements OnInit {
   subscribeInEvent(): void {
     const filter = {
       eventNumber: this.event.eventNumber,
-      registration: this.localRegistration.registration
+      registration: this.loggedUser.registration
     }
     this.eventService.subscribeEvents(filter).subscribe(() => {
       this.snackBar.open("Incrição feita no evento com sucesso", 'X', {
@@ -41,5 +55,7 @@ export class ModalSubscribeComponent implements OnInit {
         panelClass: ['green-snackbar']
       });
     })
+
+    this.close();
   }
 }

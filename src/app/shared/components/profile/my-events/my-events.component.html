@@ -9,7 +9,7 @@
         <div class="subscribed-events-container">
             <h1 class="title-page">Meus eventos Inscritos</h1>
             <div class="certificates-cards" *ngFor="let eventSubscribed of eventsSubscribed">
-                <app-my-subscribed-events-card [eventSubscribed]="eventSubscribed"></app-my-subscribed-events-card>
+                <app-my-subscribed-events-card [eventSubscribed]="eventSubscribed" (listSubscribedEvents)="unsubscribeEvent($event)"></app-my-subscribed-events-card>
             </div>
         </div>
     </div>
