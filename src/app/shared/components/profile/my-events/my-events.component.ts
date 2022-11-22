@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { getEventModel } from 'src/app/models/getEvent.model';
 import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
@@ -11,21 +12,31 @@ import { EventService } from 'src/app/shared/services/event.service';
 export class MyEventsComponent implements OnInit {
 
   events: getEventModel[];
-  localRegistration: User;
-  constructor(private eventService: EventService) { }
+  eventsSubscribed: getEventModel[];
+  loggedUser: User;
+  constructor(private eventService: EventService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.localRegistration = JSON.parse(sessionStorage.getItem('user'))
-    this.getEvents(this.localRegistration);
+    this.loggedUser = this.authService.getLoggedUser();
+    this.listEvents();
   }
   
-  getEvents(loggedUser: User): void {
-    const filtro = {
-      nome: "creatorRegistration",
-      valor: loggedUser.registration
+  listEvents(): void {
+    const filter = {
+      param: "creatorRegistration="+this.loggedUser.registration
     }
-    this.eventService.getEvents(filtro).subscribe((response) => {
+    this.eventService.getEvents(filter).subscribe((response) => {
       this.events = response;
     })
+    this.eventService.getSubscribedEvents(this.loggedUser.registration, null).subscribe((response) => {
+      this.eventsSubscribed = response;
+    })
+  }
+
+  callBackListEvents(listEvents: boolean) {
+    if (listEvents) {
+      this.listEvents();
+    }
   }
 }

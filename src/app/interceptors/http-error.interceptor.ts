@@ -31,8 +31,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         }
         
         this.snackBar.open(errorMsg, 'X', {
-          panelClass: ['red-snackbar'],
-          duration: 8000
+          panelClass: ['red-snackbar']
         });
         return throwError(() => new Error(errorMsg));
       })

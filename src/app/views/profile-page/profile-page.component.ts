@@ -47,7 +47,7 @@ export class ProfilePageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.localRegistration = JSON.parse(sessionStorage.getItem('user'))
+    this.localRegistration = JSON.parse(sessionStorage.getItem('user'));
     this.nomeUsuario = this.localRegistration.name.split(/(\s).+\s/).join(""); // regular expression que separa o array e ignora os espaços em branco a mais
   }
 

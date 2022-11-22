@@ -6,7 +6,6 @@ import { User } from 'src/app/models/user.model';
 import { ContentService } from 'src/app/shared/services/content.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Tech } from 'src/app/models/tech.model';
-import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
   selector: 'app-content',
@@ -22,10 +21,7 @@ export class ContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.localRegistration = JSON.parse(sessionStorage.getItem('user'));
-    this.loggedUser = this.authService.getLoggedUser();
-    this.userEmail = this.loggedUser.email;
-    this.techs = this.loggedUser.techs;
-    this.getRegistration = this.loggedUser.registration;
+    this.getLoggedUserEndpoint(this.localRegistration);
   }
 
   addOnBlur = true;
@@ -49,6 +45,15 @@ export class ContentComponent implements OnInit {
     if (index >= 0) {
       this.techs.splice(index, 1);
     }
+  }
+
+  getLoggedUserEndpoint(localRegistration: User):void {
+    
+    this.authService.getLoggedUserEndpoint(localRegistration.registration).subscribe((response) =>{
+      this.userEmail = response.email;
+      this.techs = response.techs;
+      this.getRegistration = response.registration;
+    })
   }
 
   changeUserTechs(){

@@ -39,6 +39,12 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MyEventsComponent } from './shared/components/profile/my-events/my-events.component';
 import { MyEventsCardComponent } from './shared/components/profile/my-events/my-events-card/my-events-card.component';
 import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
+import { MySubscribedEventsCardComponent } from './shared/components/profile/my-events/my-subscribed-events-card/my-subscribed-events-card.component';
+import { SearchEventsPageComponent } from './views/search-events-page/search-events-page.component';
+import { ModalNotificationComponent } from './shared/components/modal-notification/modal-notification.component';
+import { NotFoundPageComponent } from './shared/components/not-found-page/not-found-page.component';
+import { NotificationService } from './shared/services/notification.service';
+import { ModalConfirmComponent } from './shared/components/modal-confirm/modal-confirm.component';
 
 
 @NgModule({
@@ -56,7 +62,12 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
     CertificateCardComponent,
     CreateEventPageComponent,
     MyEventsComponent,
-    MyEventsCardComponent
+    MyEventsCardComponent,
+    MySubscribedEventsCardComponent,
+    SearchEventsPageComponent,
+    ModalNotificationComponent,
+    NotFoundPageComponent,
+    ModalConfirmComponent
   
   ],
   imports: [
@@ -77,7 +88,7 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
     HttpClientModule,
     NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
-  providers: [AuthService, ContentService, StorageService, EventService,
+  providers: [AuthService, ContentService, StorageService, EventService, NotificationService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpErrorInterceptor,

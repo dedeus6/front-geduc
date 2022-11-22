@@ -34,7 +34,7 @@ export class CreateEventPageComponent implements OnInit {
   eventNumber: string;
   sendingEvent: boolean = false;
   hasChangeOn: boolean = false;
-  mensagem: string = '';
+  message: string = '';
   
   constructor(
     private fb: FormBuilder, 
@@ -52,7 +52,7 @@ export class CreateEventPageComponent implements OnInit {
     this.eventNumber = this.route.snapshot.queryParamMap.get('eventNumber');
     this.isUpdate = this.eventNumber !== null ? true : false;
     if(this.isUpdate){
-      this.eventService.getEvents(this.eventNumber).subscribe((response) => {
+      this.eventService.getEvents('').subscribe((response) => {
         this.eventReceived = response.find(obj => {return obj.eventNumber === this.eventNumber});
         this.eventReceived.techs.forEach((tag ) => this.techs.push(tag))
         this.loadForm();
@@ -77,15 +77,6 @@ export class CreateEventPageComponent implements OnInit {
       }
     );
     this.onCreateGroupFormValueChange();
-  }
-
-
-  getEvents(usuarioLogado: User): void {
-    const filtro = {
-      nome: "creatorRegistration",
-      valor: usuarioLogado.registration
-    }
-    this.eventService.getEvents(filtro).subscribe(() => {})
   }
 
   inputFileChange(event) {
@@ -141,7 +132,6 @@ export class CreateEventPageComponent implements OnInit {
     this.files.forEach(file => {
       formData.append('files', file);
     })
-    
     this.storageService.sendFiles(formData).subscribe(response => {
       const eventRequest: EventModel = {
         creatorRegistration: this.loggedUser.registration,
@@ -154,8 +144,8 @@ export class CreateEventPageComponent implements OnInit {
       
       if(origin === 'create'){
         this.eventService.createEvent(eventRequest).subscribe(() => {
-          this.mensagem = "Evento criado com Sucesso. "
-          this.disparaMensagem(this.mensagem);
+          this.message = "Evento criado com Sucesso. "
+          this.disparaMensagem(this.message);
         },
         () => {
           this.sendingEvent = false;
@@ -163,8 +153,8 @@ export class CreateEventPageComponent implements OnInit {
       } else {
         //chama o alterar
         this.eventService.editEvents(eventRequest, this.eventNumber).subscribe(()=>{
-          this.mensagem = "Evento alterado com Sucesso. "
-          this.disparaMensagem(this.mensagem);
+          this.message = "Evento alterado com Sucesso. "
+          this.disparaMensagem(this.message);
         },
         () => {
           this.sendingEvent = false;
@@ -237,8 +227,8 @@ export class CreateEventPageComponent implements OnInit {
     return blob;
   }
 
-  disparaMensagem(mensagem: string): void {
-    this.snackBar.open(mensagem, 'X', {
+  disparaMensagem(message: string): void {
+    this.snackBar.open(message, 'X', {
       duration: 3000,
       panelClass: ['green-snackbar']
     });

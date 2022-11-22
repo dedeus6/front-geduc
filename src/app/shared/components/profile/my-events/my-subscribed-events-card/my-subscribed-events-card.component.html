@@ -1,0 +1,8 @@
+<div class="card-container">
+    <mat-card class="card">
+        {{eventSubscribed.title}}
+        <div class="icons">
+            <mat-icon (click)="unsubscribeEvent(eventSubscribed.eventNumber)">delete</mat-icon>
+        </div>
+    </mat-card>
+</div>
