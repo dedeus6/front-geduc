@@ -44,6 +44,7 @@ import { SearchEventsPageComponent } from './views/search-events-page/search-eve
 import { ModalNotificationComponent } from './shared/components/modal-notification/modal-notification.component';
 import { NotFoundPageComponent } from './shared/components/not-found-page/not-found-page.component';
 import { NotificationService } from './shared/services/notification.service';
+import { ModalConfirmComponent } from './shared/components/modal-confirm/modal-confirm.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { NotificationService } from './shared/services/notification.service';
     MySubscribedEventsCardComponent,
     SearchEventsPageComponent,
     ModalNotificationComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    ModalConfirmComponent
   
   ],
   imports: [

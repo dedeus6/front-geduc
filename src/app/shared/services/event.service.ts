@@ -38,4 +38,8 @@ export class EventService {
     unsubscribeEvents(eventNumber: string, registration: string){
       return this.http.post<void>(environment.GEDUC_API + `/v1/event/unsubscribe/${eventNumber}/${registration}`, {});
     }
+
+    cancelEvent(eventNumber: string) {
+      return this.http.post<void>(environment.GEDUC_API + `/v1/event/cancel/${eventNumber}`, {});
+    }
 }

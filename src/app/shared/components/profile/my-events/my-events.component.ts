@@ -19,24 +19,24 @@ export class MyEventsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedUser = this.authService.getLoggedUser();
-    this.listEvents(this.loggedUser.registration);
+    this.listEvents();
   }
   
-  listEvents(registration: string): void {
+  listEvents(): void {
     const filter = {
-      param: "creatorRegistration="+registration
+      param: "creatorRegistration="+this.loggedUser.registration
     }
     this.eventService.getEvents(filter).subscribe((response) => {
       this.events = response;
     })
-    this.eventService.getSubscribedEvents(registration, null).subscribe((response) => {
+    this.eventService.getSubscribedEvents(this.loggedUser.registration, null).subscribe((response) => {
       this.eventsSubscribed = response;
     })
   }
 
-  unsubscribeEvent(listEvents: boolean) {
+  callBackListEvents(listEvents: boolean) {
     if (listEvents) {
-      this.listEvents(this.loggedUser.registration);
+      this.listEvents();
     }
   }
 }
