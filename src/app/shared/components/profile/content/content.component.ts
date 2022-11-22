@@ -61,7 +61,7 @@ export class ContentComponent implements OnInit {
       techs: this.techs
     }
     this.contentService.changeUserTechs(this.getRegistration, filtro).subscribe((response) => {
-      this.snackBar.open("Tecnologias alteradas com Sucesso", 'X', {
+      this.snackBar.open("Habilidades alteradas com Sucesso", 'X', {
         duration: 3000,
         panelClass: ['green-snackbar']
       });

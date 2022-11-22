@@ -70,7 +70,7 @@
                     <mat-checkbox color="primary" (change)="hide = !hide">Mostrar senha</mat-checkbox>
                 </div>
                 <div>  
-                    <p>*Lembre-se de utilizar seu email institucional<button type="button" mat-flat-button color="primary" id="botao-cadastrar" [disabled]="!registerForm.valid" (click)="submitRegister()">CADASTRE-SE</button></p>
+                    <button type="button" mat-flat-button color="primary" id="botao-cadastrar" [disabled]="!registerForm.valid" (click)="submitRegister()">CADASTRE-SE</button>
                     <p id="paragrafo-pagina-login">Já tem uma conta?<button type="button" mat-stroked-button color="primary" id="botao-pagina-login" routerLink="/login">FAÇA O LOGIN</button></p>
                 </div>
                 <div class="msg-warning" *ngIf="passwordsValidator">
