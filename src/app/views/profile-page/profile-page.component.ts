@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { getEventModel } from 'src/app/models/getEvent.model';
 import { User } from 'src/app/models/user.model';
+import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal-confirm.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ContentService } from 'src/app/shared/services/content.service';
 import { EventService } from 'src/app/shared/services/event.service';
@@ -36,7 +38,7 @@ export class ProfilePageComponent implements OnInit {
     {
       name: 'Sair',
       icon: 'exit_to_app',
-      path: '../login'
+      //path: '../login'
     },
   ];
   
@@ -44,6 +46,7 @@ export class ProfilePageComponent implements OnInit {
   constructor(
     private router: Router,
     public authService: AuthService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -53,8 +56,23 @@ export class ProfilePageComponent implements OnInit {
 
   executarOpcao(menu){
     if(menu.name === 'Sair') {
-      this.authService.logout();
+      const dialogRef = this.dialog.open(ModalConfirmComponent, {
+        data: {
+          title: 'Sair',
+          message: 'Tem certeza que deseja sair?',
+          buttonConfirmText: 'Sair',
+          buttonCancelText: 'Fechar'
+        }
+      })
+  
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        if (dialogResult) {
+          this.authService.logout();
+          this.router.navigate(['../login'])
+        }
+      })
     }
+
   }
 
 }
