@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { getEventModel } from 'src/app/models/getEvent.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from '../../services/auth.service';
@@ -21,7 +22,8 @@ export class ModalSubscribeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private eventService: EventService, 
     private snackBar: MatSnackBar, 
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.event = this.data;
@@ -57,5 +59,12 @@ export class ModalSubscribeComponent implements OnInit {
     })
 
     this.close();
+  }
+
+  goToWatchEvent(event: getEventModel): void {
+    this.dialog.closeAll();
+    this.router.navigate(['/watch-events'],{
+      queryParams: event
+    });
   }
 }

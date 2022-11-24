@@ -14,9 +14,9 @@ export class SearchEventsPageComponent implements OnInit {
   eventTitle: string;
   events: getEventModel[];
   hasEvents: boolean = false;
-  constructor(private route: ActivatedRoute, private eventService: EventService, private router: Router) {
+  constructor(private activatedRoute: ActivatedRoute, private eventService: EventService, private router: Router) {
     this.localRegistration = JSON.parse(sessionStorage.getItem('user'));
-    this.eventTitle = this.route.snapshot.queryParamMap.get('eventTitle');
+    this.eventTitle = this.activatedRoute.snapshot.queryParamMap.get('eventTitle');
    }
 
   ngOnInit(): void {
@@ -30,7 +30,6 @@ export class SearchEventsPageComponent implements OnInit {
     }
     this.eventService.getEvents(filter).subscribe((response) => {
       this.events = response;
-      console.log('events', this.events)
       if(this.events.length > 0) {
         this.hasEvents = true;
       }

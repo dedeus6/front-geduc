@@ -43,13 +43,13 @@ export class CreateEventPageComponent implements OnInit {
     private eventService: EventService, 
     private snackBar: MatSnackBar, 
     private router: Router,
-    private route: ActivatedRoute
+    private activatedRoute: ActivatedRoute
     ) {
 
   }
   
   ngOnInit(): void {
-    this.eventNumber = this.route.snapshot.queryParamMap.get('eventNumber');
+    this.eventNumber = this.activatedRoute.snapshot.queryParamMap.get('eventNumber');
     this.isUpdate = this.eventNumber !== null ? true : false;
     if(this.isUpdate){
       this.eventService.getEvents('').subscribe((response) => {
@@ -224,6 +224,7 @@ export class CreateEventPageComponent implements OnInit {
     blob = blob.slice(0, blob.size, contentType)
     var file = new File([blob], name, {type: contentType} )
     this.files.push(file)
+    console.log(this.files)
     return blob;
   }
 

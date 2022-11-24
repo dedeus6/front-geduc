@@ -18,9 +18,16 @@
             <div class="for-you-container">
                 <h1 class="for-you-text-title">Recomendados para você</h1>
             </div>
-            <div class="events-container"> 
+            <div class="events-container" *ngIf="hasEvents"> 
                 <div class="card-events-container" *ngFor="let event of events">
                     <app-card-event [event]="event"></app-card-event>
+                </div>
+            </div>
+            <div class="events-container" *ngIf="!hasEvents"> 
+                <div>
+                    <h1>INFELIZMENTE, NÃO ENCONTRAMOS UM EVENTO QUE POSSUA TAGS COMPATÍVEIS COM AS QUE VOCÊ CADASTROU</h1>
+                    <br><br>
+                    <h2>você pode alterar suas tags <a routerLink="/profile/personal">clicando aqui</a></h2>
                 </div>
             </div>
             <!-- arrumar formatacao -->

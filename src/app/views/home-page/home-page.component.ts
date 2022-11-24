@@ -14,6 +14,7 @@ import { EventService } from 'src/app/shared/services/event.service';
 export class HomePageComponent implements OnInit {
   localRegistration: User;
   events: getEventModel[];
+  hasEvents: boolean = false;
   constructor(public authService: AuthService, private router: Router, private eventService: EventService) { }
 
   ngOnInit(): void {
@@ -46,6 +47,9 @@ export class HomePageComponent implements OnInit {
     }
     this.eventService.getEvents(filter).subscribe((response) => {
       this.events = response;
+      if(this.events.length > 0) {
+        this.hasEvents = true;
+      }
     });
   }
 
