@@ -1,3 +1,5 @@
+import { GetFiles } from "./getFiles.model";
+
 export interface getEventModel {
     title: string;
     description: string;
@@ -7,4 +9,5 @@ export interface getEventModel {
     filesId: string;
     eventNumber: string;
     status: string;
+    thumbnail?: GetFiles;
 }

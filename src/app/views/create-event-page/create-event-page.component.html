@@ -60,6 +60,24 @@
                         (change)="inputFileChange($event)" multiple></button>
             </div>
         </div>
+        <div class="titulo">
+            <span>Adicione a miniatura</span>
+        </div>
+        <div>
+            <div class="certificates-cards">
+                <div class="card-container">
+                    <mat-card class="card" *ngIf="thumbnail">
+                        <span>{{thumbnail.name | slice:0:40}}<span *ngIf="thumbnail.length > 40">...</span></span>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="inputFile-container">
+                <div class="create-button-conta">
+                    <button mat-raised-button color="primary"><input type="file" accept="image/*"
+                            (change)="inputThumbChange($event)"></button>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 <section>
