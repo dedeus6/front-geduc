@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { getEventModel } from 'src/app/models/getEvent.model';
+import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { EventService } from 'src/app/shared/services/event.service';
 
@@ -12,7 +12,7 @@ import { EventService } from 'src/app/shared/services/event.service';
 export class SearchEventsPageComponent implements OnInit {
   localRegistration: User;
   eventTitle: string;
-  events: getEventModel[];
+  events: EventModel[];
   hasEvents: boolean = false;
   constructor(private activatedRoute: ActivatedRoute, private eventService: EventService, private router: Router) {
     this.localRegistration = JSON.parse(sessionStorage.getItem('user'));

@@ -5,4 +5,6 @@ export interface EventModel {
     duration: string;
     techs: Array<string>;
     filesId: string;
+    eventNumber?: string;
+    status?: string;
 }

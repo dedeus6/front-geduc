@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { getEventModel } from 'src/app/models/getEvent.model';
+import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { EventService } from '../../services/event.service';
@@ -13,7 +13,7 @@ import { EventService } from '../../services/event.service';
   styleUrls: ['./modal-subscribe.component.sass']
 })
 export class ModalSubscribeComponent implements OnInit {
-  event: getEventModel;
+  event: EventModel;
   loggedUser: User;
   creatorOfEvent: string;
   alreadySubscribed: boolean = false;
@@ -61,7 +61,7 @@ export class ModalSubscribeComponent implements OnInit {
     this.close();
   }
 
-  goToWatchEvent(event: getEventModel): void {
+  goToWatchEvent(event: EventModel): void {
     this.dialog.closeAll();
     this.router.navigate(['/watch-events'],{
       queryParams: event

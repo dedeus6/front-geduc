@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { getEventModel } from 'src/app/models/getEvent.model';
+import { EventModel } from 'src/app/models/event.model';
 import { EventService } from 'src/app/shared/services/event.service';
 import { ModalConfirmComponent } from '../../../modal-confirm/modal-confirm.component';
 
@@ -14,7 +14,7 @@ import { ModalConfirmComponent } from '../../../modal-confirm/modal-confirm.comp
 export class MyEventsCardComponent implements OnInit {
 
   @Input()
-  event: getEventModel;
+  event: EventModel;
 
   @Output()
   listEvents = new EventEmitter<boolean>(false);
@@ -24,13 +24,13 @@ export class MyEventsCardComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  callEditEvents(event: getEventModel): void {
+  callEditEvents(event: EventModel): void {
     this.router.navigate(['../create-event'], {
       queryParams: event
     })
   }
 
-  cancelEvent(event: getEventModel) {
+  cancelEvent(event: EventModel) {
     const dialogRef = this.dialog.open(ModalConfirmComponent, {
       data: {
         title: 'Cancelar evento',

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { getEventModel } from 'src/app/models/getEvent.model';
+import { EventModel } from 'src/app/models/event.model';
 import { AuthService } from '../../services/auth.service';
 import { ModalSubscribeComponent } from '../modal-subscribe/modal-subscribe.component';
 
@@ -11,7 +11,7 @@ import { ModalSubscribeComponent } from '../modal-subscribe/modal-subscribe.comp
 })
 export class CardEventComponent implements OnInit {
   @Input()
-  event: getEventModel;
+  event: EventModel;
 
   showCard: boolean = false;
 

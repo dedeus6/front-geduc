@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { getEventModel } from 'src/app/models/getEvent.model';
+import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
@@ -11,8 +11,8 @@ import { EventService } from 'src/app/shared/services/event.service';
 })
 export class MyEventsComponent implements OnInit {
 
-  events: getEventModel[];
-  eventsSubscribed: getEventModel[];
+  events: EventModel[];
+  eventsSubscribed: EventModel[];
   loggedUser: User;
   constructor(private eventService: EventService,
     private authService: AuthService) { }
