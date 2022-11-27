@@ -9,4 +9,5 @@ export interface EventModel {
     techs: Array<string>;
     filesId: string;
     thumbnail?: GetFiles;
+    status?: string;
 }

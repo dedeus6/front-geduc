@@ -42,9 +42,9 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { MySubscribedEventsCardComponent } from './shared/components/profile/my-events/my-subscribed-events-card/my-subscribed-events-card.component';
 import { SearchEventsPageComponent } from './views/search-events-page/search-events-page.component';
 import { ModalNotificationComponent } from './shared/components/modal-notification/modal-notification.component';
-import { NotFoundPageComponent } from './shared/components/not-found-page/not-found-page.component';
 import { NotificationService } from './shared/services/notification.service';
 import { ModalConfirmComponent } from './shared/components/modal-confirm/modal-confirm.component';
+import { WatchEventsPageComponent } from './views/watch-events-page/watch-events-page.component';
 
 
 @NgModule({
@@ -66,8 +66,8 @@ import { ModalConfirmComponent } from './shared/components/modal-confirm/modal-c
     MySubscribedEventsCardComponent,
     SearchEventsPageComponent,
     ModalNotificationComponent,
-    NotFoundPageComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    WatchEventsPageComponent
   
   ],
   imports: [

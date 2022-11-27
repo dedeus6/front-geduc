@@ -4,12 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxMaskModule } from 'ngx-mask';
 import { EventModel } from 'src/app/models/event.model';
 import { Files } from 'src/app/models/files.model';
-import { getEventModel } from 'src/app/models/getEvent.model';
-import { GetFiles } from 'src/app/models/getFiles.model';
-import { UploadFileResponse } from 'src/app/models/storage.model';
 import { Tech } from 'src/app/models/tech.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -45,13 +41,13 @@ export class CreateEventPageComponent implements OnInit {
     private eventService: EventService, 
     private snackBar: MatSnackBar, 
     private router: Router,
-    private route: ActivatedRoute
+    private activatedRoute: ActivatedRoute
     ) {
 
   }
   
   ngOnInit(): void {
-    this.eventNumber = this.route.snapshot.queryParamMap.get('eventNumber');
+    this.eventNumber = this.activatedRoute.snapshot.queryParamMap.get('eventNumber');
     this.isUpdate = this.eventNumber !== null ? true : false;
     if(this.isUpdate){
       const filter = {
@@ -248,6 +244,7 @@ export class CreateEventPageComponent implements OnInit {
     blob = blob.slice(0, blob.size, contentType)
     var file = new File([blob], name, {type: contentType} )
     this.files.push(file)
+    console.log(this.files)
     return blob;
   }
 

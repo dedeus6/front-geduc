@@ -1,12 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { getEventModel } from 'src/app/models/getEvent.model';
 import { User } from 'src/app/models/user.model';
 import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal-confirm.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { ContentService } from 'src/app/shared/services/content.service';
-import { EventService } from 'src/app/shared/services/event.service';
 import { MenuModel } from '../../models/menu.model';
 
 @Component({

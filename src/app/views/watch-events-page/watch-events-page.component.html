@@ -1,0 +1,16 @@
+<section class="container">
+    <div class="container-playlist">
+        <div class="videos-navigation" >
+            <div class="cards-videos" *ngFor="let file of files">
+                <mat-card-actions (click)="readSingleFile(file, '')">
+                    {{file.name | slice:0:40}}
+                </mat-card-actions>
+
+            </div>
+          
+        </div>
+    </div>
+    <div class="container-video">
+        <video id="video" width="200" height="200" controls></video>
+    </div>
+</section>

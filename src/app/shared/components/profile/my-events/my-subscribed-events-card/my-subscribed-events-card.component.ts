@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { getEventModel } from 'src/app/models/getEvent.model';
+import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
@@ -14,7 +14,7 @@ import { ModalConfirmComponent } from '../../../modal-confirm/modal-confirm.comp
 })
 export class MySubscribedEventsCardComponent implements OnInit {
   @Input()
-  eventSubscribed: getEventModel;
+  eventSubscribed: EventModel;
 
   @Output()
   listSubscribedEvents = new EventEmitter<boolean>(false);
