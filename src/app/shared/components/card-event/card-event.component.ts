@@ -18,7 +18,6 @@ export class CardEventComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    console.log(this.event);
   }
 
   openModal() {

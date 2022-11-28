@@ -61,7 +61,6 @@ export class WatchEventsPageComponent implements OnInit {
     }
     var blob = new Blob(byteArrays, {type: contentType});
     blob = blob.slice(0, blob.size, contentType)
-    console.log('blob', blob)
     var file = new File([blob], name, {type: contentType} )
     var url = URL.createObjectURL(file);
     this.video = document.getElementsByTagName('video')[0];
@@ -69,9 +68,15 @@ export class WatchEventsPageComponent implements OnInit {
     this.video.load();
     
     this.files.push(file);
-    console.log('files', this.files)
     
     return blob;
+  }
+
+  mostrarVideoClicado(file: any){
+    var url = URL.createObjectURL(file);
+    this.video = document.getElementsByTagName('video')[0];
+    this.video.src = url;
+    this.video.load();
   }
 
 }

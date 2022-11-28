@@ -158,7 +158,7 @@ export class CreateEventPageComponent implements OnInit {
           this.storageService.uploadThumbnail(formDataThumb, response.eventNumber).subscribe(() => {
             this.message = "Evento criado com Sucesso. "
             this.disparaMensagem(this.message);
-          })
+          });
         },
         () => {
           this.sendingEvent = false;
@@ -212,7 +212,6 @@ export class CreateEventPageComponent implements OnInit {
       
       this.loadForm();
       this.eventForm.get('file').setValue(this.files);
-      console.log(this.files);
     })
   }
 
@@ -245,7 +244,6 @@ export class CreateEventPageComponent implements OnInit {
     blob = blob.slice(0, blob.size, contentType)
     var file = new File([blob], name, {type: contentType} )
     this.files.push(file)
-    console.log(this.files)
     return blob;
   }
 
