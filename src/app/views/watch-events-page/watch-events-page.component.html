@@ -2,7 +2,7 @@
     <div class="container-playlist">
         <div class="videos-navigation" >
             <div class="cards-videos" *ngFor="let file of files">
-                <mat-card-actions (click)="readSingleFile(file, '')">
+                <mat-card-actions (click)="mostrarVideoClicado(file)">
                     {{file.name | slice:0:40}}
                 </mat-card-actions>
 
