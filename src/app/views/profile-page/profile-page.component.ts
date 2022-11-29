@@ -52,9 +52,13 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedUser = this.authService.getLoggedUser();
-    if (this.loggedUser.avatar) {
-      this.b64toBlob(this.loggedUser.avatar.files[0].bytes, this.loggedUser.avatar.files[0].contentType, '', this.loggedUser.avatar.files[0].name);
-    }
+    this.authService.getLoggedUserEndpoint(this.loggedUser.registration).subscribe(response => {
+      this.authService.setStorage(response);
+      this.loggedUser = this.authService.getLoggedUser();
+      if (this.loggedUser.avatar) {
+        this.b64toBlob(this.loggedUser.avatar.files[0].bytes, this.loggedUser.avatar.files[0].contentType, '', this.loggedUser.avatar.files[0].name);
+      }
+    });
   }
 
   executarOpcao(menu){
@@ -82,7 +86,7 @@ export class ProfilePageComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalAvatarComponent, {})
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      
+
     })
   }
 

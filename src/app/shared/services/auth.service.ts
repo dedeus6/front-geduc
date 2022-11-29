@@ -40,4 +40,9 @@ export class AuthService {
   logout(){
     this.clear();
   }
+
+  setStorage(user: User) {
+    this.clear();
+    sessionStorage.setItem('user', JSON.stringify(user));
+  }
 }

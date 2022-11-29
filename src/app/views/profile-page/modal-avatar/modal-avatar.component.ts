@@ -28,7 +28,6 @@ export class ModalAvatarComponent implements OnInit {
 
     ngOnInit(): void {
         this.loggedUser = this.authService.getLoggedUser();
-        console.log(this.authService.getLoggedUser());
     }
 
     onConfirm(): void {
