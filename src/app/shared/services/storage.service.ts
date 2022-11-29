@@ -31,4 +31,12 @@ export class StorageService {
           headers: headers
       });
     }
+
+    uploadAvatar(thumbnail: FormData, registration: string){
+      const headers = new HttpHeaders();
+      headers.append('Content-Type', 'multipart/form-data')
+      return this.http.post<void>(environment.GEDUC_API + `/v1/storage/avatar/${registration}`,  thumbnail, {
+          headers: headers
+      });
+    }
 }

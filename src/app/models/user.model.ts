@@ -1,3 +1,4 @@
+import { GetFiles } from "./getFiles.model";
 import { Tech } from "./tech.model";
 
 export interface User {
@@ -6,4 +7,5 @@ export interface User {
     email?: string;
     password?: string;
     techs?: Array<Tech[]>
+    avatar?: GetFiles;
 }

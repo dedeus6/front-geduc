@@ -2,8 +2,15 @@
     <div class="profile-container">
         <div class="menu-container">
             <div class="menu-content">
-                <img class="profile-photo" src="../../assets/foto-event.png" />
-                <p class="profile-name">{{nomeUsuario}}</p>
+                <div class="avatar-container">
+                    <img class="profile-photo" [src]="avatar" />
+                    <div class="edit-avatar-container">
+                        <mat-icon (click)="openAvatarModal()">
+                            edit
+                        </mat-icon>
+                    </div>
+                </div>
+                <p class="profile-name">{{loggedUser.name}}</p>
             </div>
             <div class="menu-options">
                 <mat-selection-list #shoes [multiple]="false">

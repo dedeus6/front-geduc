@@ -14,6 +14,7 @@ import { LoginPage } from './views/login-page/login-page.component';
 import { CertificatesComponent } from './shared/components/profile/certificates/certificates.component';
 import { ContentComponent } from './shared/components/profile/content/content.component';
 import { CertificateCardComponent } from './shared/components/profile/certificates/certificate-card/certificate-card.component';
+import { ModalAvatarComponent } from './views/profile-page/modal-avatar/modal-avatar.component';
 
 import { AuthService } from './shared/services/auth.service';
 import { ContentService } from './shared/services/content.service';
@@ -67,6 +68,7 @@ import { WatchEventsPageComponent } from './views/watch-events-page/watch-events
     SearchEventsPageComponent,
     ModalNotificationComponent,
     ModalConfirmComponent,
+    ModalAvatarComponent,
     WatchEventsPageComponent
   
   ],
