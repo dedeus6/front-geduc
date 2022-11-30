@@ -1,16 +1,16 @@
 <section class="container">
     <div class="container-playlist">
-        <div class="videos-navigation" >
-            <div class="cards-videos" *ngFor="let file of files">
-                <mat-card-actions (click)="mostrarVideoClicado(file)">
-                    {{file.name | slice:0:40}}
+        <div class="videos-navigation" *ngFor="let file of files; let i = index">
+            <div class="cards-videos" (click)="showSelectedVideo(file)">
+                <mat-card-actions >
+                    {{i+1}}.{{file.name | slice:0:40}}
                 </mat-card-actions>
-
             </div>
-          
         </div>
     </div>
     <div class="container-video">
-        <video id="video" width="200" height="200" controls></video>
+        <mat-card>
+            <video id="video" width="200" height="200" controls></video>
+        </mat-card>
     </div>
 </section>
