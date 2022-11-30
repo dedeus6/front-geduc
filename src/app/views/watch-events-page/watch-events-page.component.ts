@@ -39,6 +39,7 @@ export class WatchEventsPageComponent implements OnInit {
   }
 
   b64toBlob(b64Data, contentType, sliceSize, name): Blob {
+    var name = name.slice(0,name.length-4)
     contentType = contentType || 'video/*';
     sliceSize = sliceSize || 512;
   
@@ -68,11 +69,12 @@ export class WatchEventsPageComponent implements OnInit {
     this.video.load();
     
     this.files.push(file);
+    this.files.reverse();
     
     return blob;
   }
 
-  mostrarVideoClicado(file: any){
+  showSelectedVideo(file: any){
     var url = URL.createObjectURL(file);
     this.video = document.getElementsByTagName('video')[0];
     this.video.src = url;
