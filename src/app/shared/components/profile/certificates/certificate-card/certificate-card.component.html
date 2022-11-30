@@ -1,9 +1,8 @@
 <div class="card-container">
     <mat-card class="card">
-        {{certificate}}
+        Certificado do evento: {{certificate.eventTitle}}
         <div class="icons">
-            <mat-icon>download</mat-icon>
-            <mat-icon>open_in_new</mat-icon>
+            <a href="/assets/Certificate.pdf" download="certificate"><mat-icon>download</mat-icon></a>
         </div>
     </mat-card>
 </div>

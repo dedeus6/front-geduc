@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CertificateModel } from 'src/app/models/certificate.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { CertificateService } from 'src/app/shared/services/certificate.service';
 
 @Component({
   selector: 'app-certificates',
@@ -7,11 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CertificatesComponent implements OnInit {
 
-  certificates: Array<string> = ['Certificado 1', 'Certificado 2', 'Certificado 3', 'Certificado 4'];
+  certificates: Array<CertificateModel> = [];
+  loggedUser: User;
 
-  constructor() { }
+  constructor(private certificateService: CertificateService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.loggedUser = this.authService.getLoggedUser();
+    this.certificateService.getCertificates(this.loggedUser.registration).subscribe(response => {
+      this.certificates = response;
+    })
   }
 
 }

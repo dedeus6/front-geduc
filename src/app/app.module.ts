@@ -46,6 +46,7 @@ import { ModalNotificationComponent } from './shared/components/modal-notificati
 import { NotificationService } from './shared/services/notification.service';
 import { ModalConfirmComponent } from './shared/components/modal-confirm/modal-confirm.component';
 import { WatchEventsPageComponent } from './views/watch-events-page/watch-events-page.component';
+import { CertificateService } from './shared/services/certificate.service';
 
 
 @NgModule({
@@ -90,7 +91,7 @@ import { WatchEventsPageComponent } from './views/watch-events-page/watch-events
     HttpClientModule,
     NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
-  providers: [AuthService, ContentService, StorageService, EventService, NotificationService,
+  providers: [AuthService, ContentService, StorageService, EventService, NotificationService, CertificateService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpErrorInterceptor,
