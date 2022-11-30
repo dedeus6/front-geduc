@@ -15,9 +15,13 @@ import { CertificatesComponent } from './shared/components/profile/certificates/
 import { ContentComponent } from './shared/components/profile/content/content.component';
 import { CertificateCardComponent } from './shared/components/profile/certificates/certificate-card/certificate-card.component';
 import { ModalAvatarComponent } from './views/profile-page/modal-avatar/modal-avatar.component';
+import { CreateEventPageComponent } from './views/create-event-page/create-event-page.component';
 
+//service
 import { AuthService } from './shared/services/auth.service';
 import { ContentService } from './shared/services/content.service';
+import { StorageService } from './shared/services/storage.service';
+import { EventService } from './shared/services/event.service';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
@@ -31,9 +35,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { CreateEventPageComponent } from './views/create-event-page/create-event-page.component';
-import { StorageService } from './shared/services/storage.service';
-import { EventService } from './shared/services/event.service';
+import { MatBadgeModule } from '@angular/material/badge'
+
 
 // Dependências do ngx-mask
 import { NgxMaskModule } from 'ngx-mask';
@@ -89,6 +92,7 @@ import { CertificateService } from './shared/services/certificate.service';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    MatBadgeModule,
     NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
   providers: [AuthService, ContentService, StorageService, EventService, NotificationService, CertificateService,

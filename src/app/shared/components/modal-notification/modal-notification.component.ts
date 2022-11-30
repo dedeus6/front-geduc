@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { NotificationService } from '../../services/notification.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -14,7 +15,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class ModalNotificationComponent implements OnInit {
 
   loggedUser: User;
-  notifications: Array<NotificationModel>;
+  notifications$: Observable<Array<NotificationModel>>;
 
   constructor(
     private authService: AuthService,
@@ -24,18 +25,13 @@ export class ModalNotificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedUser = this.authService.getLoggedUser();
-    this.listNotifications();
+    this.notifications$ = this.notificationService.getNotification();
   }
 
-  listNotifications() {
-    this.notificationService.getNotifications(this.loggedUser.registration).subscribe(response => {
-      this.notifications = response;
-    });
-  }
 
   readNotification(notificationId: string): void {
     this.notificationService.readNotifications(notificationId).subscribe(response => {
-      this.listNotifications();
+      this.notificationService.getNotifications(this.loggedUser.registration).subscribe();
     });
   }
 

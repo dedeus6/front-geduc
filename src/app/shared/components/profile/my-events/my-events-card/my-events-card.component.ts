@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventModel } from 'src/app/models/event.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
 import { ModalConfirmComponent } from '../../../modal-confirm/modal-confirm.component';
 
@@ -15,11 +17,14 @@ export class MyEventsCardComponent implements OnInit {
 
   @Input()
   event: EventModel;
+  loggedUser: User;
 
   @Output()
   listEvents = new EventEmitter<boolean>(false);
 
-  constructor(private router: Router, private dialog: MatDialog, private eventService: EventService, private snackBar: MatSnackBar) { }
+  constructor(private router: Router, private dialog: MatDialog, private eventService: EventService, private snackBar: MatSnackBar, private authService: AuthService) {
+    this.loggedUser = this.authService.getLoggedUser();
+   }
 
   ngOnInit(): void {
   }
@@ -42,7 +47,7 @@ export class MyEventsCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
-        this.eventService.cancelEvent(event.eventNumber).subscribe(response => {
+        this.eventService.cancelEvent(event.eventNumber, this.loggedUser.registration).subscribe(response => {
           this.snackBar.open("Evento cancelado com sucesso.", 'X', {
             duration: 3000,
             panelClass: ['green-snackbar']
