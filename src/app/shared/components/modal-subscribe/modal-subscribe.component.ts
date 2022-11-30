@@ -17,6 +17,7 @@ export class ModalSubscribeComponent implements OnInit {
   loggedUser: User;
   creatorOfEvent: string;
   alreadySubscribed: boolean = false;
+  eventOwner: boolean = false;
   constructor(
     protected dialog: MatDialog, 
     @Inject(MAT_DIALOG_DATA) public data: any, 
@@ -32,6 +33,7 @@ export class ModalSubscribeComponent implements OnInit {
       this.creatorOfEvent = response.name.split(/(\s).+\s/).join(""); // regular expression que separa o array e ignora os espaços em branco a mais
     });
     this.verifyIfUserAlteradySubscibed();
+    this.verifyEventOwner();
   }
 
   verifyIfUserAlteradySubscibed() {
@@ -40,6 +42,12 @@ export class ModalSubscribeComponent implements OnInit {
         this.alreadySubscribed = true
       }
     })
+  }
+
+  verifyEventOwner() {
+    if (this.loggedUser.registration == this.event.creatorRegistration) {
+      this.eventOwner = true;
+    }
   }
 
   close() {
