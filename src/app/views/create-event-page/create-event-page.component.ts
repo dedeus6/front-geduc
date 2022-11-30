@@ -157,7 +157,7 @@ export class CreateEventPageComponent implements OnInit {
         this.eventService.createEvent(eventRequest).subscribe((response) => {
           this.storageService.uploadThumbnail(formDataThumb, response.eventNumber).subscribe(() => {
             this.message = "Evento criado com Sucesso. "
-            this.disparaMensagem(this.message);
+            this.showMessages(this.message);
           });
         },
         () => {
@@ -168,7 +168,7 @@ export class CreateEventPageComponent implements OnInit {
         this.eventService.editEvents(eventRequest, this.eventNumber).subscribe(()=>{
           this.storageService.uploadThumbnail(formDataThumb, this.eventNumber).subscribe(() => {
             this.message = "Evento alterado com Sucesso. "
-            this.disparaMensagem(this.message);
+            this.showMessages(this.message);
           })
         },
         () => {
@@ -272,9 +272,9 @@ export class CreateEventPageComponent implements OnInit {
     return blob;
   }
 
-  disparaMensagem(message: string): void {
+  showMessages(message: string): void {
     this.snackBar.open(message, 'X', {
-      duration: 3000,
+      duration: 5000,
       panelClass: ['green-snackbar']
     });
     this.router.navigate(['home'])

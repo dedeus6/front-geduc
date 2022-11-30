@@ -34,7 +34,7 @@ export class ModalAvatarComponent implements OnInit {
         const formData = new FormData();
         formData.append('avatar', this.avatar);
         this.storageService.uploadAvatar(formData, this.loggedUser.registration).subscribe(() => {
-            this.disparaMensagem("Foto alterada com sucesso.");
+            this.showMessages("Foto alterada com sucesso.");
             this.dialogRef.close();
         });
     }
@@ -48,7 +48,7 @@ export class ModalAvatarComponent implements OnInit {
         this.hasChange = true;
     }
 
-    disparaMensagem(message: string): void {
+    showMessages(message: string): void {
         this.snackBar.open(message, 'X', {
           duration: 3000,
           panelClass: ['green-snackbar']
