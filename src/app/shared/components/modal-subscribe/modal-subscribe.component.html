@@ -20,8 +20,8 @@
                 <p>{{event.status}}</p>
             </div>
             <div class="button-container">
-                <button *ngIf="!alreadySubscribed" mat-raised-button color="primary" (click)="subscribeInEvent()">Inscreva-se</button>
-                <button *ngIf="alreadySubscribed" mat-raised-button color="primary">Assistir</button>
+                <button *ngIf="!alreadySubscribed && !eventOwner" mat-raised-button color="primary" (click)="subscribeInEvent()">Inscreva-se</button>
+                <button *ngIf="alreadySubscribed || eventOwner" mat-raised-button color="primary" (click)="goToWatchEvent(event)">Assistir</button>
             </div>
         </div>
     </div>

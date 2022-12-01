@@ -1,5 +1,5 @@
 {
-    "/*": {
+    "**": {
         "target": "https://back-geduc.herokuapp.com",
         "secure": false
     }

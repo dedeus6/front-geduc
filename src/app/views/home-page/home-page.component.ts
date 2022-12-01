@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { getEventModel } from 'src/app/models/getEvent.model';
+import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
@@ -13,7 +13,8 @@ import { EventService } from 'src/app/shared/services/event.service';
 
 export class HomePageComponent implements OnInit {
   localRegistration: User;
-  events: getEventModel[];
+  events: EventModel[];
+  hasEvents: boolean = false;
   constructor(public authService: AuthService, private router: Router, private eventService: EventService) { }
 
   ngOnInit(): void {
@@ -46,6 +47,9 @@ export class HomePageComponent implements OnInit {
     }
     this.eventService.getEvents(filter).subscribe((response) => {
       this.events = response;
+      if(this.events.length > 0) {
+        this.hasEvents = true;
+      }
     });
   }
 

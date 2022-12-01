@@ -14,7 +14,7 @@ export class AuthGuard {
   ngOnInit(): void {
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(activatedRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if(!this.authService.isAuthenticated()){
       if(state.url != '/login'){
         this.router.navigate(['/login']);

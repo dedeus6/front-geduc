@@ -23,4 +23,20 @@ export class StorageService {
     getFiles(filesId: string){
       return this.http.get<GetFiles>(environment.GEDUC_API + `/v1/storage/${filesId}`)
     }
+
+    uploadThumbnail(thumbnail: FormData, eventNumber: string){
+      const headers = new HttpHeaders();
+      headers.append('Content-Type', 'multipart/form-data')
+      return this.http.post<UploadFileResponse>(environment.GEDUC_API + `/v1/storage/thumb/${eventNumber}`,  thumbnail, {
+          headers: headers
+      });
+    }
+
+    uploadAvatar(thumbnail: FormData, registration: string){
+      const headers = new HttpHeaders();
+      headers.append('Content-Type', 'multipart/form-data')
+      return this.http.post<void>(environment.GEDUC_API + `/v1/storage/avatar/${registration}`,  thumbnail, {
+          headers: headers
+      });
+    }
 }

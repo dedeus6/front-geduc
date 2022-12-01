@@ -12,7 +12,10 @@
         <div class="menu-items">
             <mat-icon routerLink="/home" aria-label="Example home icon">home</mat-icon>
             <mat-icon class="menu-icon" routerLink="profile/personal">account_circle</mat-icon>
-            <mat-icon  (click)="openModal()">notifications</mat-icon>
+            <!-- <mat-icon  matBadge="15" matBadgeColor="warn" (click)="openModal()">notifications</mat-icon> -->
+            <div style="display: block;" *ngIf="notifications$ | async as notificationView">
+                <mat-icon matBadge="{{notificationView.length }}" matBadgeColor="warn" (click)="openModal()">notifications</mat-icon>
+            </div>
         </div>
     </div>
 </div>

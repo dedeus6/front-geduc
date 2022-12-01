@@ -14,9 +14,14 @@ import { LoginPage } from './views/login-page/login-page.component';
 import { CertificatesComponent } from './shared/components/profile/certificates/certificates.component';
 import { ContentComponent } from './shared/components/profile/content/content.component';
 import { CertificateCardComponent } from './shared/components/profile/certificates/certificate-card/certificate-card.component';
+import { ModalAvatarComponent } from './views/profile-page/modal-avatar/modal-avatar.component';
+import { CreateEventPageComponent } from './views/create-event-page/create-event-page.component';
 
+//service
 import { AuthService } from './shared/services/auth.service';
 import { ContentService } from './shared/services/content.service';
+import { StorageService } from './shared/services/storage.service';
+import { EventService } from './shared/services/event.service';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
@@ -30,9 +35,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { CreateEventPageComponent } from './views/create-event-page/create-event-page.component';
-import { StorageService } from './shared/services/storage.service';
-import { EventService } from './shared/services/event.service';
+import { MatBadgeModule } from '@angular/material/badge'
+
 
 // Dependências do ngx-mask
 import { NgxMaskModule } from 'ngx-mask';
@@ -42,9 +46,10 @@ import { HttpErrorInterceptor } from './interceptors/http-error.interceptor';
 import { MySubscribedEventsCardComponent } from './shared/components/profile/my-events/my-subscribed-events-card/my-subscribed-events-card.component';
 import { SearchEventsPageComponent } from './views/search-events-page/search-events-page.component';
 import { ModalNotificationComponent } from './shared/components/modal-notification/modal-notification.component';
-import { NotFoundPageComponent } from './shared/components/not-found-page/not-found-page.component';
 import { NotificationService } from './shared/services/notification.service';
 import { ModalConfirmComponent } from './shared/components/modal-confirm/modal-confirm.component';
+import { WatchEventsPageComponent } from './views/watch-events-page/watch-events-page.component';
+import { CertificateService } from './shared/services/certificate.service';
 
 
 @NgModule({
@@ -66,8 +71,9 @@ import { ModalConfirmComponent } from './shared/components/modal-confirm/modal-c
     MySubscribedEventsCardComponent,
     SearchEventsPageComponent,
     ModalNotificationComponent,
-    NotFoundPageComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    ModalAvatarComponent,
+    WatchEventsPageComponent
   
   ],
   imports: [
@@ -86,9 +92,10 @@ import { ModalConfirmComponent } from './shared/components/modal-confirm/modal-c
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    MatBadgeModule,
     NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
-  providers: [AuthService, ContentService, StorageService, EventService, NotificationService,
+  providers: [AuthService, ContentService, StorageService, EventService, NotificationService, CertificateService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpErrorInterceptor,

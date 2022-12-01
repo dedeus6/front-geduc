@@ -4,11 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxMaskModule } from 'ngx-mask';
 import { EventModel } from 'src/app/models/event.model';
 import { Files } from 'src/app/models/files.model';
-import { getEventModel } from 'src/app/models/getEvent.model';
-import { UploadFileResponse } from 'src/app/models/storage.model';
 import { Tech } from 'src/app/models/tech.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -23,6 +20,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 
 export class CreateEventPageComponent implements OnInit {
   files: Array<File> = [];
+  thumbnail: File = null;
   techs: any[] = [];
   eventForm: FormGroup;
   tempForm: FormGroup;
@@ -43,18 +41,22 @@ export class CreateEventPageComponent implements OnInit {
     private eventService: EventService, 
     private snackBar: MatSnackBar, 
     private router: Router,
-    private route: ActivatedRoute
+    private activatedRoute: ActivatedRoute
     ) {
 
   }
   
   ngOnInit(): void {
-    this.eventNumber = this.route.snapshot.queryParamMap.get('eventNumber');
+    this.eventNumber = this.activatedRoute.snapshot.queryParamMap.get('eventNumber');
     this.isUpdate = this.eventNumber !== null ? true : false;
     if(this.isUpdate){
-      this.eventService.getEvents('').subscribe((response) => {
-        this.eventReceived = response.find(obj => {return obj.eventNumber === this.eventNumber});
+      const filter = {
+        param: 'eventNumber='+this.eventNumber
+      }
+      this.eventService.getEvents(filter).subscribe((response) => {
+        this.eventReceived = response[0];
         this.eventReceived.techs.forEach((tag ) => this.techs.push(tag))
+        this.thumbnail = response[0].thumbnail ? this.convertThumbFile(response[0].thumbnail.files[0]) : null;
         this.loadForm();
         this.getFilesOfEVent(this.eventReceived.filesId);
         
@@ -73,7 +75,8 @@ export class CreateEventPageComponent implements OnInit {
         eventDescription: [this.isUpdate?this.eventReceived.description:'', [Validators.required]],
         duration: [this.isUpdate?this.eventReceived.duration:'', [Validators.required]],
         techs: [this.techs, [Validators.required]],
-        file: [this.files, [Validators.required]]
+        file: [this.files, [Validators.required]],
+        thumbnail: [this.isUpdate ? this.thumbnail : '', [Validators.required]]
       }
     );
     this.onCreateGroupFormValueChange();
@@ -91,6 +94,12 @@ export class CreateEventPageComponent implements OnInit {
       this.files.push(event.target.files[0]);
       this.eventForm.get('file').setValue(this.files);
     }
+    this.hasChangeOn = true;
+  }
+
+  inputThumbChange(event) {
+    this.thumbnail = event.target.files[0];
+    this.eventForm.get('thumbnail').setValue(this.thumbnail);
     this.hasChangeOn = true;
   }
 
@@ -129,6 +138,8 @@ export class CreateEventPageComponent implements OnInit {
   createEvent(origin: string) {
     this.sendingEvent = true;
     const formData = new FormData();
+    const formDataThumb = new FormData();
+    formDataThumb.append('thumbnail', this.thumbnail);
     this.files.forEach(file => {
       formData.append('files', file);
     })
@@ -143,9 +154,11 @@ export class CreateEventPageComponent implements OnInit {
       }
       
       if(origin === 'create'){
-        this.eventService.createEvent(eventRequest).subscribe(() => {
-          this.message = "Evento criado com Sucesso. "
-          this.disparaMensagem(this.message);
+        this.eventService.createEvent(eventRequest).subscribe((response) => {
+          this.storageService.uploadThumbnail(formDataThumb, response.eventNumber).subscribe(() => {
+            this.message = "Evento criado com Sucesso. "
+            this.showMessages(this.message);
+          });
         },
         () => {
           this.sendingEvent = false;
@@ -153,8 +166,10 @@ export class CreateEventPageComponent implements OnInit {
       } else {
         //chama o alterar
         this.eventService.editEvents(eventRequest, this.eventNumber).subscribe(()=>{
-          this.message = "Evento alterado com Sucesso. "
-          this.disparaMensagem(this.message);
+          this.storageService.uploadThumbnail(formDataThumb, this.eventNumber).subscribe(() => {
+            this.message = "Evento alterado com Sucesso. "
+            this.showMessages(this.message);
+          })
         },
         () => {
           this.sendingEvent = false;
@@ -200,6 +215,11 @@ export class CreateEventPageComponent implements OnInit {
     })
   }
 
+  convertThumbFile(file: Files): File {
+    let blob = this.b64toBlobThumb(file.bytes, file.contentType, '',file.name)
+    return new File([blob], file.name);
+  }
+
   b64toBlob(b64Data, contentType, sliceSize, name): Blob {
     contentType = contentType || 'video/*';
     sliceSize = sliceSize || 512;
@@ -227,9 +247,34 @@ export class CreateEventPageComponent implements OnInit {
     return blob;
   }
 
-  disparaMensagem(message: string): void {
+  b64toBlobThumb(b64Data, contentType, sliceSize, name): Blob {
+    contentType = contentType || 'video/*';
+    sliceSize = sliceSize || 512;
+  
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+  
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+    
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
+      }
+    
+      var byteArray = new Uint8Array(byteNumbers);
+    
+      byteArrays.push(byteArray);
+    }
+  
+    var blob = new Blob(byteArrays, {type: contentType});
+    blob = blob.slice(0, blob.size, contentType)
+    return blob;
+  }
+
+  showMessages(message: string): void {
     this.snackBar.open(message, 'X', {
-      duration: 3000,
+      duration: 5000,
       panelClass: ['green-snackbar']
     });
     this.router.navigate(['home'])

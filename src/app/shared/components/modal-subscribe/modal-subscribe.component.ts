@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { getEventModel } from 'src/app/models/getEvent.model';
+import { Router } from '@angular/router';
+import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { EventService } from '../../services/event.service';
@@ -12,16 +13,18 @@ import { EventService } from '../../services/event.service';
   styleUrls: ['./modal-subscribe.component.sass']
 })
 export class ModalSubscribeComponent implements OnInit {
-  event: getEventModel;
+  event: EventModel;
   loggedUser: User;
   creatorOfEvent: string;
   alreadySubscribed: boolean = false;
+  eventOwner: boolean = false;
   constructor(
     protected dialog: MatDialog, 
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private eventService: EventService, 
     private snackBar: MatSnackBar, 
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.event = this.data;
@@ -30,6 +33,7 @@ export class ModalSubscribeComponent implements OnInit {
       this.creatorOfEvent = response.name.split(/(\s).+\s/).join(""); // regular expression que separa o array e ignora os espaços em branco a mais
     });
     this.verifyIfUserAlteradySubscibed();
+    this.verifyEventOwner();
   }
 
   verifyIfUserAlteradySubscibed() {
@@ -38,6 +42,12 @@ export class ModalSubscribeComponent implements OnInit {
         this.alreadySubscribed = true
       }
     })
+  }
+
+  verifyEventOwner() {
+    if (this.loggedUser.registration == this.event.creatorRegistration) {
+      this.eventOwner = true;
+    }
   }
 
   close() {
@@ -57,5 +67,12 @@ export class ModalSubscribeComponent implements OnInit {
     })
 
     this.close();
+  }
+
+  goToWatchEvent(event: EventModel): void {
+    this.dialog.closeAll();
+    this.router.navigate(['/watch-events'],{
+      queryParams: event
+    });
   }
 }

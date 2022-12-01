@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CertificateModel } from 'src/app/models/certificate.model';
 
 @Component({
   selector: 'app-certificate-card',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CertificateCardComponent implements OnInit {
 
   @Input()
-  certificate: string;
+  certificate: CertificateModel;
 
   constructor() {
   }

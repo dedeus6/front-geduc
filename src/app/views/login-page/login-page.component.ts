@@ -32,15 +32,14 @@ export class LoginPage implements OnInit{
     let dataLogin = this.loginForm.getRawValue();
     if(this.loginForm.valid){
       this.authService.login(dataLogin).subscribe(
-        (response) => {
+        () => {
           this.snackBar.open("Usuário Logado com Sucesso", 'X', {
             duration: 3000,
             panelClass: ['green-snackbar']
           });
           this.router.navigate(['/home']);
           this.mostraWarningCredencial = false;
-
-          sessionStorage.setItem('user', JSON.stringify(response)); // Substitui o JWT (JSON Web Token)
+          
           
         }, 
         (error) => {

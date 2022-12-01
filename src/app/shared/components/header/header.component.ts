@@ -1,6 +1,11 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { NotificationModel } from 'src/app/models/notification.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from '../../services/auth.service';
+import { NotificationService } from '../../services/notification.service';
 import { ModalNotificationComponent } from '../modal-notification/modal-notification.component';
 
 @Component({
@@ -11,13 +16,20 @@ import { ModalNotificationComponent } from '../modal-notification/modal-notifica
 export class HeaderComponent implements OnInit {
 
   eventTitle: string;
+  loggedUser: User;
+  notifications$: Observable<Array<NotificationModel>>;
 
   constructor(
     private router: Router,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    private authService: AuthService,
+    private notificationService: NotificationService
+  ) { this.loggedUser = this.authService.getLoggedUser();}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.notifications$ = this.notificationService.getNotification();
+    this.notificationService.getNotifications(this.loggedUser.registration).subscribe();
+  }
 
   openModal() {
     const dialogRef = this.dialog.open(ModalNotificationComponent, {
@@ -34,4 +46,10 @@ export class HeaderComponent implements OnInit {
       }); 
     }
   }
+
+  // listNotifications() {
+  //   this.notificationService.getNotifications(this.loggedUser.registration).subscribe(response => {
+  //     this.notifications = response;
+  //   });
+  // }
 }
