@@ -58,4 +58,11 @@ export class MyEventsCardComponent implements OnInit {
     })
   }
 
+  goToWatchEvent(event: EventModel): void {
+    this.dialog.closeAll();
+    this.router.navigate(['/watch-events'],{
+      queryParams: event
+    });
+  }
+
 }

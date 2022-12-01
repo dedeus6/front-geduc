@@ -28,7 +28,10 @@ export class CardEventComponent implements OnInit {
 
   openModal() {
     const dialogRef = this.dialog.open(ModalSubscribeComponent, {
-      data : this.event
+      data : {
+        event: this.event,
+        thumb: this.thumbnail
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

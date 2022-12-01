@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -21,7 +22,7 @@ export class MySubscribedEventsCardComponent implements OnInit {
 
   loggedUser: User;
 
-  constructor(private authService: AuthService, private eventService: EventService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService, private eventService: EventService, private dialog: MatDialog, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
     this.loggedUser = this.authService.getLoggedUser();
@@ -48,5 +49,12 @@ export class MySubscribedEventsCardComponent implements OnInit {
         });
       }
     })
+  }
+
+  goToWatchEvent(event: EventModel): void {
+    this.dialog.closeAll();
+    this.router.navigate(['/watch-events'],{
+      queryParams: event
+    });
   }
 }

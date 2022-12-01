@@ -3,7 +3,7 @@
         <mat-icon class="close-icon" aria-hidden="false" aria-label="Example home icon" (click)="close()">close</mat-icon>
         <div class="modal-content-container">
             <div class="img-container">
-                <img src="assets/foto-event.png">
+                <img [src]="thumbnail">
             </div>
             <h1 class="event-title">{{event.title}}</h1>
             <p class="event-description">{{event.description}}</p>
