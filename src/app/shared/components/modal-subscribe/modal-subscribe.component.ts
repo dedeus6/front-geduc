@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
@@ -18,6 +19,7 @@ export class ModalSubscribeComponent implements OnInit {
   creatorOfEvent: string;
   alreadySubscribed: boolean = false;
   eventOwner: boolean = false;
+  thumbnail: SafeUrl = "assets/foto-event.png";
   constructor(
     protected dialog: MatDialog, 
     @Inject(MAT_DIALOG_DATA) public data: any, 
@@ -27,7 +29,8 @@ export class ModalSubscribeComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.event = this.data;
+    this.event = this.data.event;
+    this.thumbnail = this.data.thumb;
     this.loggedUser = this.authService.getLoggedUser();
     this.authService.getLoggedUserEndpoint(this.event.creatorRegistration).subscribe((response) => {
       this.creatorOfEvent = response.name.split(/(\s).+\s/).join(""); // regular expression que separa o array e ignora os espaços em branco a mais
