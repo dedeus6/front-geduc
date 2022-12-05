@@ -6,6 +6,7 @@ import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { ModalConfirmComponent } from '../../../modal-confirm/modal-confirm.component';
 
 @Component({
@@ -22,7 +23,7 @@ export class MySubscribedEventsCardComponent implements OnInit {
 
   loggedUser: User;
 
-  constructor(private authService: AuthService, private eventService: EventService, private dialog: MatDialog, private snackBar: MatSnackBar, private router: Router) { }
+  constructor(private authService: AuthService, private eventService: EventService, public spinnerService: SpinnerService,private dialog: MatDialog, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
     this.loggedUser = this.authService.getLoggedUser();
@@ -35,7 +36,8 @@ export class MySubscribedEventsCardComponent implements OnInit {
         message: 'Tem certeza que quer cancelar sua inscrição neste evento?',
         buttonConfirmText: 'Cancelar Inscrição',
         buttonCancelText: 'Fechar'
-      }
+      },
+      height: '180px'
     })
 
     dialogRef.afterClosed().subscribe(dialogResult => {

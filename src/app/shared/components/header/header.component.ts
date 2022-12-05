@@ -28,7 +28,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.notifications$ = this.notificationService.getNotification();
-    this.notificationService.getNotifications(this.loggedUser.registration).subscribe();
+    if(this.loggedUser){
+      this.notificationService.getNotifications(this.loggedUser.registration).subscribe();
+    }
   }
 
   openModal() {
@@ -47,9 +49,4 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  // listNotifications() {
-  //   this.notificationService.getNotifications(this.loggedUser.registration).subscribe(response => {
-  //     this.notifications = response;
-  //   });
-  // }
 }

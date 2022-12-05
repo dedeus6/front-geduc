@@ -7,7 +7,7 @@
         <div class="info-login">
             <h1>Cadastre sua conta</h1>
         </div>     
-        
+        <app-spinner-overlay *ngIf="spinnerService.visibility | async" overlay="true"></app-spinner-overlay>
         <form [formGroup]="registerForm" class="form-login-cadastro">
             <div class="container-inputs">
                 <div>
@@ -70,7 +70,7 @@
                     <mat-checkbox color="primary" (change)="hide = !hide">Mostrar senha</mat-checkbox>
                 </div>
                 <div>  
-                    <button type="button" mat-flat-button color="primary" id="botao-cadastrar" [disabled]="!registerForm.valid" (click)="submitRegister()">CADASTRE-SE</button>
+                    <button type="button" mat-flat-button color="primary" id="botao-cadastrar" [disabled]="!registerForm.valid || isLoading" (click)="submitRegister()">CADASTRE-SE</button>
                     <p id="paragrafo-pagina-login">Já tem uma conta?<button type="button" mat-stroked-button color="primary" id="botao-pagina-login" routerLink="/login">FAÇA O LOGIN</button></p>
                 </div>
                 <div class="msg-warning" *ngIf="passwordsValidator">

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal-confirm.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { MenuModel } from '../../models/menu.model';
 import { ModalAvatarComponent } from './modal-avatar/modal-avatar.component';
 
@@ -14,11 +15,9 @@ import { ModalAvatarComponent } from './modal-avatar/modal-avatar.component';
   styleUrls: ['./profile-page.component.sass']
 })
 export class ProfilePageComponent implements OnInit {
-  primeiroNomeUsuario: string;
-  ultimoNomeUsuario: string;
-  nomeUsuario: string;
   loggedUser: User;
   avatar: SafeUrl = "assets/foto-event.png";
+  isLoading: boolean = false;
   menuItems: Array<MenuModel> = [
     {
       name: 'Perfil',
@@ -44,8 +43,9 @@ export class ProfilePageComponent implements OnInit {
   
 
   constructor(
-    private router: Router,
+    public spinnerService: SpinnerService,
     public authService: AuthService,
+    private router: Router,
     private dialog: MatDialog,
     private domSanitizer: DomSanitizer
   ) { }
@@ -56,6 +56,7 @@ export class ProfilePageComponent implements OnInit {
       this.authService.setStorage(response);
       this.loggedUser = this.authService.getLoggedUser();
       if (this.loggedUser.avatar) {
+        this.isLoading = true;
         this.b64toBlob(this.loggedUser.avatar.files[0].bytes, this.loggedUser.avatar.files[0].contentType, '', this.loggedUser.avatar.files[0].name);
       }
     });
@@ -69,7 +70,9 @@ export class ProfilePageComponent implements OnInit {
           message: 'Tem certeza que deseja sair?',
           buttonConfirmText: 'Sair',
           buttonCancelText: 'Fechar'
-        }
+        },
+        height: '180px',
+        width: '300px'
       })
   
       dialogRef.afterClosed().subscribe(dialogResult => {
@@ -113,6 +116,7 @@ export class ProfilePageComponent implements OnInit {
     var url = URL.createObjectURL(file);
 
     this.avatar = this.domSanitizer.bypassSecurityTrustUrl(url);
+    this.isLoading = false;
   }
 
 }

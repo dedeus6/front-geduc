@@ -1,12 +1,13 @@
 <section class="wrapper">
     <div class="home-container">
         <div class="events-container">
-            <div class="events-container"  *ngIf="hasEvents"> 
+            <div class="events-container" *ngIf="hasEvents && !isLoading"> 
                 <div class="card-events-container" *ngFor="let event of events">
                     <app-card-event [event]="event"></app-card-event>
                 </div>
             </div>
-            <div class="events-container"  *ngIf="!hasEvents"> 
+            <app-spinner-overlay *ngIf="spinnerService.visibility | async" overlay="true"></app-spinner-overlay>
+            <div class="events-container"  *ngIf="!hasEvents && !isLoading"> 
                 <div>
                     <h1>INFELIZMENTE, NÃO ENCONTRAMOS UM EVENTO COM ESSE NOME...</h1>
                     <br><br>
@@ -19,7 +20,6 @@
                     </ul>
                 </div>
             </div>
-            <!-- arrumar formatacao -->
         </div>
     </div>
 </section>

@@ -8,7 +8,7 @@
             <h3>Bem vindo</h3>
             <h1>Faça login na sua conta</h1>
         </div>
-        
+        <app-spinner-overlay *ngIf="spinnerService.visibility | async" overlay="true"></app-spinner-overlay>
         <div [formGroup]="loginForm" class="form-login-cadastro"> 
             <div class="container-inputs">
                 <div>

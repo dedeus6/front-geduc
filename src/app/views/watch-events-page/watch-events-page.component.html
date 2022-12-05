@@ -1,4 +1,5 @@
 <section class="container">
+    <app-spinner-overlay *ngIf="spinnerService.visibility | async" overlay="true"></app-spinner-overlay>
     <div class="container-playlist">
         <div class="container-playlist-header">
             <span>
@@ -14,6 +15,10 @@
         </div>
         <div class="container-playlist-button">
             <button mat-raised-button color="primary" (click)="generateCertificate()">Concluir Evento</button>
+        </div>
+        <div class="container-description">
+            <h3>Descrição do Curso</h3>
+            <p>{{event.description}}</p>
         </div>
     </div>
     <div class="container-video">

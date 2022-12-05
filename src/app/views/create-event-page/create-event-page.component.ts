@@ -10,6 +10,7 @@ import { Tech } from 'src/app/models/tech.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 
 @Component({
@@ -33,12 +34,14 @@ export class CreateEventPageComponent implements OnInit {
   sendingEvent: boolean = false;
   hasChangeOn: boolean = false;
   message: string = '';
+  isLoading: boolean = false;
   
   constructor(
-    private fb: FormBuilder, 
+    public spinnerService: SpinnerService,
     private authService: AuthService, 
     private storageService: StorageService, 
     private eventService: EventService, 
+    private fb: FormBuilder, 
     private snackBar: MatSnackBar, 
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -136,6 +139,7 @@ export class CreateEventPageComponent implements OnInit {
   }
 
   createEvent(origin: string) {
+    this.isLoading = true;
     this.sendingEvent = true;
     const formData = new FormData();
     const formDataThumb = new FormData();
@@ -157,6 +161,7 @@ export class CreateEventPageComponent implements OnInit {
         this.eventService.createEvent(eventRequest).subscribe((response) => {
           this.storageService.uploadThumbnail(formDataThumb, response.eventNumber).subscribe(() => {
             this.message = "Evento criado com Sucesso. "
+            this.isLoading = false;
             this.showMessages(this.message);
           });
         },
