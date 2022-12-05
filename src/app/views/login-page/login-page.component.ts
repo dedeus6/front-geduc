@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
 @Component({
   selector: 'app-login-page',
@@ -13,9 +14,8 @@ export class LoginPage implements OnInit{
   hide = true;
   loginForm: FormGroup;
   mostraWarningCredencial: boolean;
-  
 
-  constructor(private fb: FormBuilder, public authService: AuthService, private snackBar: MatSnackBar, private router: Router) {
+  constructor(private fb: FormBuilder, public authService: AuthService, private snackBar: MatSnackBar, private router: Router, public spinnerService: SpinnerService) {
     this.loginForm = this.fb.group(
       {
         registration: ['', [Validators.required]],
@@ -28,7 +28,6 @@ export class LoginPage implements OnInit{
   }
 
   submit(){
-
     let dataLogin = this.loginForm.getRawValue();
     if(this.loginForm.valid){
       this.authService.login(dataLogin).subscribe(
@@ -38,9 +37,7 @@ export class LoginPage implements OnInit{
             panelClass: ['green-snackbar']
           });
           this.router.navigate(['/home']);
-          this.mostraWarningCredencial = false;
-          
-          
+          this.mostraWarningCredencial = false;   
         }, 
         (error) => {
           if(error.status === 422){

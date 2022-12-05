@@ -16,6 +16,7 @@ export class ModalAvatarComponent implements OnInit {
     hasChange: boolean = false;
     avatar: File;
     loggedUser: User;
+    isLoading: boolean = false;
 
     constructor(
         protected dialogRef: MatDialogRef<ModalAvatarComponent>,
@@ -31,9 +32,11 @@ export class ModalAvatarComponent implements OnInit {
     }
 
     onConfirm(): void {
+        this.isLoading = true;
         const formData = new FormData();
         formData.append('avatar', this.avatar);
         this.storageService.uploadAvatar(formData, this.loggedUser.registration).subscribe(() => {
+            this.isLoading = false;
             this.showMessages("Foto alterada com sucesso.");
             this.dialogRef.close();
         });

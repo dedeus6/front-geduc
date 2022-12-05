@@ -7,6 +7,7 @@ import { NotificationModel } from 'src/app/models/notification.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CertificateService } from 'src/app/shared/services/certificate.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 
 @Component({
@@ -25,7 +26,8 @@ export class WatchEventsPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private storageService: StorageService,
     private authService: AuthService,
-    private certificateService: CertificateService
+    private certificateService: CertificateService,
+    public spinnerService: SpinnerService
   ) { }
   ngOnInit(): void {
     this.loggedUser = this.authService.getLoggedUser();
@@ -39,7 +41,7 @@ export class WatchEventsPageComponent implements OnInit {
     this.storageService.getFiles(filesId).subscribe((response) => {
       response.files.forEach((file) => {
         this.b64toBlob(file.bytes, file.contentType, '',file.name)
-      })    
+      });
     })
   }
 

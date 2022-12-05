@@ -14,6 +14,6 @@
 
     <div mat-dialog-actions>
         <button mat-button (click)="onDismiss()">Fechar</button>
-        <button mat-raised-button color="primary" (click)="onConfirm()" [disabled]="!hasChange">Alterar foto</button>
+        <button mat-raised-button color="primary" (click)="onConfirm()" [disabled]="!hasChange || isLoading">Alterar foto</button>
     </div>
 </section>

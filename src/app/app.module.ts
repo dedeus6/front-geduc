@@ -23,7 +23,8 @@ import { ContentService } from './shared/services/content.service';
 import { StorageService } from './shared/services/storage.service';
 import { EventService } from './shared/services/event.service';
 
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,6 +37,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 // Dependências do ngx-mask
@@ -50,6 +52,8 @@ import { NotificationService } from './shared/services/notification.service';
 import { ModalConfirmComponent } from './shared/components/modal-confirm/modal-confirm.component';
 import { WatchEventsPageComponent } from './views/watch-events-page/watch-events-page.component';
 import { CertificateService } from './shared/services/certificate.service';
+import { SpinnerOverlayComponent } from './shared/components/spinner-overlay/spinner-overlay.component';
+import { CustomHttpInterceptor } from './interceptors/http-interceptor';
 
 
 @NgModule({
@@ -73,13 +77,14 @@ import { CertificateService } from './shared/services/certificate.service';
     ModalNotificationComponent,
     ModalConfirmComponent,
     ModalAvatarComponent,
-    WatchEventsPageComponent
+    WatchEventsPageComponent,
+    SpinnerOverlayComponent
   
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     MatInputModule,
     MatCheckboxModule,
     MatIconModule,
@@ -93,6 +98,7 @@ import { CertificateService } from './shared/services/certificate.service';
     FormsModule,
     HttpClientModule,
     MatBadgeModule,
+    MatProgressSpinnerModule,
     NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
   providers: [AuthService, ContentService, StorageService, EventService, NotificationService, CertificateService,
@@ -100,7 +106,13 @@ import { CertificateService } from './shared/services/certificate.service';
     provide: HTTP_INTERCEPTORS,
     useClass: HttpErrorInterceptor,
     multi: true
-    }],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 <div class="card-container">
+    <app-spinner-overlay *ngIf="spinnerService.visibility | async" overlay="true"></app-spinner-overlay>
     <mat-card class="card">
         {{event.title}}
         <div class="icons">

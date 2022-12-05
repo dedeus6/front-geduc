@@ -14,6 +14,7 @@ export class SearchEventsPageComponent implements OnInit {
   eventTitle: string;
   events: EventModel[];
   hasEvents: boolean = false;
+  isLoading: boolean = true;
   constructor(private activatedRoute: ActivatedRoute, private eventService: EventService, private router: Router) {
     this.localRegistration = JSON.parse(sessionStorage.getItem('user'));
     this.eventTitle = this.activatedRoute.snapshot.queryParamMap.get('eventTitle');
@@ -32,6 +33,10 @@ export class SearchEventsPageComponent implements OnInit {
       this.events = response;
       if(this.events.length > 0) {
         this.hasEvents = true;
+        this.isLoading = false;
+      } else {
+        this.hasEvents = false;
+        this.isLoading = false;
       }
     });
   }

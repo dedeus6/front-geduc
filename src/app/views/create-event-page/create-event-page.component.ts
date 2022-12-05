@@ -33,6 +33,7 @@ export class CreateEventPageComponent implements OnInit {
   sendingEvent: boolean = false;
   hasChangeOn: boolean = false;
   message: string = '';
+  isLoading: boolean = false;
   
   constructor(
     private fb: FormBuilder, 
@@ -136,6 +137,7 @@ export class CreateEventPageComponent implements OnInit {
   }
 
   createEvent(origin: string) {
+    this.isLoading = true;
     this.sendingEvent = true;
     const formData = new FormData();
     const formDataThumb = new FormData();
@@ -157,6 +159,7 @@ export class CreateEventPageComponent implements OnInit {
         this.eventService.createEvent(eventRequest).subscribe((response) => {
           this.storageService.uploadThumbnail(formDataThumb, response.eventNumber).subscribe(() => {
             this.message = "Evento criado com Sucesso. "
+            this.isLoading = false;
             this.showMessages(this.message);
           });
         },

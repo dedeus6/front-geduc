@@ -6,7 +6,7 @@
                 <img [src]="thumbnail">
             </div>
             <h1 class="event-title">{{event.title}}</h1>
-            <p class="event-description">{{event.description}}</p>
+            <p class="event-description" maxlength="5">{{event.description}}</p>
             <div class="icon-container">
                 <mat-icon aria-hidden="false" aria-label="Example home icon">person</mat-icon>
                 <p>{{creatorOfEvent}}</p>

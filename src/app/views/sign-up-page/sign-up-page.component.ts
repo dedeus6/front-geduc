@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Tech } from 'src/app/models/tech.model';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -16,8 +17,8 @@ export class SignUpPageComponent implements OnInit {
   hide = true;
   registerForm: FormGroup;
   passwordsValidator: boolean  = false;
-
-  constructor(private fb: FormBuilder, private authService: AuthService, private snackBar: MatSnackBar, private router: Router) {
+  isLoading: boolean =false;
+  constructor(private fb: FormBuilder, private authService: AuthService, public spinnerService: SpinnerService, private snackBar: MatSnackBar, private router: Router) {
     this.registerForm = this.fb.group(
       {
         name: ['', [Validators.required]],
@@ -58,6 +59,7 @@ export class SignUpPageComponent implements OnInit {
   }
 
   submitRegister(){
+    this.isLoading = true;
     let dataRegister = this.registerForm.getRawValue();
     dataRegister.techs = this.techs.map(a => a.name)
     if(this.registerForm.valid){
@@ -66,12 +68,13 @@ export class SignUpPageComponent implements OnInit {
         this.passwordsValidator = false;
         delete dataRegister.passwordConfirmation;
         this.authService.register(dataRegister).subscribe(() =>{
+          this.isLoading = false;
           this.snackBar.open("Usuário Cadastrado com Sucesso", 'X', {
             duration: 3000,
             panelClass: ['green-snackbar']
           });
           this.router.navigate(['/login']);
-        })
+        });
       } else {
         this.passwordsValidator = true;
       }

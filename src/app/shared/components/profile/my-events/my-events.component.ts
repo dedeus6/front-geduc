@@ -3,6 +3,7 @@ import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
 @Component({
   selector: 'app-my-events',
@@ -15,7 +16,7 @@ export class MyEventsComponent implements OnInit {
   eventsSubscribed: EventModel[];
   loggedUser: User;
   constructor(private eventService: EventService,
-    private authService: AuthService) { }
+    private authService: AuthService, public spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
     this.loggedUser = this.authService.getLoggedUser();

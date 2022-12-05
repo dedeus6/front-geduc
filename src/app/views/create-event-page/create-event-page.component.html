@@ -1,4 +1,5 @@
 <section class="wrapper">
+    <app-spinner-overlay *ngIf="isLoading" overlay="true"></app-spinner-overlay>
     <form class="criar-evento-container" [formGroup]="eventForm" *ngIf="eventForm">
         <div class="titulo">
             <span *ngIf="!isUpdate">Crie seu evento</span>
@@ -12,7 +13,7 @@
         </div>
         <div>
             <mat-form-field id="campo-descricao" appearance="outline">
-                <mat-label>Descricao</mat-label>
+                <mat-label>Descrição</mat-label>
                 <textarea matInput formControlName="eventDescription" maxlength="500" required></textarea>
             </mat-form-field>
         </div>

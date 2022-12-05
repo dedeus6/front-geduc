@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { ModalConfirmComponent } from '../../../modal-confirm/modal-confirm.component';
 
 @Component({
@@ -22,7 +23,7 @@ export class MyEventsCardComponent implements OnInit {
   @Output()
   listEvents = new EventEmitter<boolean>(false);
 
-  constructor(private router: Router, private dialog: MatDialog, private eventService: EventService, private snackBar: MatSnackBar, private authService: AuthService) {
+  constructor(private router: Router, private dialog: MatDialog, private eventService: EventService, private snackBar: MatSnackBar, private authService: AuthService, public spinnerService: SpinnerService) {
     this.loggedUser = this.authService.getLoggedUser();
    }
 

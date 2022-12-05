@@ -5,7 +5,12 @@
         </div>
         <div class="info-container">
             <h1 class="event-title">{{event.title}}</h1>
-            <p class="event-description" maxlength="5">{{event.description}}</p>
+            <div class="chip-list">
+                <mat-chip-list *ngFor="let tech of event.techs" aria-label="techs">
+                    <mat-chip disabled>{{tech}}</mat-chip>
+                </mat-chip-list>
+            </div>
+            <p class="event-description">{{event.description}}</p>
             <button class="event-button" mat-raised-button color="primary" (click)="openModal()">Veja mais</button>
         </div>
     </div>
