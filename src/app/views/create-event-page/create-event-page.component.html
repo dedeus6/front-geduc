@@ -1,5 +1,5 @@
 <section class="wrapper">
-    <app-spinner-overlay *ngIf="isLoading" overlay="true"></app-spinner-overlay>
+    <app-spinner-overlay *ngIf="spinnerService.visibility | async" overlay="true"></app-spinner-overlay>
     <form class="criar-evento-container" [formGroup]="eventForm" *ngIf="eventForm">
         <div class="titulo">
             <span *ngIf="!isUpdate">Crie seu evento</span>

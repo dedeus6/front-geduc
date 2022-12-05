@@ -4,6 +4,7 @@ import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
 @Component({
   selector: 'app-home-page',
@@ -15,7 +16,7 @@ export class HomePageComponent implements OnInit {
   localRegistration: User;
   events: EventModel[];
   hasEvents: boolean = false;
-  constructor(public authService: AuthService, private router: Router, private eventService: EventService) { }
+  constructor(public authService: AuthService, public spinnerService: SpinnerService,private router: Router, private eventService: EventService) { }
 
   ngOnInit(): void {
     this.localRegistration = JSON.parse(sessionStorage.getItem('user'))

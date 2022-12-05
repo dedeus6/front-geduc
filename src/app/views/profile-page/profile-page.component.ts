@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal-confirm.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { MenuModel } from '../../models/menu.model';
 import { ModalAvatarComponent } from './modal-avatar/modal-avatar.component';
 
@@ -42,8 +43,9 @@ export class ProfilePageComponent implements OnInit {
   
 
   constructor(
-    private router: Router,
+    public spinnerService: SpinnerService,
     public authService: AuthService,
+    private router: Router,
     private dialog: MatDialog,
     private domSanitizer: DomSanitizer
   ) { }
@@ -69,7 +71,8 @@ export class ProfilePageComponent implements OnInit {
           buttonConfirmText: 'Sair',
           buttonCancelText: 'Fechar'
         },
-        height: '200px',
+        height: '180px',
+        width: '300px'
       })
   
       dialogRef.afterClosed().subscribe(dialogResult => {

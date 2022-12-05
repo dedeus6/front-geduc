@@ -24,10 +24,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           if(erro.status < 500) {
             errorMsg = `${erro.error.message}`;
           } else {
-            errorMsg = 'Message: Aconteceu um erro. Tente novamente!'
+            errorMsg = 'Aconteceu um erro. Tente novamente!'
           }
         } else {
-          errorMsg = 'Message: Aconteceu um erro. Tente novamente!'
+          errorMsg = 'Aconteceu um erro. Tente novamente!'
         }
         
         this.snackBar.open(errorMsg, 'X', {

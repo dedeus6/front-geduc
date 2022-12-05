@@ -10,6 +10,7 @@ import { Tech } from 'src/app/models/tech.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventService } from 'src/app/shared/services/event.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 
 @Component({
@@ -36,10 +37,11 @@ export class CreateEventPageComponent implements OnInit {
   isLoading: boolean = false;
   
   constructor(
-    private fb: FormBuilder, 
+    public spinnerService: SpinnerService,
     private authService: AuthService, 
     private storageService: StorageService, 
     private eventService: EventService, 
+    private fb: FormBuilder, 
     private snackBar: MatSnackBar, 
     private router: Router,
     private activatedRoute: ActivatedRoute

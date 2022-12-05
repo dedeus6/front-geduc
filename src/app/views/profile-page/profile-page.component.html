@@ -1,6 +1,6 @@
 <section class="wrapper">
     <div class="profile-container">
-        <app-spinner-overlay *ngIf="isLoading" overlay="true"></app-spinner-overlay>
+        <app-spinner-overlay *ngIf="spinnerService.visibility | async" overlay="true"></app-spinner-overlay>
         <div class="menu-container">
             <div class="menu-content">
                 <div class="avatar-container">

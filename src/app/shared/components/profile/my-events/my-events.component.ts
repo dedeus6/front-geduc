@@ -15,6 +15,7 @@ export class MyEventsComponent implements OnInit {
   events: EventModel[];
   eventsSubscribed: EventModel[];
   loggedUser: User;
+  isLoading: boolean = true;
   constructor(private eventService: EventService,
     private authService: AuthService, public spinnerService: SpinnerService) { }
 
@@ -33,6 +34,7 @@ export class MyEventsComponent implements OnInit {
     this.eventService.getSubscribedEvents(this.loggedUser.registration, null).subscribe((response) => {
       this.eventsSubscribed = response;
     })
+    this.isLoading = false;
   }
 
   callBackListEvents(listEvents: boolean) {

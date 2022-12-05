@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventModel } from 'src/app/models/event.model';
 import { User } from 'src/app/models/user.model';
 import { EventService } from 'src/app/shared/services/event.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
 @Component({
   selector: 'app-search-events-page',
@@ -15,7 +16,7 @@ export class SearchEventsPageComponent implements OnInit {
   events: EventModel[];
   hasEvents: boolean = false;
   isLoading: boolean = true;
-  constructor(private activatedRoute: ActivatedRoute, private eventService: EventService, private router: Router) {
+  constructor(public spinnerService: SpinnerService, private eventService: EventService, private activatedRoute: ActivatedRoute, private router: Router) {
     this.localRegistration = JSON.parse(sessionStorage.getItem('user'));
     this.eventTitle = this.activatedRoute.snapshot.queryParamMap.get('eventTitle');
    }

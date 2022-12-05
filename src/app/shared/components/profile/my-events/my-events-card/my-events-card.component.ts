@@ -43,7 +43,8 @@ export class MyEventsCardComponent implements OnInit {
         message: 'Tem certeza que quer cancelar este evento?',
         buttonConfirmText: 'Cancelar Evento',
         buttonCancelText: 'Fechar'
-      }
+      },
+      height: '180px'
     })
 
     dialogRef.afterClosed().subscribe(dialogResult => {

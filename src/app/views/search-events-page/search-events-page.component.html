@@ -6,7 +6,7 @@
                     <app-card-event [event]="event"></app-card-event>
                 </div>
             </div>
-            <app-spinner-overlay *ngIf="isLoading" overlay="true"></app-spinner-overlay>
+            <app-spinner-overlay *ngIf="spinnerService.visibility | async" overlay="true"></app-spinner-overlay>
             <div class="events-container"  *ngIf="!hasEvents && !isLoading"> 
                 <div>
                     <h1>INFELIZMENTE, NÃO ENCONTRAMOS UM EVENTO COM ESSE NOME...</h1>

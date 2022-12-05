@@ -1,4 +1,5 @@
 <section class="wrapper">
+    <app-spinner-overlay *ngIf="spinnerService.visibility | async" overlay="true"></app-spinner-overlay>
     <div class="home-container">
         <div class="info-container">
             <div class="img-container">
@@ -30,7 +31,6 @@
                     <h2>você pode alterar suas tags <a routerLink="/profile/personal">clicando aqui</a></h2>
                 </div>
             </div>
-            <!-- arrumar formatacao -->
         </div>
     </div>
 </section>
