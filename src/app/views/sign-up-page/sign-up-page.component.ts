@@ -64,7 +64,6 @@ export class SignUpPageComponent implements OnInit {
     dataRegister.techs = this.techs.map(a => a.name)
     if(this.registerForm.valid){
       if(dataRegister.password == dataRegister.passwordConfirmation){
-        
         this.passwordsValidator = false;
         delete dataRegister.passwordConfirmation;
         this.authService.register(dataRegister).subscribe(() =>{
@@ -74,8 +73,9 @@ export class SignUpPageComponent implements OnInit {
             panelClass: ['green-snackbar']
           });
           this.router.navigate(['/login']);
-        });
+        },() => {this.isLoading = false;});
       } else {
+        this.isLoading = false;
         this.passwordsValidator = true;
       }
     }
