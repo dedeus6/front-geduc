@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -17,7 +17,6 @@ import { ModalAvatarComponent } from './modal-avatar/modal-avatar.component';
 export class ProfilePageComponent implements OnInit {
   loggedUser: User;
   avatar: SafeUrl = "assets/foto-event.png";
-  isLoading: boolean = false;
   menuItems: Array<MenuModel> = [
     {
       name: 'Perfil',
@@ -37,7 +36,6 @@ export class ProfilePageComponent implements OnInit {
     {
       name: 'Sair',
       icon: 'exit_to_app',
-      //path: '../login'
     },
   ];
   
@@ -47,7 +45,8 @@ export class ProfilePageComponent implements OnInit {
     public authService: AuthService,
     private router: Router,
     private dialog: MatDialog,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -56,7 +55,6 @@ export class ProfilePageComponent implements OnInit {
       this.authService.setStorage(response);
       this.loggedUser = this.authService.getLoggedUser();
       if (this.loggedUser.avatar) {
-        this.isLoading = true;
         this.b64toBlob(this.loggedUser.avatar.files[0].bytes, this.loggedUser.avatar.files[0].contentType, '', this.loggedUser.avatar.files[0].name);
       }
     });
@@ -72,7 +70,7 @@ export class ProfilePageComponent implements OnInit {
           buttonCancelText: 'Fechar'
         },
         height: '180px',
-        width: '300px'
+        width: '400px',
       })
   
       dialogRef.afterClosed().subscribe(dialogResult => {
@@ -88,7 +86,7 @@ export class ProfilePageComponent implements OnInit {
   openAvatarModal() {
     const dialogRef = this.dialog.open(ModalAvatarComponent, {})
 
-    dialogRef.afterClosed().subscribe(dialogResult => {
+    dialogRef.afterClosed().subscribe(() => {
 
     })
   }
@@ -116,7 +114,9 @@ export class ProfilePageComponent implements OnInit {
     var url = URL.createObjectURL(file);
 
     this.avatar = this.domSanitizer.bypassSecurityTrustUrl(url);
-    this.isLoading = false;
   }
 
+  ngAfterContentChecked(){
+    this.cd.detectChanges();
+  }
 }
