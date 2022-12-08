@@ -70,7 +70,7 @@ export class ProfilePageComponent implements OnInit {
           buttonCancelText: 'Fechar'
         },
         height: '180px',
-        width: '400px',
+        width: '400px'
       })
   
       dialogRef.afterClosed().subscribe(dialogResult => {
