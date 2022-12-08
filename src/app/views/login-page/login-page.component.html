@@ -25,8 +25,9 @@
                         </button>
                     </mat-form-field>
                 </div>
-                <div style="margin-bottom: 1em;">
+                <div style="margin-bottom: 1em; display: flex; flex-direction: column;">
                     <mat-checkbox color="primary" (change)="hide = !hide">Mostrar senha</mat-checkbox>
+                    <span style="font-family: 'Roboto';line-height: 24px;"><a href routerLink="/change-password" >Esqueceu a senha?</a></span>
                 </div>
                 <div>
                     <button type="button" (click)="submit()" mat-flat-button color="primary" id="botao-entrar" [disabled]="!loginForm.valid">ENTRAR</button>
