@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   changePassword(filter: any) {
-    return this.http.post<User>(environment.GEDUC_API + '/v1/user/change/password', filter);
+    return this.http.put<User>(environment.GEDUC_API + '/v1/user/change/password', filter);
   }
 
   clear(){

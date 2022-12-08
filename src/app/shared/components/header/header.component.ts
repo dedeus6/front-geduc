@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit {
 
   openModal() {
     const dialogRef = this.dialog.open(ModalNotificationComponent, {
+      panelClass: ['modal-padding']
     });
 
     dialogRef.afterClosed().subscribe((response) => {
