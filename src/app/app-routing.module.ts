@@ -11,6 +11,7 @@ import { CreateEventPageComponent } from "./views/create-event-page/create-event
 import { MyEventsComponent } from "./shared/components/profile/my-events/my-events.component";
 import { SearchEventsPageComponent } from "./views/search-events-page/search-events-page.component";
 import { WatchEventsPageComponent } from "./views/watch-events-page/watch-events-page.component";
+import { ChangePasswordPageComponent } from "./views/change-password-page/change-password-page.component";
 
 const routes: Routes = [
     {
@@ -24,8 +25,12 @@ const routes: Routes = [
 
     },
     {
-        path: "cadastro",
+        path: "sign-up",
         component: SignUpPageComponent
+    },
+    {
+        path: "change-password",
+        component: ChangePasswordPageComponent
     },
     {
         path: "home",

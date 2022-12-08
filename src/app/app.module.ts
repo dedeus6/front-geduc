@@ -54,6 +54,7 @@ import { WatchEventsPageComponent } from './views/watch-events-page/watch-events
 import { CertificateService } from './shared/services/certificate.service';
 import { SpinnerOverlayComponent } from './shared/components/spinner-overlay/spinner-overlay.component';
 import { CustomHttpInterceptor } from './interceptors/http-interceptor';
+import { ChangePasswordPageComponent } from './views/change-password-page/change-password-page.component';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { CustomHttpInterceptor } from './interceptors/http-interceptor';
     ModalConfirmComponent,
     ModalAvatarComponent,
     WatchEventsPageComponent,
-    SpinnerOverlayComponent
+    SpinnerOverlayComponent,
+    ChangePasswordPageComponent
   
   ],
   imports: [
