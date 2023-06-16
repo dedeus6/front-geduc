@@ -76,7 +76,8 @@ export class WatchEventsPageComponent implements OnInit {
     this.video.load();
     
     this.files.push(file);
-    this.files.reverse();
+    // this.files.reverse();
+    this.files = this.files.sort((a, b) => (a.name < b.name) ? -1 : 1);
     
     return blob;
   }

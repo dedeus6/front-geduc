@@ -31,7 +31,8 @@ export class CardEventComponent implements OnInit {
       data : {
         event: this.event,
         thumb: this.thumbnail
-      }
+      },
+      panelClass: ['modal-padding']
     });
 
     dialogRef.afterClosed().subscribe(result => {
